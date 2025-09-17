@@ -1,0 +1,117 @@
+[gd_scene load_steps=8 format=3 uid="uid://cw6m0btnxmmhf"]
+
+[ext_resource type="Texture2D" uid="uid://cryrt6pjsi6ev" path="res://assets/sprites/splash/spr-logo-game.png" id="1_n1sb7"]
+[ext_resource type="Texture2D" uid="uid://nnnc28jrmmmg" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty1.png" id="2_d1tww"]
+[ext_resource type="Texture2D" uid="uid://bgj3qmu8u0cjc" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty2.png" id="3_fd088"]
+[ext_resource type="Texture2D" uid="uid://dua2kntctpow6" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty3.png" id="4_5dk1h"]
+[ext_resource type="Texture2D" uid="uid://bh6ibgrw4dae5" path="res://assets/sprites/splash/gemstones/spr-gemstones-full1.png" id="5_tpw3g"]
+[ext_resource type="Texture2D" uid="uid://cxb77it3r076m" path="res://assets/sprites/splash/gemstones/spr-gemstones-full2.png" id="6_x758s"]
+[ext_resource type="Texture2D" uid="uid://cj22pqajejimt" path="res://assets/sprites/splash/gemstones/spr-gemstones-full3.png" id="7_rqvx0"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="GemContainer" type="HBoxContainer" parent="."]
+offset_left = -145.0
+offset_top = 26.0
+offset_right = 145.0
+offset_bottom = 73.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = -1
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 160.0
+texture = ExtResource("1_n1sb7")
+stretch_mode = 5
+
+[node name="GemContainer2" type="Node2D" parent="."]
+
+[node name="Gems" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -140.0
+offset_top = 16.0
+offset_right = 138.0
+offset_bottom = 78.0
+
+[node name="GemEmpty" type="HBoxContainer" parent="Gems"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Gem-1" type="Control" parent="Gems/GemEmpty"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gem-Back" type="TextureRect" parent="Gems/GemEmpty/Gem-1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_d1tww")
+stretch_mode = 5
+
+[node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_tpw3g")
+stretch_mode = 5
+
+[node name="Gem-2" type="Control" parent="Gems/GemEmpty"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gem-Back" type="TextureRect" parent="Gems/GemEmpty/Gem-2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_fd088")
+stretch_mode = 5
+
+[node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_x758s")
+stretch_mode = 5
+
+[node name="Gem-3" type="Control" parent="Gems/GemEmpty"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Gem-Back" type="TextureRect" parent="Gems/GemEmpty/Gem-3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_5dk1h")
+stretch_mode = 5
+
+[node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_rqvx0")
+stretch_mode = 5

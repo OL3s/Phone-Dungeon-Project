@@ -1,0 +1,29 @@
+using Godot;
+using System;
+
+public partial class CategoryManager : Control
+{
+	[Export] public MenuButtons MenuButtonContainer;
+
+	public override void _Ready(){
+		
+		// Connect to buttons
+		MenuButtonContainer.Connect(
+			MenuButtons.SignalName.MenuChangeButtonPressed,
+			Callable.From<int>(OnMenuButtonPressed)
+		);
+		
+		// Set current menu
+		OnMenuButtonPressed(2);
+	}
+
+	// Make only target menu visible
+	private void OnMenuButtonPressed(int index) {
+		GD.Print($"CategoryManager: Button index {index} pressed");
+		var i = 0;
+		foreach(Control menu in GetChildren()) {
+			menu.Visible = (i == index);
+			i++;
+		}
+	}
+}
