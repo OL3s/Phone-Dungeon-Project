@@ -21,8 +21,10 @@ public partial class CategoryManager : Control
 	private void OnMenuButtonPressed(int index) {
 		GD.Print($"CategoryManager: Button index {index} pressed");
 		var i = 0;
-		foreach(Control menu in GetChildren()) {
-			menu.Visible = (i == index);
+		
+		// Make Ui visible
+		foreach(Control ui in GetChildren()) {
+			ui.Visible = (i == index);
 			i++;
 		}
 	}

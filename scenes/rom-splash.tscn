@@ -1,32 +1,68 @@
-[gd_scene load_steps=8 format=3 uid="uid://cw6m0btnxmmhf"]
+[gd_scene load_steps=16 format=3 uid="uid://cw6m0btnxmmhf"]
 
 [ext_resource type="Texture2D" uid="uid://cryrt6pjsi6ev" path="res://assets/sprites/splash/spr-logo-game.png" id="1_n1sb7"]
+[ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://scenes/rom-splash.gdshader" id="1_rqvx0"]
 [ext_resource type="Texture2D" uid="uid://nnnc28jrmmmg" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty1.png" id="2_d1tww"]
 [ext_resource type="Texture2D" uid="uid://bgj3qmu8u0cjc" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty2.png" id="3_fd088"]
 [ext_resource type="Texture2D" uid="uid://dua2kntctpow6" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty3.png" id="4_5dk1h"]
+[ext_resource type="Script" uid="uid://dbl1m4t6kj8bb" path="res://scripts/GemShowcase.cs" id="4_fd088"]
 [ext_resource type="Texture2D" uid="uid://bh6ibgrw4dae5" path="res://assets/sprites/splash/gemstones/spr-gemstones-full1.png" id="5_tpw3g"]
 [ext_resource type="Texture2D" uid="uid://cxb77it3r076m" path="res://assets/sprites/splash/gemstones/spr-gemstones-full2.png" id="6_x758s"]
 [ext_resource type="Texture2D" uid="uid://cj22pqajejimt" path="res://assets/sprites/splash/gemstones/spr-gemstones-full3.png" id="7_rqvx0"]
+[ext_resource type="Script" uid="uid://dla3fepapwkis" path="res://scripts/GameData.cs" id="8_d1tww"]
+[ext_resource type="Texture2D" uid="uid://w5y1fk8lphmc" path="res://assets/sprites/menu/background/spr-background-dark.png" id="10_5dk1h"]
+[ext_resource type="Script" uid="uid://boa4hby1j2p7i" path="res://scripts/EffectFader.cs" id="11_tpw3g"]
+[ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://fonts/ByteBounce.ttf" id="11_x758s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rqvx0"]
+shader = ExtResource("1_rqvx0")
+shader_parameter/local_amp = 0.1
+shader_parameter/local_freq = 3.0
+shader_parameter/local_speed = 1.2
+shader_parameter/local_layers = 5
+shader_parameter/blob_rate = 2.0
+shader_parameter/blob_strength = 0.08
+shader_parameter/blob_scale = 0.2
+shader_parameter/blob_life = 1.8
+shader_parameter/blob_streams = 4
+shader_parameter/global_amp = 0.06
+shader_parameter/global_freq = 1.6
+shader_parameter/global_speed = 0.6
+
+[sub_resource type="LabelSettings" id="LabelSettings_5dk1h"]
+line_spacing = -4.0
+font = ExtResource("11_x758s")
+font_size = 36
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.623529)
+shadow_offset = Vector2(1, 3)
 
 [node name="Node2D" type="Node2D"]
 
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_rqvx0")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1000.0
+offset_top = -1000.0
+offset_right = 1000.0
+offset_bottom = 1000.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_5dk1h")
+stretch_mode = 1
+metadata/_edit_lock_ = true
+
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="GemContainer" type="HBoxContainer" parent="."]
-offset_left = -145.0
-offset_top = 26.0
-offset_right = 145.0
-offset_bottom = 73.0
-
-[node name="TextureRect" type="TextureRect" parent="."]
-anchors_preset = -1
+[node name="ImageLogo" type="TextureRect" parent="."]
 offset_left = -160.0
 offset_top = -90.0
 offset_right = 160.0
 texture = ExtResource("1_n1sb7")
 stretch_mode = 5
-
-[node name="GemContainer2" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
 
 [node name="Gems" type="Control" parent="."]
 layout_mode = 3
@@ -49,6 +85,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Gem-Back" type="TextureRect" parent="Gems/GemEmpty/Gem-1"]
+modulate = Color(0.588235, 0.588235, 0.588235, 0.470588)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,6 +94,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_d1tww")
 stretch_mode = 5
+metadata/_edit_lock_ = true
 
 [node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-1"]
 layout_mode = 1
@@ -67,12 +105,15 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_tpw3g")
 stretch_mode = 5
+script = ExtResource("4_fd088")
+metadata/_edit_lock_ = true
 
 [node name="Gem-2" type="Control" parent="Gems/GemEmpty"]
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Gem-Back" type="TextureRect" parent="Gems/GemEmpty/Gem-2"]
+modulate = Color(0.588235, 0.588235, 0.588235, 0.470588)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,6 +122,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_fd088")
 stretch_mode = 5
+metadata/_edit_lock_ = true
 
 [node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-2"]
 layout_mode = 1
@@ -91,12 +133,16 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_x758s")
 stretch_mode = 5
+script = ExtResource("4_fd088")
+currentTimeOffset = 300.0
+metadata/_edit_lock_ = true
 
 [node name="Gem-3" type="Control" parent="Gems/GemEmpty"]
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Gem-Back" type="TextureRect" parent="Gems/GemEmpty/Gem-3"]
+modulate = Color(0.588235, 0.588235, 0.588235, 0.470588)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -105,6 +151,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_5dk1h")
 stretch_mode = 5
+metadata/_edit_lock_ = true
 
 [node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-3"]
 layout_mode = 1
@@ -115,3 +162,29 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_rqvx0")
 stretch_mode = 5
+script = ExtResource("4_fd088")
+currentTimeOffset = 600.0
+metadata/_edit_lock_ = true
+
+[node name="GameData" type="Node" parent="."]
+script = ExtResource("8_d1tww")
+IncludeGlobalData = true
+
+[node name="LabelStart" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = 16.5
+offset_right = 98.0
+offset_bottom = 76.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Tap to start game
+Hold for tutorial"
+label_settings = SubResource("LabelSettings_5dk1h")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("11_tpw3g")

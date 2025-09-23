@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Mobile-Project"
-run/main_scene="uid://b1hcnw84ujj36"
+run/main_scene="uid://cw6m0btnxmmhf"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://icon.svg"
 

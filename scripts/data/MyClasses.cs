@@ -1,39 +1,34 @@
+using MyStructs;
+
 namespace MyClasses {
-	public enum Biomes {
-		Woodland,
-		Swamp,
-		Desert,
-		Mountain,
-		Cave,
-		IceCave,
-		Volcanic,
-		Ruins,
-		Crypt,
-		Abyss,
+	public class GameData {
+		public int Gold {get; private set;}
+		public int Wave {get; private set;}
+		public Biomes biome {get; set;}
+		public int Kills {get; private set;}
+		public int KillsHeavy {get; private set;}
+		
+		void AddGold(int amount) {
+			Gold += amount;
+		}
+		
+		void AddWave() {
+			Wave ++;
+		}
+		
+		void AddKill(bool isHeavy) {
+			Kills++;
+			KillsHeavy += (isHeavy) ? 1 : 0;
+		}
 	}
-	public enum MobFamilies {
-		Wild,
-		Elemental,
-		Goblin,
-		Bandit,
-		Undead,
-		Cultist,
-		Abyssal
+
+	public class PermData {
+		public int[] Gems {get; set;}
 	}
-	public enum DamageType {
-		Physical,
-		Slash, 
-		Pierce, 
-		Crush, 
-		Heat, 
-		Cold, 
-		Acid
-	}
-	public enum StatusType {
-		Hit, 
-		Stun, 
-		Slow, 
-		Burn, 
-		Freeze
+
+	public class Item {
+		public string Name {get;}
+		public int Cost {get;}
+		public int Condition {get; set;}
 	}
 }

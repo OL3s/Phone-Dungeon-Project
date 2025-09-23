@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1hcnw84ujj36"]
+[gd_scene load_steps=13 format=3 uid="uid://b1hcnw84ujj36"]
 
-[ext_resource type="Script" uid="uid://b7624mf6sqaig" path="res://scenes/MenuButtons.cs" id="1_c26fr"]
+[ext_resource type="Script" uid="uid://b7624mf6sqaig" path="res://scripts/MenuButtons.cs" id="1_c26fr"]
+[ext_resource type="Texture2D" uid="uid://w5y1fk8lphmc" path="res://assets/sprites/menu/background/spr-background-dark.png" id="1_in2e0"]
 [ext_resource type="Texture2D" uid="uid://cw0qjvu1a2ui7" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon3.png" id="1_lxtin"]
 [ext_resource type="Texture2D" uid="uid://dnj2hf3f70hdw" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon2.png" id="2_c26fr"]
 [ext_resource type="Texture2D" uid="uid://3k3ewh63313k" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon1.png" id="3_aceb1"]
@@ -8,17 +9,35 @@
 [ext_resource type="Texture2D" uid="uid://c2pvmctt516by" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon5.png" id="5_in2e0"]
 [ext_resource type="Texture2D" uid="uid://bntbc24pxbsaa" path="res://assets/sprites/menu/icons/spr-icon-gold.png" id="6_131qp"]
 [ext_resource type="Texture2D" uid="uid://b3iyfar0s7nmd" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome8.png" id="7_ce0po"]
-[ext_resource type="Script" uid="uid://bdndmajl12mlp" path="res://scenes/CategoryManager.cs" id="9_aceb1"]
+[ext_resource type="Script" uid="uid://bdndmajl12mlp" path="res://scripts/CategoryManager.cs" id="9_aceb1"]
+[ext_resource type="Script" uid="uid://dla3fepapwkis" path="res://scripts/GameData.cs" id="10_yc45i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_131qp"]
 
 [node name="Main" type="Node2D"]
 
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_131qp")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1000.0
+offset_top = -1000.0
+offset_right = 1000.0
+offset_bottom = 1000.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_in2e0")
+stretch_mode = 1
+metadata/_edit_lock_ = true
+
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Main" type="Control" parent="."]
+[node name="MainUI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 
-[node name="ContainerButtons" type="HBoxContainer" parent="Main"]
+[node name="ContainerButtons" type="HBoxContainer" parent="MainUI"]
 layout_mode = 1
 offset_left = -140.0
 offset_top = 64.0
@@ -26,55 +45,55 @@ offset_right = 140.0
 offset_bottom = 80.0
 script = ExtResource("1_c26fr")
 
-[node name="ButtonLoadout" type="Button" parent="Main/ContainerButtons"]
+[node name="ButtonLoadout" type="Button" parent="MainUI/ContainerButtons"]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 icon = ExtResource("1_lxtin")
 flat = true
 
-[node name="ButtonMarket" type="Button" parent="Main/ContainerButtons"]
+[node name="ButtonMarket" type="Button" parent="MainUI/ContainerButtons"]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 icon = ExtResource("2_c26fr")
 flat = true
 
-[node name="ButtonHome" type="Button" parent="Main/ContainerButtons"]
+[node name="ButtonHome" type="Button" parent="MainUI/ContainerButtons"]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 icon = ExtResource("3_aceb1")
 flat = true
 
-[node name="ButtonSkill" type="Button" parent="Main/ContainerButtons"]
+[node name="ButtonSkill" type="Button" parent="MainUI/ContainerButtons"]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 icon = ExtResource("4_yc45i")
 flat = true
 
-[node name="ButtonContract" type="Button" parent="Main/ContainerButtons"]
+[node name="ButtonContract" type="Button" parent="MainUI/ContainerButtons"]
 custom_minimum_size = Vector2(16, 0)
 layout_mode = 2
 size_flags_horizontal = 6
 icon = ExtResource("5_in2e0")
 flat = true
 
-[node name="ContainerTop" type="HBoxContainer" parent="Main"]
+[node name="ContainerTop" type="HBoxContainer" parent="MainUI"]
 layout_mode = 0
 offset_left = -152.0
 offset_top = -83.0
 offset_right = 101.0
 offset_bottom = -59.0
 
-[node name="SpriteGold" type="TextureRect" parent="Main/ContainerTop"]
+[node name="SpriteGold" type="TextureRect" parent="MainUI/ContainerTop"]
 layout_mode = 2
 size_flags_horizontal = 6
 texture = ExtResource("6_131qp")
 expand_mode = 2
 
-[node name="LabelGold" type="Label" parent="Main/ContainerTop/SpriteGold"]
+[node name="LabelGold" type="Label" parent="MainUI/ContainerTop/SpriteGold"]
 layout_mode = 2
 offset_left = 25.0
 offset_right = 76.0
@@ -82,13 +101,13 @@ offset_bottom = 23.0
 text = "$gold"
 vertical_alignment = 1
 
-[node name="SpriteBiome" type="TextureRect" parent="Main/ContainerTop"]
+[node name="SpriteBiome" type="TextureRect" parent="MainUI/ContainerTop"]
 layout_mode = 2
 size_flags_horizontal = 6
 texture = ExtResource("7_ce0po")
 expand_mode = 2
 
-[node name="LabelBiome" type="Label" parent="Main/ContainerTop/SpriteBiome"]
+[node name="LabelBiome" type="Label" parent="MainUI/ContainerTop/SpriteBiome"]
 layout_mode = 2
 offset_left = 26.0
 offset_top = -1.0
@@ -103,7 +122,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("9_aceb1")
-MenuButtonContainer = NodePath("../Main/ContainerButtons")
+MenuButtonContainer = NodePath("../MainUI/ContainerButtons")
 
 [node name="Loadout" type="Control" parent="Categories"]
 layout_mode = 3
@@ -134,3 +153,9 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="GameData" type="Node" parent="."]
+script = ExtResource("10_yc45i")
+IncludeGlobalData = true
+IncludeGameData = true
+IncludeInventoryData = true
