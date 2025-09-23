@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://cw6m0btnxmmhf"]
 
 [ext_resource type="Texture2D" uid="uid://cryrt6pjsi6ev" path="res://assets/sprites/splash/spr-logo-game.png" id="1_n1sb7"]
-[ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://scenes/rom-splash.gdshader" id="1_rqvx0"]
+[ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://shaders/rom-splash.gdshader" id="1_rqvx0"]
 [ext_resource type="Texture2D" uid="uid://nnnc28jrmmmg" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty1.png" id="2_d1tww"]
 [ext_resource type="Texture2D" uid="uid://bgj3qmu8u0cjc" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty2.png" id="3_fd088"]
 [ext_resource type="Texture2D" uid="uid://dua2kntctpow6" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty3.png" id="4_5dk1h"]
@@ -16,18 +16,18 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rqvx0"]
 shader = ExtResource("1_rqvx0")
-shader_parameter/local_amp = 0.1
-shader_parameter/local_freq = 3.0
-shader_parameter/local_speed = 1.2
-shader_parameter/local_layers = 5
-shader_parameter/blob_rate = 2.0
-shader_parameter/blob_strength = 0.08
-shader_parameter/blob_scale = 0.2
-shader_parameter/blob_life = 1.8
-shader_parameter/blob_streams = 4
-shader_parameter/global_amp = 0.06
-shader_parameter/global_freq = 1.6
-shader_parameter/global_speed = 0.6
+shader_parameter/local_amp = 29.473
+shader_parameter/local_freq = 6.255
+shader_parameter/local_speed = 0.1
+shader_parameter/local_layers = 7
+shader_parameter/blob_rate = 0.0
+shader_parameter/blob_strength = 0.0
+shader_parameter/blob_scale = 0.0
+shader_parameter/blob_life = 0.0
+shader_parameter/blob_streams = 10
+shader_parameter/global_amp = 10.0
+shader_parameter/global_freq = 2.0
+shader_parameter/global_speed = 0.03
 
 [sub_resource type="LabelSettings" id="LabelSettings_5dk1h"]
 line_spacing = -4.0
