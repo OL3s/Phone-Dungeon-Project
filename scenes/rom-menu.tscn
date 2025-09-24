@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://b1hcnw84ujj36"]
+[gd_scene load_steps=14 format=3 uid="uid://b1hcnw84ujj36"]
 
-[ext_resource type="Script" uid="uid://b7624mf6sqaig" path="res://scripts/MenuButtons.cs" id="1_c26fr"]
+[ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://shaders/rom-splash.gdshader" id="1_131qp"]
+[ext_resource type="Script" uid="uid://b7624mf6sqaig" path="res://scripts/menu/MenuButtons.cs" id="1_c26fr"]
 [ext_resource type="Texture2D" uid="uid://w5y1fk8lphmc" path="res://assets/sprites/menu/background/spr-background-dark.png" id="1_in2e0"]
 [ext_resource type="Texture2D" uid="uid://cw0qjvu1a2ui7" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon3.png" id="1_lxtin"]
 [ext_resource type="Texture2D" uid="uid://dnj2hf3f70hdw" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon2.png" id="2_c26fr"]
@@ -9,10 +10,23 @@
 [ext_resource type="Texture2D" uid="uid://c2pvmctt516by" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon5.png" id="5_in2e0"]
 [ext_resource type="Texture2D" uid="uid://bntbc24pxbsaa" path="res://assets/sprites/menu/icons/spr-icon-gold.png" id="6_131qp"]
 [ext_resource type="Texture2D" uid="uid://b3iyfar0s7nmd" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome8.png" id="7_ce0po"]
-[ext_resource type="Script" uid="uid://bdndmajl12mlp" path="res://scripts/CategoryManager.cs" id="9_aceb1"]
+[ext_resource type="Script" uid="uid://bdndmajl12mlp" path="res://scripts/menu/CategoryManager.cs" id="9_aceb1"]
 [ext_resource type="Script" uid="uid://dla3fepapwkis" path="res://scripts/GameData.cs" id="10_yc45i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_131qp"]
+shader = ExtResource("1_131qp")
+shader_parameter/local_amp = 29.473
+shader_parameter/local_freq = 6.255
+shader_parameter/local_speed = 0.1
+shader_parameter/local_layers = 7
+shader_parameter/blob_rate = 0.0
+shader_parameter/blob_strength = 0.0
+shader_parameter/blob_scale = 0.0
+shader_parameter/blob_life = 0.0
+shader_parameter/blob_streams = 10
+shader_parameter/global_amp = 10.0
+shader_parameter/global_freq = 2.0
+shader_parameter/global_speed = 0.03
 
 [node name="Main" type="Node2D"]
 

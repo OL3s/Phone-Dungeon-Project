@@ -1,18 +1,19 @@
-[gd_scene load_steps=16 format=3 uid="uid://cw6m0btnxmmhf"]
+[gd_scene load_steps=17 format=3 uid="uid://cw6m0btnxmmhf"]
 
 [ext_resource type="Texture2D" uid="uid://cryrt6pjsi6ev" path="res://assets/sprites/splash/spr-logo-game.png" id="1_n1sb7"]
 [ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://shaders/rom-splash.gdshader" id="1_rqvx0"]
 [ext_resource type="Texture2D" uid="uid://nnnc28jrmmmg" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty1.png" id="2_d1tww"]
 [ext_resource type="Texture2D" uid="uid://bgj3qmu8u0cjc" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty2.png" id="3_fd088"]
 [ext_resource type="Texture2D" uid="uid://dua2kntctpow6" path="res://assets/sprites/splash/gemstones/spr-gemstone-empty3.png" id="4_5dk1h"]
-[ext_resource type="Script" uid="uid://dbl1m4t6kj8bb" path="res://scripts/GemShowcase.cs" id="4_fd088"]
+[ext_resource type="Script" uid="uid://dbl1m4t6kj8bb" path="res://scripts/splash/GemShowcase.cs" id="4_fd088"]
 [ext_resource type="Texture2D" uid="uid://bh6ibgrw4dae5" path="res://assets/sprites/splash/gemstones/spr-gemstones-full1.png" id="5_tpw3g"]
 [ext_resource type="Texture2D" uid="uid://cxb77it3r076m" path="res://assets/sprites/splash/gemstones/spr-gemstones-full2.png" id="6_x758s"]
 [ext_resource type="Texture2D" uid="uid://cj22pqajejimt" path="res://assets/sprites/splash/gemstones/spr-gemstones-full3.png" id="7_rqvx0"]
 [ext_resource type="Script" uid="uid://dla3fepapwkis" path="res://scripts/GameData.cs" id="8_d1tww"]
 [ext_resource type="Texture2D" uid="uid://w5y1fk8lphmc" path="res://assets/sprites/menu/background/spr-background-dark.png" id="10_5dk1h"]
-[ext_resource type="Script" uid="uid://boa4hby1j2p7i" path="res://scripts/EffectFader.cs" id="11_tpw3g"]
+[ext_resource type="Script" uid="uid://boa4hby1j2p7i" path="res://scripts/effect/EffectFader.cs" id="11_tpw3g"]
 [ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://fonts/ByteBounce.ttf" id="11_x758s"]
+[ext_resource type="Script" uid="uid://bl7e5gmxts4s" path="res://scripts/splash/TouchStart.cs" id="14_q3q07"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rqvx0"]
 shader = ExtResource("1_rqvx0")
@@ -33,7 +34,9 @@ shader_parameter/global_speed = 0.03
 line_spacing = -4.0
 font = ExtResource("11_x758s")
 font_size = 36
-shadow_size = 3
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
 shadow_color = Color(0, 0, 0, 0.623529)
 shadow_offset = Vector2(1, 3)
 
@@ -53,6 +56,15 @@ grow_vertical = 2
 texture = ExtResource("10_5dk1h")
 stretch_mode = 1
 metadata/_edit_lock_ = true
+
+[node name="TouchStart" type="Control" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_q3q07")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

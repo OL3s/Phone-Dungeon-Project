@@ -5,7 +5,7 @@ public partial class EffectFader : Control
 	[Export] public float Delay = 3f;
 	[Export] public float DelayAfter = 6f;
 	[Export] public float FadeIn = 4f;
-	[Export] public float Visible = 3f;
+	[Export] public float Visiblee = 3f;
 	[Export] public float FadeOut = 6f;
 
 	private double _start;
@@ -16,8 +16,8 @@ public partial class EffectFader : Control
 	{
 		var t = (float)(Time.GetTicksMsec()/1000.0 - _start);
 
-		float first = Delay + FadeIn + Visible + FadeOut;
-		float repeat = DelayAfter + FadeIn + Visible + FadeOut;
+		float first = Delay + FadeIn + Visiblee + FadeOut;
+		float repeat = DelayAfter + FadeIn + Visiblee + FadeOut;
 
 		float a;
 		if (t < Delay) a = 0f;
@@ -25,8 +25,8 @@ public partial class EffectFader : Control
 		{
 			float u = t - Delay;
 			if (u < FadeIn) a = u / FadeIn;
-			else if (u < FadeIn + Visible) a = 1f;
-			else a = 1f - (u - FadeIn - Visible) / FadeOut;
+			else if (u < FadeIn + Visiblee) a = 1f;
+			else a = 1f - (u - FadeIn - Visiblee) / FadeOut;
 		}
 		else
 		{
@@ -36,8 +36,8 @@ public partial class EffectFader : Control
 			{
 				float w = v - DelayAfter;
 				if (w < FadeIn) a = w / FadeIn;
-				else if (w < FadeIn + Visible) a = 1f;
-				else a = 1f - (w - FadeIn - Visible) / FadeOut;
+				else if (w < FadeIn + Visiblee) a = 1f;
+				else a = 1f - (w - FadeIn - Visiblee) / FadeOut;
 			}
 		}
 
@@ -45,6 +45,6 @@ public partial class EffectFader : Control
 		Modulate = new Color(1,1,1,a);
 
 		// midlertidig debug: se faktisk alpha
-		GD.Print($"alpha={a:0.00}, t={t:0.00}");
+		// GD.Print($"alpha={a:0.00}, t={t:0.00}");
 	}
 }
