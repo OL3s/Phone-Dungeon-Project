@@ -25,6 +25,10 @@ namespace MyClasses {
 	public class PermData {
 		public int[] Gems {get; set;}
 	}
+	
+	public class InventoryData {
+		
+	}
 
 	public class Item {
 		public string Name {get;}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b1hcnw84ujj36"]
+[gd_scene load_steps=18 format=3 uid="uid://b1hcnw84ujj36"]
 
 [ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://shaders/rom-splash.gdshader" id="1_131qp"]
 [ext_resource type="Script" uid="uid://b7624mf6sqaig" path="res://scripts/menu/MenuButtons.cs" id="1_c26fr"]
@@ -11,7 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://bntbc24pxbsaa" path="res://assets/sprites/menu/icons/spr-icon-gold.png" id="6_131qp"]
 [ext_resource type="Texture2D" uid="uid://b3iyfar0s7nmd" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome8.png" id="7_ce0po"]
 [ext_resource type="Script" uid="uid://bdndmajl12mlp" path="res://scripts/menu/CategoryManager.cs" id="9_aceb1"]
+[ext_resource type="LabelSettings" uid="uid://d252j1wwry2gd" path="res://pixelLabel.tres" id="10_chs3y"]
 [ext_resource type="Script" uid="uid://dla3fepapwkis" path="res://scripts/GameData.cs" id="10_yc45i"]
+[ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://fonts/ByteBounce.ttf" id="12_yhqx5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_131qp"]
 shader = ExtResource("1_131qp")
@@ -27,6 +29,16 @@ shader_parameter/blob_streams = 10
 shader_parameter/global_amp = 10.0
 shader_parameter/global_freq = 2.0
 shader_parameter/global_speed = 0.03
+
+[sub_resource type="LabelSettings" id="LabelSettings_rs64w"]
+font = ExtResource("12_yhqx5")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5gsci"]
+bg_color = Color(0.6, 0.6, 0.6, 0.164706)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Main" type="Node2D"]
 
@@ -53,10 +65,10 @@ anchors_preset = 0
 
 [node name="ContainerButtons" type="HBoxContainer" parent="MainUI"]
 layout_mode = 1
-offset_left = -140.0
-offset_top = 64.0
-offset_right = 140.0
-offset_bottom = 80.0
+offset_left = -160.0
+offset_top = 66.0
+offset_right = 160.0
+offset_bottom = 90.0
 script = ExtResource("1_c26fr")
 
 [node name="ButtonLoadout" type="Button" parent="MainUI/ContainerButtons"]
@@ -113,6 +125,7 @@ offset_left = 25.0
 offset_right = 76.0
 offset_bottom = 23.0
 text = "$gold"
+label_settings = ExtResource("10_chs3y")
 vertical_alignment = 1
 
 [node name="SpriteBiome" type="TextureRect" parent="MainUI/ContainerTop"]
@@ -128,6 +141,7 @@ offset_top = -1.0
 offset_right = 84.0
 offset_bottom = 22.0
 text = "$biome"
+label_settings = SubResource("LabelSettings_rs64w")
 vertical_alignment = 1
 
 [node name="Categories" type="Control" parent="." node_paths=PackedStringArray("MenuButtonContainer")]
@@ -139,10 +153,52 @@ script = ExtResource("9_aceb1")
 MenuButtonContainer = NodePath("../MainUI/ContainerButtons")
 
 [node name="Loadout" type="Control" parent="Categories"]
-layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -160.0
+offset_top = -57.0
+offset_right = 160.0
+offset_bottom = 65.0
+
+[node name="Items" type="Control" parent="Categories/Loadout"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Categories/Loadout/Items"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_right = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5gsci")
+
+[node name="GridContainer" type="GridContainer" parent="Categories/Loadout/Items/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 4
+
+[node name="Label" type="Label" parent="Categories/Loadout/Items/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 13.0
+grow_horizontal = 2
+text = "Items"
+label_settings = ExtResource("10_chs3y")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Market" type="Control" parent="Categories"]
 layout_mode = 3
