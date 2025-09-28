@@ -9,10 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://bh6ibgrw4dae5" path="res://assets/sprites/splash/gemstones/spr-gemstones-full1.png" id="5_tpw3g"]
 [ext_resource type="Texture2D" uid="uid://cxb77it3r076m" path="res://assets/sprites/splash/gemstones/spr-gemstones-full2.png" id="6_x758s"]
 [ext_resource type="Texture2D" uid="uid://cj22pqajejimt" path="res://assets/sprites/splash/gemstones/spr-gemstones-full3.png" id="7_rqvx0"]
-[ext_resource type="Script" uid="uid://dla3fepapwkis" path="res://scripts/GameData.cs" id="8_d1tww"]
 [ext_resource type="Texture2D" uid="uid://w5y1fk8lphmc" path="res://assets/sprites/menu/background/spr-background-dark.png" id="10_5dk1h"]
 [ext_resource type="Script" uid="uid://boa4hby1j2p7i" path="res://scripts/effect/EffectFader.cs" id="11_tpw3g"]
 [ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://fonts/ByteBounce.ttf" id="11_x758s"]
+[ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scenes/SaveData.cs" id="12_q3q07"]
 [ext_resource type="Script" uid="uid://bl7e5gmxts4s" path="res://scripts/splash/TouchStart.cs" id="14_q3q07"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rqvx0"]
@@ -41,6 +41,10 @@ shadow_color = Color(0, 0, 0, 0.623529)
 shadow_offset = Vector2(1, 3)
 
 [node name="Node2D" type="Node2D"]
+
+[node name="SaveData" type="Node" parent="."]
+script = ExtResource("12_q3q07")
+IncludeGlobalData = true
 
 [node name="Background" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_rqvx0")
@@ -177,10 +181,6 @@ stretch_mode = 5
 script = ExtResource("4_fd088")
 currentTimeOffset = 600.0
 metadata/_edit_lock_ = true
-
-[node name="GameData" type="Node" parent="."]
-script = ExtResource("8_d1tww")
-IncludeGlobalData = true
 
 [node name="LabelStart" type="Label" parent="."]
 anchors_preset = 8

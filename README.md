@@ -1,4 +1,4 @@
-[Back to index](../README.md)
+	[Back to index](../README.md)
 # Path of Salvation
 
 *A pixel-style, real-time dungeon crawler for mobile platforms. Your ultimate goal is to collect all three legendary gems, each earned by defeating a unique final boss. After collecting a gem, the game resets for a new challenge.*
@@ -29,16 +29,16 @@
 
 ``` c#
 public enum Biomes {
-    Woodland,
-    Swamp,
-    Desert,
-    Mountain,
-    Cave,
-    IceCave,
-    Volcanic,
-    Ruins,
-    Crypt,
-    Abyss,
+	Woodland,
+	Swamp,
+	Desert,
+	Mountain,
+	Cave,
+	IceCave,
+	Volcanic,
+	Ruins,
+	Crypt,
+	Abyss,
 }
 ```
 *Current biome chooses what next available biome is.* 
@@ -49,13 +49,13 @@ public enum Biomes {
 
 ``` c#
 public enum MobFamilies {
-    Wild,
-    Elemental,
-    Goblin,
-    Bandit,
-    Undead,
-    Cultist,
-    Abyssal
+	Wild,
+	Elemental,
+	Goblin,
+	Bandit,
+	Undead,
+	Cultist,
+	Abyssal
 }
 ```
 *Each family has unique abilities and combat behaviors.*
@@ -67,23 +67,46 @@ The combat system has been overhauled to add more depth and tactical options:
 **[Damage Types:](./scripts/data/MyEnums.cs)**
 ``` c#
 public enum DamageType {
-    Physical,
-    Slash, 
-    Pierce, 
-    Crush, 
-    Heat, 
-    Cold, 
-    Acid
+	Physical,
+	Slash, 
+	Pierce, 
+	Crush, 
+	Heat, 
+	Cold, 
+	Acid
 }
 ```
 **[Status Types:](./scripts/data/MyEnums.cs)**
 ``` c#
 public enum StatusType {
-    Hit, 
-    Stun, 
-    Slow, 
-    Burn, 
-    Freeze
+	Hit, 
+	Stun, 
+	Slow, 
+	Burn, 
+	Freeze
 }
 ```
 - **Status Tracking:** Effects are tracked and updated each frame, with visual feedback
+
+# Code Tecnicals
+
+## Save / Load Data
+
+All rooms with data should have a Node object called `GameData` holding its apropriate script.
+
+Gamedata consist of potential data types: 
+- Global, 
+- Game, 
+- Inventory.
+
+To fetch data:
+``` c#
+	var saveNode = GetTree().Root.GetNode("Main").GetNode("GameData") as SaveData;
+	var value = saveNode.{game, global, inventory}Data.ToString();
+```
+
+To save data:
+``` c#
+	var saveNode = GetTree().Root.GetNode("Main").GetNode("GameData") as SaveData;
+	saveNode.SaveAll();
+```

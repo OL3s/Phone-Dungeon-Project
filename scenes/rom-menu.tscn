@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b1hcnw84ujj36"]
+[gd_scene load_steps=19 format=3 uid="uid://b1hcnw84ujj36"]
 
 [ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://shaders/rom-splash.gdshader" id="1_131qp"]
 [ext_resource type="Script" uid="uid://b7624mf6sqaig" path="res://scripts/menu/MenuButtons.cs" id="1_c26fr"]
@@ -12,9 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://b3iyfar0s7nmd" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome8.png" id="7_ce0po"]
 [ext_resource type="Script" uid="uid://bdndmajl12mlp" path="res://scripts/menu/CategoryManager.cs" id="9_aceb1"]
 [ext_resource type="LabelSettings" uid="uid://d252j1wwry2gd" path="res://pixelLabel.tres" id="10_chs3y"]
-[ext_resource type="Script" uid="uid://dla3fepapwkis" path="res://scripts/GameData.cs" id="10_yc45i"]
+[ext_resource type="Script" uid="uid://cqn1jwhjhp4oe" path="res://scenes/LabelSaveData.cs" id="11_yhqx5"]
 [ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://fonts/ByteBounce.ttf" id="12_yhqx5"]
 [ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://scenes/StyleBoxMenu.tres" id="14_yhqx5"]
+[ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scenes/SaveData.cs" id="16_rs64w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_131qp"]
 shader = ExtResource("1_131qp")
@@ -35,6 +36,12 @@ shader_parameter/global_speed = 0.03
 font = ExtResource("12_yhqx5")
 
 [node name="Main" type="Node2D"]
+
+[node name="SaveData" type="Node" parent="."]
+script = ExtResource("16_rs64w")
+IncludeGlobalData = true
+IncludeGameData = true
+IncludeInventoryData = true
 
 [node name="Background" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_131qp")
@@ -131,6 +138,9 @@ grow_vertical = 2
 text = "$gold"
 label_settings = ExtResource("10_chs3y")
 vertical_alignment = 1
+script = ExtResource("11_yhqx5")
+SaveDataName = "PermData"
+ValueName = "Gold"
 
 [node name="SpriteBiome" type="TextureRect" parent="MainUI/ContainerTop"]
 layout_mode = 2
@@ -256,9 +266,3 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="GameData" type="Node" parent="."]
-script = ExtResource("10_yc45i")
-IncludeGlobalData = true
-IncludeGameData = true
-IncludeInventoryData = true
