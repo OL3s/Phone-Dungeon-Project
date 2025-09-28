@@ -34,7 +34,7 @@ namespace FileData
 	{
 		public int Gold { get; set; }
 		public int Wave { get; set; }
-		public Biomes biome { get; set; }
+		public Biomes Biome { get; set; }
 		public int Kills { get; set; }
 		public int KillsHeavy { get; set; }
 
@@ -43,7 +43,7 @@ namespace FileData
 			GD.Print("New GameData created!");
 			Gold = 0;
 			Wave = 0;
-			biome = Biomes.Woodland;
+			Biome = Biomes.Woodland;
 			Kills = 0;
 			KillsHeavy = 0;
 			if (instantLoad)
@@ -80,7 +80,7 @@ namespace FileData
 			if (data == null) { GD.Print("No GameData saved found! creating empty"); return; }
 			Gold = data.Gold;
 			Wave = data.Wave;
-			biome = data.biome;
+			Biome = data.Biome;
 			Kills = data.Kills;
 			KillsHeavy = data.KillsHeavy;
 		}

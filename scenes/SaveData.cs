@@ -12,7 +12,7 @@ public partial class SaveData : Node
 	private FileData.Storage _data;
 
 	public FileData.GameData gameData => _data.GameData;
-	public FileData.PermData globalData => _data.PermData;
+	public FileData.PermData permData => _data.PermData;
 	public FileData.InventoryData inventoryData => _data.InventoryData;
 
 	public override void _Ready()

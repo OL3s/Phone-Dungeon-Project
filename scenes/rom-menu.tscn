@@ -139,8 +139,6 @@ text = "$gold"
 label_settings = ExtResource("10_chs3y")
 vertical_alignment = 1
 script = ExtResource("11_yhqx5")
-SaveDataName = "PermData"
-ValueName = "Gold"
 
 [node name="SpriteBiome" type="TextureRect" parent="MainUI/ContainerTop"]
 layout_mode = 2
@@ -162,6 +160,8 @@ grow_vertical = 2
 text = "$biome"
 label_settings = SubResource("LabelSettings_rs64w")
 vertical_alignment = 1
+script = ExtResource("11_yhqx5")
+ValueName = "Wave"
 
 [node name="Control" type="Control" parent="MainUI/ContainerTop"]
 custom_minimum_size = Vector2(32, 0)
