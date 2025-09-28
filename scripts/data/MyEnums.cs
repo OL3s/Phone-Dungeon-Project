@@ -1,4 +1,4 @@
-namespace MyStructs {
+namespace MyEnums {
 	public enum Biomes {
 		Woodland,
 		Swamp,

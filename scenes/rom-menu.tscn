@@ -14,6 +14,7 @@
 [ext_resource type="LabelSettings" uid="uid://d252j1wwry2gd" path="res://pixelLabel.tres" id="10_chs3y"]
 [ext_resource type="Script" uid="uid://dla3fepapwkis" path="res://scripts/GameData.cs" id="10_yc45i"]
 [ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://fonts/ByteBounce.ttf" id="12_yhqx5"]
+[ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://scenes/StyleBoxMenu.tres" id="14_yhqx5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_131qp"]
 shader = ExtResource("1_131qp")
@@ -32,13 +33,6 @@ shader_parameter/global_speed = 0.03
 
 [sub_resource type="LabelSettings" id="LabelSettings_rs64w"]
 font = ExtResource("12_yhqx5")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5gsci"]
-bg_color = Color(0.6, 0.6, 0.6, 0.164706)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
 
 [node name="Main" type="Node2D"]
 
@@ -61,7 +55,11 @@ metadata/_edit_lock_ = true
 
 [node name="MainUI" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ContainerButtons" type="HBoxContainer" parent="MainUI"]
 layout_mode = 1
@@ -108,22 +106,28 @@ flat = true
 
 [node name="ContainerTop" type="HBoxContainer" parent="MainUI"]
 layout_mode = 0
-offset_left = -152.0
-offset_top = -83.0
-offset_right = 101.0
-offset_bottom = -59.0
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 160.0
+offset_bottom = -66.0
 
 [node name="SpriteGold" type="TextureRect" parent="MainUI/ContainerTop"]
 layout_mode = 2
 size_flags_horizontal = 6
 texture = ExtResource("6_131qp")
 expand_mode = 2
+stretch_mode = 3
 
 [node name="LabelGold" type="Label" parent="MainUI/ContainerTop/SpriteGold"]
-layout_mode = 2
-offset_left = 25.0
-offset_right = 76.0
-offset_bottom = 23.0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 26.0
+offset_top = -5.5
+offset_right = 58.0
+offset_bottom = 5.5
+grow_vertical = 2
 text = "$gold"
 label_settings = ExtResource("10_chs3y")
 vertical_alignment = 1
@@ -133,16 +137,25 @@ layout_mode = 2
 size_flags_horizontal = 6
 texture = ExtResource("7_ce0po")
 expand_mode = 2
+stretch_mode = 3
 
 [node name="LabelBiome" type="Label" parent="MainUI/ContainerTop/SpriteBiome"]
-layout_mode = 2
-offset_left = 26.0
-offset_top = -1.0
-offset_right = 84.0
-offset_bottom = 22.0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 28.0
+offset_top = -5.5
+offset_right = 68.0
+offset_bottom = 5.5
+grow_vertical = 2
 text = "$biome"
 label_settings = SubResource("LabelSettings_rs64w")
 vertical_alignment = 1
+
+[node name="Control" type="Control" parent="MainUI/ContainerTop"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
 
 [node name="Categories" type="Control" parent="." node_paths=PackedStringArray("MenuButtonContainer")]
 layout_mode = 3
@@ -177,7 +190,7 @@ offset_left = 7.0
 offset_right = -5.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_5gsci")
+theme_override_styles/panel = ExtResource("14_yhqx5")
 
 [node name="GridContainer" type="GridContainer" parent="Categories/Loadout/Items/Panel"]
 layout_mode = 1
@@ -199,6 +212,26 @@ text = "Items"
 label_settings = ExtResource("10_chs3y")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Selected" type="Control" parent="Categories/Loadout"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Categories/Loadout/Selected"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_right = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("14_yhqx5")
 
 [node name="Market" type="Control" parent="Categories"]
 layout_mode = 3
