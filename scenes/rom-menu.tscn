@@ -169,18 +169,27 @@ layout_mode = 2
 
 [node name="Categories" type="Control" parent="." node_paths=PackedStringArray("MenuButtonContainer")]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -60.0
+offset_right = 160.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("9_aceb1")
 MenuButtonContainer = NodePath("../MainUI/ContainerButtons")
 
 [node name="Loadout" type="Control" parent="Categories"]
-anchors_preset = 0
-offset_left = -160.0
-offset_top = -57.0
-offset_right = 160.0
-offset_bottom = 65.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Items" type="Control" parent="Categories/Loadout"]
 layout_mode = 1
@@ -244,25 +253,33 @@ grow_vertical = 2
 theme_override_styles/panel = ExtResource("14_yhqx5")
 
 [node name="Market" type="Control" parent="Categories"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Home" type="Control" parent="Categories"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Skill" type="Control" parent="Categories"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Contract" type="Control" parent="Categories"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

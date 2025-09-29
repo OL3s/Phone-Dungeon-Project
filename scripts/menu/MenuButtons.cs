@@ -25,14 +25,4 @@ public partial class MenuButtons : HBoxContainer
 		EmitSignal(SignalName.MenuChangeButtonPressed, idx);
 		UpdateVisuals();
 	}
-
-	private void UpdateVisuals()
-	{
-		/*
-		for (int i = 0; i < GetChildCount(); i++)
-		{
-			if (GetChild(i) is Button btn)
-				btn.Modulate = new Color(1, 1, 1, i == _selected ? 1f : 0.5f);
-		}
-	*/}
 }
