@@ -44,7 +44,6 @@ shadow_offset = Vector2(1, 3)
 
 [node name="SaveData" type="Node" parent="."]
 script = ExtResource("12_q3q07")
-IncludeGlobalData = true
 
 [node name="Background" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_rqvx0")

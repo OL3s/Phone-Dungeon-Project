@@ -39,7 +39,6 @@ font = ExtResource("12_yhqx5")
 
 [node name="SaveData" type="Node" parent="."]
 script = ExtResource("16_rs64w")
-IncludeGlobalData = true
 IncludeGameData = true
 IncludeInventoryData = true
 

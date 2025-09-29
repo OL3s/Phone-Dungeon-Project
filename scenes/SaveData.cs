@@ -2,39 +2,36 @@ using Godot;
 using System;
 using FileData;
 
-
 public partial class SaveData : Node
 {
-	[Export] public bool IncludeGlobalData;
+	// Exports
 	[Export] public bool IncludeGameData;
+	[Export] public bool IncludePermData;
 	[Export] public bool IncludeInventoryData;
+	
+	// Init datatypes
+	public FileData.GameData gameData;
+	public FileData.PermData permData;
+	public FileData.InventoryData inventoryData;
 
-	private FileData.Storage _data;
-
-	public FileData.GameData gameData => _data.GameData;
-	public FileData.PermData permData => _data.PermData;
-	public FileData.InventoryData inventoryData => _data.InventoryData;
-
+	// Load on execute
 	public override void _Ready()
 	{
-		_data = new FileData.Storage(IncludeGameData, IncludeGlobalData, IncludeInventoryData);
+		if (IncludeGameData) gameData = new GameData();
+		if (IncludePermData) permData = new PermData();
+		if (IncludeInventoryData) inventoryData = new InventoryData();
 	}
 	
+	// Save all function
 	public void SaveAll()
 	{
-		if (_data == null)
-		{
-			GD.Print("No data in storage found, nothing to save.");
-			return;
-		}
+		if (IncludeGameData && gameData != null)
+			gameData.Save();
 
-		if (IncludeGameData && _data.GameData is not null)
-			_data.GameData.Save();
+		if (IncludePermData && permData != null)
+			permData.Save();
 
-		if (IncludeGlobalData && _data.PermData is not null)
-			_data.PermData.Save();
-
-		if (IncludeInventoryData && _data.InventoryData is not null)
-			_data.InventoryData.Save();
+		if (IncludeInventoryData && inventoryData != null)
+			inventoryData.Save();
 	}
 }

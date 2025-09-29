@@ -16,13 +16,11 @@ public partial class MenuButtons : HBoxContainer
 				btn.Pressed += () => OnPressed(idx);
 			}
 		}
-		UpdateVisuals();
 	}
 
 	private void OnPressed(int idx)
 	{
 		_selected = idx;
-		EmitSignal(SignalName.MenuChangeButtonPressed, idx);
-		UpdateVisuals();
+		EmitSignal(SignalName.MenuChangeButtonPressed, idx);	
 	}
 }

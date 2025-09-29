@@ -6,46 +6,16 @@ using MyEnums;
 
 namespace FileData
 {
-	public class Storage
-	{
-		public GameData? GameData { get; private set; }
-		public PermData? PermData { get; private set; }
-		public InventoryData? InventoryData { get; private set; }
-
-		public Storage(bool includeGame, bool includeGlobal, bool includeInventory)
-		{
-			if (includeGame)
-				GameData = DataManager.LoadData<GameData>("GameData") ?? new GameData();
-
-			if (includeGlobal)
-				PermData = DataManager.LoadData<PermData>("PermData") ?? new PermData();
-
-			if (includeInventory)
-				InventoryData = DataManager.LoadData<InventoryData>("InventoryData") ?? new InventoryData();
-		}
-
-		public void SaveGame()       => GameData?.Save();
-		public void SaveGlobal()     => PermData?.Save();
-		public void SaveInventory()  => InventoryData?.Save();
-		public void SaveAll() { SaveGame(); SaveGlobal(); SaveInventory(); }
-	}
-
 	public class GameData
 	{
-		public int Gold { get; set; }
-		public int Wave { get; set; }
-		public Biomes Biome { get; set; }
-		public int Kills { get; set; }
-		public int KillsHeavy { get; set; }
+		public int Gold { get; set; } = 0;
+		public int Wave { get; set; } = 0;
+		public Biomes Biome { get; set; } = Biomes.Woodland;
+		public int Kills { get; set; } = 0;
+		public int KillsHeavy { get; set; } = 0;
 
 		public GameData(bool instantLoad = true)
 		{
-			GD.Print("New GameData created!");
-			Gold = 0;
-			Wave = 0;
-			Biome = Biomes.Woodland;
-			Kills = 0;
-			KillsHeavy = 0;
 			if (instantLoad)
 				Load();
 		}
@@ -88,13 +58,11 @@ namespace FileData
 
 	public class PermData
 	{
-		public int[] Gems { get; set; } = new int[3];
+		public int[] Gems { get; set; } = { 0, 0, 0 };
 
 		public PermData(bool instantLoad = true)
 		{
-			GD.Print("New PermData created!");
-			for (int i = 0; i < Gems.Length; i++)
-				Gems[i] = 0;
+			GD.Print("PermData Init");
 			if (instantLoad)
 				Load();
 		}
@@ -118,11 +86,10 @@ namespace FileData
 
 	public class InventoryData
 	{
-		public Item[] Items { get; set; }
+		public Item[] Items { get; set; } = new Item[40];
 		public InventoryData(bool instantLoad = true)
 		{
-			GD.Print("New InventoryData created!");
-			Items = new Item[40]; // Example size
+			GD.Print("InventoryData Init");
 			if (instantLoad)
 				Load();
 		}
@@ -160,10 +127,8 @@ namespace FileData
 		}
 	}
 
-	public class DataManager
+	public static class DataManager
 	{
-
-
 		private static string PathOf(string name) => $"user://{name}.json";
 
 		public static T LoadData<T>(string fileName)
