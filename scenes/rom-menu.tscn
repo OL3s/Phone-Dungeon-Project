@@ -69,9 +69,9 @@ grow_vertical = 2
 
 [node name="ContainerButtons" type="HBoxContainer" parent="MainUI"]
 layout_mode = 1
-offset_left = -160.0
+offset_left = -150.0
 offset_top = 66.0
-offset_right = 160.0
+offset_right = 150.0
 offset_bottom = 90.0
 script = ExtResource("1_c26fr")
 
