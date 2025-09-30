@@ -11,11 +11,11 @@
 [ext_resource type="Texture2D" uid="uid://bntbc24pxbsaa" path="res://assets/sprites/menu/icons/spr-icon-gold.png" id="6_131qp"]
 [ext_resource type="Texture2D" uid="uid://b3iyfar0s7nmd" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome8.png" id="7_ce0po"]
 [ext_resource type="Script" uid="uid://bdndmajl12mlp" path="res://scripts/menu/CategoryManager.cs" id="9_aceb1"]
-[ext_resource type="LabelSettings" uid="uid://d252j1wwry2gd" path="res://pixelLabel.tres" id="10_chs3y"]
+[ext_resource type="LabelSettings" uid="uid://d252j1wwry2gd" path="res://assets/font/pixelLabel.tres" id="10_chs3y"]
 [ext_resource type="Script" uid="uid://cqn1jwhjhp4oe" path="res://scenes/LabelSaveData.cs" id="11_yhqx5"]
 [ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://fonts/ByteBounce.ttf" id="12_yhqx5"]
 [ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://scenes/StyleBoxMenu.tres" id="14_yhqx5"]
-[ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scenes/SaveData.cs" id="16_rs64w"]
+[ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scripts/data/filedata/SaveData.cs" id="16_rs64w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_131qp"]
 shader = ExtResource("1_131qp")
@@ -75,40 +75,35 @@ offset_right = 160.0
 offset_bottom = 90.0
 script = ExtResource("1_c26fr")
 
-[node name="ButtonLoadout" type="Button" parent="MainUI/ContainerButtons"]
-custom_minimum_size = Vector2(16, 0)
+[node name="ButtonInventory" type="TextureButton" parent="MainUI/ContainerButtons"]
 layout_mode = 2
-size_flags_horizontal = 6
-icon = ExtResource("1_lxtin")
-flat = true
+size_flags_horizontal = 3
+texture_normal = ExtResource("1_lxtin")
+stretch_mode = 3
 
-[node name="ButtonMarket" type="Button" parent="MainUI/ContainerButtons"]
-custom_minimum_size = Vector2(16, 0)
+[node name="ButtonShop" type="TextureButton" parent="MainUI/ContainerButtons"]
 layout_mode = 2
-size_flags_horizontal = 6
-icon = ExtResource("2_c26fr")
-flat = true
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_c26fr")
+stretch_mode = 3
 
-[node name="ButtonHome" type="Button" parent="MainUI/ContainerButtons"]
-custom_minimum_size = Vector2(16, 0)
+[node name="ButtonHome" type="TextureButton" parent="MainUI/ContainerButtons"]
 layout_mode = 2
-size_flags_horizontal = 6
-icon = ExtResource("3_aceb1")
-flat = true
+size_flags_horizontal = 3
+texture_normal = ExtResource("3_aceb1")
+stretch_mode = 3
 
-[node name="ButtonSkill" type="Button" parent="MainUI/ContainerButtons"]
-custom_minimum_size = Vector2(16, 0)
+[node name="ButtonSkills" type="TextureButton" parent="MainUI/ContainerButtons"]
 layout_mode = 2
-size_flags_horizontal = 6
-icon = ExtResource("4_yc45i")
-flat = true
+size_flags_horizontal = 3
+texture_normal = ExtResource("4_yc45i")
+stretch_mode = 3
 
-[node name="ButtonContract" type="Button" parent="MainUI/ContainerButtons"]
-custom_minimum_size = Vector2(16, 0)
+[node name="ButtonContract" type="TextureButton" parent="MainUI/ContainerButtons"]
 layout_mode = 2
-size_flags_horizontal = 6
-icon = ExtResource("5_in2e0")
-flat = true
+size_flags_horizontal = 3
+texture_normal = ExtResource("5_in2e0")
+stretch_mode = 3
 
 [node name="ContainerTop" type="HBoxContainer" parent="MainUI"]
 layout_mode = 0
@@ -174,9 +169,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -160.0
-offset_top = -60.0
+offset_top = -65.0
 offset_right = 160.0
-offset_bottom = 60.0
+offset_bottom = 65.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_aceb1")
@@ -190,27 +185,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Items" type="Control" parent="Categories/Loadout"]
+[node name="SelectedPanel" type="Panel" parent="Categories/Loadout"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_left = 0.5
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -160.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="Categories/Loadout/Items"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 7.0
-offset_right = -5.0
+offset_left = 10.0
+offset_right = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("14_yhqx5")
 
-[node name="GridContainer" type="GridContainer" parent="Categories/Loadout/Items/Panel"]
+[node name="ItemPanel" type="Panel" parent="Categories/Loadout"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.033
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -4.29
+offset_right = -10.0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("14_yhqx5")
+
+[node name="GridContainer" type="GridContainer" parent="Categories/Loadout/ItemPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,7 +219,7 @@ grow_horizontal = 2
 grow_vertical = 2
 columns = 4
 
-[node name="Label" type="Label" parent="Categories/Loadout/Items/Panel"]
+[node name="Label" type="Label" parent="Categories/Loadout/ItemPanel"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -231,27 +230,8 @@ label_settings = ExtResource("10_chs3y")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Selected" type="Control" parent="Categories/Loadout"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 160.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="Categories/Loadout/Selected"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_right = -7.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = ExtResource("14_yhqx5")
-
 [node name="Market" type="Control" parent="Categories"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -260,6 +240,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Home" type="Control" parent="Categories"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -268,6 +249,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Skill" type="Control" parent="Categories"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -276,6 +258,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Contract" type="Control" parent="Categories"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
