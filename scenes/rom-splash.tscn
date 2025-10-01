@@ -10,9 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://cxb77it3r076m" path="res://assets/sprites/splash/gemstones/spr-gemstones-full2.png" id="6_x758s"]
 [ext_resource type="Texture2D" uid="uid://cj22pqajejimt" path="res://assets/sprites/splash/gemstones/spr-gemstones-full3.png" id="7_rqvx0"]
 [ext_resource type="Texture2D" uid="uid://w5y1fk8lphmc" path="res://assets/sprites/menu/background/spr-background-dark.png" id="10_5dk1h"]
-[ext_resource type="Script" uid="uid://boa4hby1j2p7i" path="res://scripts/effect/EffectFader.cs" id="11_tpw3g"]
 [ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://fonts/ByteBounce.ttf" id="11_x758s"]
 [ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scripts/data/filedata/SaveData.cs" id="12_q3q07"]
+[ext_resource type="Script" uid="uid://dexdrsbxxb8n7" path="res://scenes/LabelSplashStart.cs" id="14_5whtx"]
 [ext_resource type="Script" uid="uid://bl7e5gmxts4s" path="res://scripts/splash/TouchStart.cs" id="14_q3q07"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rqvx0"]
@@ -112,7 +112,7 @@ texture = ExtResource("2_d1tww")
 stretch_mode = 5
 metadata/_edit_lock_ = true
 
-[node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-1"]
+[node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-1" node_paths=PackedStringArray("saveData")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -122,6 +122,7 @@ grow_vertical = 2
 texture = ExtResource("5_tpw3g")
 stretch_mode = 5
 script = ExtResource("4_fd088")
+saveData = NodePath("../../../../SaveData")
 metadata/_edit_lock_ = true
 
 [node name="Gem-2" type="Control" parent="Gems/GemEmpty"]
@@ -140,7 +141,7 @@ texture = ExtResource("3_fd088")
 stretch_mode = 5
 metadata/_edit_lock_ = true
 
-[node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-2"]
+[node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-2" node_paths=PackedStringArray("saveData")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -150,7 +151,8 @@ grow_vertical = 2
 texture = ExtResource("6_x758s")
 stretch_mode = 5
 script = ExtResource("4_fd088")
-currentTimeOffset = 300.0
+saveData = NodePath("../../../../SaveData")
+index = 1
 metadata/_edit_lock_ = true
 
 [node name="Gem-3" type="Control" parent="Gems/GemEmpty"]
@@ -169,7 +171,7 @@ texture = ExtResource("4_5dk1h")
 stretch_mode = 5
 metadata/_edit_lock_ = true
 
-[node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-3"]
+[node name="Gem-Front" type="TextureRect" parent="Gems/GemEmpty/Gem-3" node_paths=PackedStringArray("saveData")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -179,7 +181,8 @@ grow_vertical = 2
 texture = ExtResource("7_rqvx0")
 stretch_mode = 5
 script = ExtResource("4_fd088")
-currentTimeOffset = 600.0
+saveData = NodePath("../../../../SaveData")
+index = 2
 metadata/_edit_lock_ = true
 
 [node name="LabelStart" type="Label" parent="."]
@@ -199,4 +202,4 @@ Hold for tutorial"
 label_settings = SubResource("LabelSettings_5dk1h")
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("11_tpw3g")
+script = ExtResource("14_5whtx")

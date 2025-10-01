@@ -2,40 +2,36 @@ using Godot;
 using System;
 using FileData;
 
-public partial class GemShowcase : EffectFloat
+public partial class GemShowcase : Control
 {
+	[Export] SaveData saveData;
+	[Export] int index;
+	private Effects.EffectFloat floatEffect;
+	private Vector2 originalPosition;
+
 	public override void _Ready()
 	{
-		base._Ready();
-		
-		// Init values
-		SaveData saveData = null;
-		
-		/*
-			Requisits:
-			- Room needs Node with name SaveDava with this script
-			- The GemShowcase's parent must have the {index + 1} as the last char in the name
-		*/
-		
-		// Fetch object's SaveData class
-		try { saveData = GetTree().Root.GetNode("Main").GetNode<SaveData>("SaveData"); }
-		catch(Exception e) { GD.Print($"warning: problem fetching SaveData object\n{e.Message}\n{e.StackTrace}"); return;}
+		// Store original position
+		originalPosition = new Vector2(0f, 0f);
 
-		// Fetch Index
-		string nodeName = GetParent().Name.ToString();
-		char lastChar = nodeName[nodeName.Length - 1];
+		// Initialize the float effect
+		floatEffect = new Effects.EffectFloat(new Effects.EffectFloat.Settings(
+			false, 			// Is centered
+			4f,				// Height
+			3f,				// Speed
+			index * 0.3f	// Start offset
+		));
 		
-		// Fetch Index debugger
-		if (! char.IsDigit(lastChar)) {
-			GD.Print("warning: gem parent missing index name");
-			return;
-		}
-		
-		// Convert char => int
-		int index = lastChar - '0' - 1;
-
 		// Add visible trait
 		Visible = saveData.permData.Gems[index] != 0;
+	}
 
+	public override void _Process(double delta)
+	{
+		if (floatEffect != null)
+		{
+			float yOffset = floatEffect.GetHeight();
+			Position = new Vector2(originalPosition.X, originalPosition.Y + yOffset);
+		}
 	}
 }

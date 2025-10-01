@@ -1,5 +1,8 @@
-namespace MyEnums {
-	public enum Biomes {
+namespace MyEnums
+{
+	/// <summary> Enumeration for different biomes in the game. </summary>
+	public enum Biomes
+	{
 		Woodland,
 		Swamp,
 		Desert,
@@ -11,7 +14,9 @@ namespace MyEnums {
 		Crypt,
 		Abyss,
 	}
-	public enum MobFamilies {
+	/// <summary> Enumeration for different mob families in the game. </summary>
+	public enum MobFamilies
+	{
 		Wild,
 		Elemental,
 		Goblin,
@@ -20,20 +25,24 @@ namespace MyEnums {
 		Cultist,
 		Abyssal
 	}
-	public enum DamageType {
+	/// <summary> Enumeration for different damage types in the game. </summary>
+	public enum DamageType
+	{
 		Physical,
-		Slash, 
-		Pierce, 
-		Crush, 
-		Heat, 
-		Cold, 
+		Slash,
+		Pierce,
+		Crush,
+		Heat,
+		Cold,
 		Acid
 	}
-	public enum StatusType {
-		Hit, 
-		Stun, 
-		Slow, 
-		Burn, 
+	/// <summary> Enumeration for different status effect types in the game. </summary>
+	public enum StatusType
+	{
+		Hit,
+		Stun,
+		Slow,
+		Burn,
 		Freeze
 	}
 }
