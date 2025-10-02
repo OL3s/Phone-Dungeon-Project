@@ -1,4 +1,4 @@
 # TODO
-- PermData -rename-> PermenantData
-- .tres files for item
 - finnish Item class
+- add ItemBasic class
+- add function to convert Item to ItemBasic
