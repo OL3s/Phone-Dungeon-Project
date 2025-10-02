@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b1hcnw84ujj36"]
+[gd_scene load_steps=23 format=3 uid="uid://b1hcnw84ujj36"]
 
 [ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://shaders/rom-splash.gdshader" id="1_131qp"]
 [ext_resource type="Script" uid="uid://b7624mf6sqaig" path="res://scripts/menu/MenuButtons.cs" id="1_c26fr"]
@@ -18,7 +18,8 @@
 [ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://scenes/StyleBoxMenu.tres" id="14_yhqx5"]
 [ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scripts/data/filedata/SaveData.cs" id="16_rs64w"]
 [ext_resource type="PackedScene" uid="uid://cok7fvvmif3pb" path="res://assets/prefab/menu-contract.tscn" id="17_5gsci"]
-[ext_resource type="Script" uid="uid://dcbrqr6h2epx8" path="res://scripts/ContractButton.cs" id="18_eadlt"]
+[ext_resource type="Script" uid="uid://dcbrqr6h2epx8" path="res://scripts/menu/ContractButton.cs" id="18_eadlt"]
+[ext_resource type="Script" uid="uid://cj16r715hnvyj" path="res://scripts/ContractSelected.cs" id="20_epfvj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_131qp"]
 shader = ExtResource("1_131qp")
@@ -268,6 +269,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 8.0
+offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -282,14 +285,69 @@ offset_right = 0.159973
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Contract-1" parent="Categories/Contract/ContractContainer" instance=ExtResource("17_5gsci")]
+[node name="Contract-1" parent="Categories/Contract/ContractContainer" node_paths=PackedStringArray("ContractSelectedMenu", "ContractMenu", "saveData") instance=ExtResource("17_5gsci")]
 layout_mode = 2
 script = ExtResource("18_eadlt")
+ContractSelectedMenu = NodePath("../../../../ContractSelected")
+ContractMenu = NodePath("../..")
+saveData = NodePath("../../../../SaveData")
 
-[node name="Contract-2" parent="Categories/Contract/ContractContainer" instance=ExtResource("17_5gsci")]
+[node name="Contract-2" parent="Categories/Contract/ContractContainer" node_paths=PackedStringArray("ContractSelectedMenu", "ContractMenu", "saveData") instance=ExtResource("17_5gsci")]
 layout_mode = 2
 script = ExtResource("18_eadlt")
+ContractSelectedMenu = NodePath("../../../../ContractSelected")
+ContractMenu = NodePath("../..")
+Index = 1
+saveData = NodePath("../../../../SaveData")
 
-[node name="Contract-3" parent="Categories/Contract/ContractContainer" instance=ExtResource("17_5gsci")]
+[node name="Contract-3" parent="Categories/Contract/ContractContainer" node_paths=PackedStringArray("ContractSelectedMenu", "ContractMenu", "saveData") instance=ExtResource("17_5gsci")]
 layout_mode = 2
 script = ExtResource("18_eadlt")
+ContractSelectedMenu = NodePath("../../../../ContractSelected")
+ContractMenu = NodePath("../..")
+Index = 2
+saveData = NodePath("../../../../SaveData")
+
+[node name="ContractSelected" type="Control" parent="." node_paths=PackedStringArray("ButtonBack", "ButtonStart", "CategoryContract")]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = -140.0
+offset_top = -65.0
+offset_right = 139.0
+offset_bottom = 65.0
+script = ExtResource("20_epfvj")
+ButtonBack = NodePath("Panel/BtnBack")
+ButtonStart = NodePath("Panel/BtnStart")
+CategoryContract = NodePath("../Categories/Contract")
+
+[node name="Panel" type="Panel" parent="ContractSelected"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("14_yhqx5")
+
+[node name="BtnBack" type="Button" parent="ContractSelected/Panel"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 0
+offset_left = 150.0
+offset_top = 111.0
+offset_right = 214.0
+offset_bottom = 130.0
+theme_override_fonts/font = ExtResource("12_yhqx5")
+text = "Back"
+flat = true
+
+[node name="BtnStart" type="Button" parent="ContractSelected/Panel"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 0
+offset_left = 214.0
+offset_top = 111.0
+offset_right = 278.0
+offset_bottom = 130.0
+theme_override_fonts/font = ExtResource("12_yhqx5")
+text = "Start"
+flat = true

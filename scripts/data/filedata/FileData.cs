@@ -4,6 +4,7 @@ using System.Text.Json;
 using MyClasses;
 using MyEnums;
 
+// Core data handling namespace
 namespace FileData
 {
 	/// <summary>
@@ -16,6 +17,7 @@ namespace FileData
 		public Biomes Biome { get; set; } = Biomes.Woodland;
 		public int Kills { get; set; } = 0;
 		public int KillsHeavy { get; set; } = 0;
+		public int ContractSeed { get; set; } = 0;
 
 		/// <summary> Constructor for GameData, optionally loading existing data. </summary>
 		/// <param name="instantLoad">If true, loads data immediately on default.</param>
@@ -69,6 +71,12 @@ namespace FileData
 			Biome = data.Biome;
 			Kills = data.Kills;
 			KillsHeavy = data.KillsHeavy;
+		}
+
+		public void RandomizeContractSeed()
+		{
+			ContractSeed = new Random().Next();
+			GD.Print($"New contract seed: {ContractSeed}");
 		}
 	}
 
@@ -206,7 +214,7 @@ namespace FileData
 			var path = PathOf("GameData");
 			if (FileAccess.FileExists(path))
 				DirAccess.RemoveAbsolute(path);
-			else 
+			else
 				GD.Print("No GameData file to delete.");
 		}
 
@@ -217,7 +225,7 @@ namespace FileData
 			var path = PathOf("PermData");
 			if (FileAccess.FileExists(path))
 				DirAccess.RemoveAbsolute(path);
-			else 
+			else
 				GD.Print("No PermData file to delete.");
 		}
 
@@ -228,7 +236,7 @@ namespace FileData
 			var path = PathOf("InventoryData");
 			if (FileAccess.FileExists(path))
 				DirAccess.RemoveAbsolute(path);
-			else 
+			else
 				GD.Print("No InventoryData file to delete.");
 		}
 	}

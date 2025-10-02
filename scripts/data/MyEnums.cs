@@ -45,4 +45,13 @@ namespace MyEnums
 		Burn,
 		Freeze
 	}
+	public enum MissionType
+	{
+		Rescue,     // Rescue NPC(s)
+		Eliminate,  // Eliminate target(s) / Boss fight
+		Rush,        // Reach end in time
+		Locate,      // Locate item(s) / Collectibles
+		None        // No mission
+
+	}
 }
