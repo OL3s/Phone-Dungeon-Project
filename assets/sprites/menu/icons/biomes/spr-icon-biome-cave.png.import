@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2dh02yjyqk8p"
-path="res://.godot/imported/spr-icon-biome1.png-a65bfea88d92be5f764fad83603b1a0e.ctex"
+uid="uid://q1ownwxf27xx"
+path="res://.godot/imported/spr-icon-biome-cave.png-547081a8c9ac8ae611bb44ea83ba2da4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/menu/icons/biomes/spr-icon-biome1.png"
-dest_files=["res://.godot/imported/spr-icon-biome1.png-a65bfea88d92be5f764fad83603b1a0e.ctex"]
+source_file="res://assets/sprites/menu/icons/biomes/spr-icon-biome-cave.png"
+dest_files=["res://.godot/imported/spr-icon-biome-cave.png-547081a8c9ac8ae611bb44ea83ba2da4.ctex"]
 
 [params]
 

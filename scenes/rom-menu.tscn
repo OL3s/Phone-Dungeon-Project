@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b1hcnw84ujj36"]
+[gd_scene load_steps=22 format=3 uid="uid://b1hcnw84ujj36"]
 
 [ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://shaders/rom-splash.gdshader" id="1_131qp"]
 [ext_resource type="Script" uid="uid://b7624mf6sqaig" path="res://scripts/menu/MenuButtons.cs" id="1_c26fr"]
@@ -9,13 +9,16 @@
 [ext_resource type="Texture2D" uid="uid://cojg36dlgtiul" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon4.png" id="4_yc45i"]
 [ext_resource type="Texture2D" uid="uid://c2pvmctt516by" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon5.png" id="5_in2e0"]
 [ext_resource type="Texture2D" uid="uid://bntbc24pxbsaa" path="res://assets/sprites/menu/icons/spr-icon-gold.png" id="6_131qp"]
-[ext_resource type="Texture2D" uid="uid://b3iyfar0s7nmd" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome8.png" id="7_ce0po"]
+[ext_resource type="Texture2D" uid="uid://b3iyfar0s7nmd" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome-abyss.png" id="7_ce0po"]
 [ext_resource type="Script" uid="uid://bdndmajl12mlp" path="res://scripts/menu/CategoryManager.cs" id="9_aceb1"]
 [ext_resource type="LabelSettings" uid="uid://d252j1wwry2gd" path="res://assets/font/pixelLabel.tres" id="10_chs3y"]
 [ext_resource type="Script" uid="uid://cqn1jwhjhp4oe" path="res://scenes/LabelSaveData.cs" id="11_yhqx5"]
 [ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://fonts/ByteBounce.ttf" id="12_yhqx5"]
+[ext_resource type="Script" uid="uid://de55xpirkep0v" path="res://scripts/GetBiomeTexture.cs" id="14_0lbrx"]
 [ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://scenes/StyleBoxMenu.tres" id="14_yhqx5"]
 [ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scripts/data/filedata/SaveData.cs" id="16_rs64w"]
+[ext_resource type="PackedScene" uid="uid://cok7fvvmif3pb" path="res://assets/prefab/menu-contract.tscn" id="17_5gsci"]
+[ext_resource type="Script" uid="uid://dcbrqr6h2epx8" path="res://scripts/ContractButton.cs" id="18_eadlt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_131qp"]
 shader = ExtResource("1_131qp")
@@ -140,6 +143,7 @@ size_flags_horizontal = 6
 texture = ExtResource("7_ce0po")
 expand_mode = 2
 stretch_mode = 3
+script = ExtResource("14_0lbrx")
 
 [node name="LabelBiome" type="Label" parent="MainUI/ContainerTop/SpriteBiome"]
 layout_mode = 1
@@ -155,9 +159,10 @@ text = "$biome"
 label_settings = SubResource("LabelSettings_rs64w")
 vertical_alignment = 1
 script = ExtResource("11_yhqx5")
+stringAfter = "/10"
 ValueName = "Wave"
 
-[node name="Control" type="Control" parent="MainUI/ContainerTop"]
+[node name="Empty" type="Control" parent="MainUI/ContainerTop"]
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
@@ -178,6 +183,7 @@ script = ExtResource("9_aceb1")
 MenuButtonContainer = NodePath("../MainUI/ContainerButtons")
 
 [node name="Loadout" type="Control" parent="Categories"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -258,10 +264,32 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Contract" type="Control" parent="Categories"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="ContractContainer" type="HBoxContainer" parent="Categories/Contract"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.062
+anchor_right = 0.937
+anchor_bottom = 1.0
+offset_left = 0.16
+offset_right = 0.159973
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Contract-1" parent="Categories/Contract/ContractContainer" instance=ExtResource("17_5gsci")]
+layout_mode = 2
+script = ExtResource("18_eadlt")
+
+[node name="Contract-2" parent="Categories/Contract/ContractContainer" instance=ExtResource("17_5gsci")]
+layout_mode = 2
+script = ExtResource("18_eadlt")
+
+[node name="Contract-3" parent="Categories/Contract/ContractContainer" instance=ExtResource("17_5gsci")]
+layout_mode = 2
+script = ExtResource("18_eadlt")

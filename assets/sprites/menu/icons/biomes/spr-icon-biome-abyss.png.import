@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4ukwfpsfge7"
-path="res://.godot/imported/spr-icon-biome7.png-16f32ed3bfbd19f43314b89ed6a88321.ctex"
+uid="uid://b3iyfar0s7nmd"
+path="res://.godot/imported/spr-icon-biome-abyss.png-7c8d72940dff6a3068d79a79501bbb72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/menu/icons/biomes/spr-icon-biome7.png"
-dest_files=["res://.godot/imported/spr-icon-biome7.png-16f32ed3bfbd19f43314b89ed6a88321.ctex"]
+source_file="res://assets/sprites/menu/icons/biomes/spr-icon-biome-abyss.png"
+dest_files=["res://.godot/imported/spr-icon-biome-abyss.png-7c8d72940dff6a3068d79a79501bbb72.ctex"]
 
 [params]
 

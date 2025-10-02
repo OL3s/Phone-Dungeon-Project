@@ -7,6 +7,8 @@ public partial class LabelSaveData : Label
 {
 	[Export(PropertyHint.Enum, "gameData,permData,inventoryData")]
 	string SaveDataName = "gameData";
+	[Export] string stringBefore;
+	[Export] string stringAfter;
 
 	[Export]
 	string ValueName = "Gold";
@@ -46,5 +48,7 @@ public partial class LabelSaveData : Label
 		{
 			Text = "Property Not Found";
 		}
+		
+		Text = stringBefore + Text + stringAfter;
 	}
 }
