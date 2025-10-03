@@ -2,7 +2,7 @@ using Godot;
 using System;
 using MyClasses;
 using FileData;
-using Effects;
+using MyEnums;
 
 public partial class ContractButton : Control
 {
@@ -13,7 +13,7 @@ public partial class ContractButton : Control
 	
 	private GameData gameData;
 	public Contract contract;
-	
+
 	public override void _Ready()
 	{
 		gameData = saveData.gameData;
@@ -24,7 +24,7 @@ public partial class ContractButton : Control
 		{
 			throw new Exception("ContractSelectedMenu | ContractMenu not assigned in ContractButton");
 		}
-		
+
 		// Update biome image
 		GetNode("Button").GetNode<TextureRect>("BiomeTexture").Texture = Converters.BiomeToTexture(contract.Biome);
 
@@ -33,6 +33,13 @@ public partial class ContractButton : Control
 
 		// Connect the button pressed signal
 		GetNode<Button>("Button").Pressed += OnButtonPressed;
+
+		// Set contract type
+		GetNode("Button").GetNode<Label>("MissionLabel").Text = contract.Mission.ToString();
+
+		// Make contract invisible if no mission
+		GetNode("Button").GetNode<Label>("MissionLabel").Visible 		 = contract.Mission != MissionType.None;
+		GetNode("Button").GetNode<TextureRect>("MissionTexture").Visible = contract.Mission != MissionType.None;
 	}
 
 	public override void _Process(double delta)
@@ -43,12 +50,13 @@ public partial class ContractButton : Control
 
 	private void OnButtonPressed()
 	{
-		GD.Print("Contract pressed! -> TODO ADD: GOTO MISSION");
+		GD.Print("Contract pressed!");
 		ContractSelectedMenu.Visible = true;
-		
-		// Set contract for selected menu
-		((ContractSelected)ContractSelectedMenu).CurrentContract = contract;
-		
 		ContractMenu.Visible = false;
+		
+		// Set contract for selected menu + update
+		((ContractSelected)ContractSelectedMenu).CurrentContract = contract;
+		((ContractSelected)ContractSelectedMenu).UpdateContractInfo();
+		
 	}
 }

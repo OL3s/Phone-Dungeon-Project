@@ -4,8 +4,12 @@ using System;
 public partial class CategoryManager : Control
 {
 	[Export] public MenuButtons MenuButtonContainer;
+	[Export] public Control ContractSelectedMenu;
 
 	public override void _Ready(){
+		
+		// Make visible
+		Visible = true;
 		
 		// Connect to buttons
 		MenuButtonContainer.Connect(
@@ -27,5 +31,8 @@ public partial class CategoryManager : Control
 			ui.Visible = (i == index);
 			i++;
 		}
+		
+		// Make ContractSelectedMenu not visible
+		ContractSelectedMenu.Visible = false;
 	}
 }

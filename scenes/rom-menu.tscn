@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b1hcnw84ujj36"]
+[gd_scene load_steps=24 format=3 uid="uid://b1hcnw84ujj36"]
 
 [ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://shaders/rom-splash.gdshader" id="1_131qp"]
 [ext_resource type="Script" uid="uid://b7624mf6sqaig" path="res://scripts/menu/MenuButtons.cs" id="1_c26fr"]
@@ -18,8 +18,9 @@
 [ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://scenes/StyleBoxMenu.tres" id="14_yhqx5"]
 [ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scripts/data/filedata/SaveData.cs" id="16_rs64w"]
 [ext_resource type="PackedScene" uid="uid://cok7fvvmif3pb" path="res://assets/prefab/menu-contract.tscn" id="17_5gsci"]
-[ext_resource type="Script" uid="uid://dcbrqr6h2epx8" path="res://scripts/menu/ContractButton.cs" id="18_eadlt"]
+[ext_resource type="PackedScene" uid="uid://cwyq1efe6p40p" path="res://assets/prefab/item_button.tscn" id="18_r4gec"]
 [ext_resource type="Script" uid="uid://cj16r715hnvyj" path="res://scripts/ContractSelected.cs" id="20_epfvj"]
+[ext_resource type="Texture2D" uid="uid://ccks58su2ii0f" path="res://assets/sprites/menu/icons/spr-icon-skull.png" id="21_r4gec"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_131qp"]
 shader = ExtResource("1_131qp")
@@ -167,7 +168,7 @@ ValueName = "Wave"
 custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
-[node name="Categories" type="Control" parent="." node_paths=PackedStringArray("MenuButtonContainer")]
+[node name="Categories" type="Control" parent="." node_paths=PackedStringArray("MenuButtonContainer", "ContractSelectedMenu")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -182,6 +183,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_aceb1")
 MenuButtonContainer = NodePath("../MainUI/ContainerButtons")
+ContractSelectedMenu = NodePath("../ContractSelected")
 
 [node name="Loadout" type="Control" parent="Categories"]
 visible = false
@@ -204,6 +206,18 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("14_yhqx5")
 
+[node name="Label" type="Label" parent="Categories/Loadout/SelectedPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 11.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "Description"
+label_settings = ExtResource("10_chs3y")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ItemPanel" type="Panel" parent="Categories/Loadout"]
 layout_mode = 1
 anchors_preset = -1
@@ -216,26 +230,39 @@ offset_right = -10.0
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("14_yhqx5")
 
-[node name="GridContainer" type="GridContainer" parent="Categories/Loadout/ItemPanel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Categories/Loadout/ItemPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 16.0
 grow_horizontal = 2
 grow_vertical = 2
-columns = 4
+mouse_filter = 0
+horizontal_scroll_mode = 0
 
-[node name="Label" type="Label" parent="Categories/Loadout/ItemPanel"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 13.0
-grow_horizontal = 2
+[node name="ItemContainer" type="VBoxContainer" parent="Categories/Loadout/ItemPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Items"
 label_settings = ExtResource("10_chs3y")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ItemButton" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
+layout_mode = 2
+
+[node name="ItemButton2" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
+layout_mode = 2
+
+[node name="ItemButton3" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
+layout_mode = 2
+
+[node name="ItemButton4" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
+layout_mode = 2
 
 [node name="Market" type="Control" parent="Categories"]
 visible = false
@@ -245,6 +272,88 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="SelectedPanel" type="Panel" parent="Categories/Market"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("14_yhqx5")
+
+[node name="Label" type="Label" parent="Categories/Market/SelectedPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 11.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "Description"
+label_settings = ExtResource("10_chs3y")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Categories/Market/SelectedPanel"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 103.0
+offset_right = 133.0
+offset_bottom = 127.0
+theme_override_fonts/font = ExtResource("12_yhqx5")
+theme_override_styles/focus = ExtResource("14_yhqx5")
+text = "Buy"
+icon = ExtResource("6_131qp")
+flat = true
+
+[node name="ItemPanel" type="Panel" parent="Categories/Market"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.033
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -4.29
+offset_right = -10.0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("14_yhqx5")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Categories/Market/ItemPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+horizontal_scroll_mode = 0
+
+[node name="ItemContainer" type="VBoxContainer" parent="Categories/Market/ItemPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Buy Item"
+label_settings = ExtResource("10_chs3y")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemButton" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
+layout_mode = 2
+
+[node name="ItemButton2" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
+layout_mode = 2
+
+[node name="ItemButton3" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
+layout_mode = 2
+
+[node name="ItemButton4" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
+layout_mode = 2
 
 [node name="Home" type="Control" parent="Categories"]
 visible = false
@@ -265,6 +374,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Contract" type="Control" parent="Categories"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -287,14 +397,12 @@ grow_vertical = 2
 
 [node name="Contract-1" parent="Categories/Contract/ContractContainer" node_paths=PackedStringArray("ContractSelectedMenu", "ContractMenu", "saveData") instance=ExtResource("17_5gsci")]
 layout_mode = 2
-script = ExtResource("18_eadlt")
 ContractSelectedMenu = NodePath("../../../../ContractSelected")
 ContractMenu = NodePath("../..")
 saveData = NodePath("../../../../SaveData")
 
 [node name="Contract-2" parent="Categories/Contract/ContractContainer" node_paths=PackedStringArray("ContractSelectedMenu", "ContractMenu", "saveData") instance=ExtResource("17_5gsci")]
 layout_mode = 2
-script = ExtResource("18_eadlt")
 ContractSelectedMenu = NodePath("../../../../ContractSelected")
 ContractMenu = NodePath("../..")
 Index = 1
@@ -302,13 +410,12 @@ saveData = NodePath("../../../../SaveData")
 
 [node name="Contract-3" parent="Categories/Contract/ContractContainer" node_paths=PackedStringArray("ContractSelectedMenu", "ContractMenu", "saveData") instance=ExtResource("17_5gsci")]
 layout_mode = 2
-script = ExtResource("18_eadlt")
 ContractSelectedMenu = NodePath("../../../../ContractSelected")
 ContractMenu = NodePath("../..")
 Index = 2
 saveData = NodePath("../../../../SaveData")
 
-[node name="ContractSelected" type="Control" parent="." node_paths=PackedStringArray("ButtonBack", "ButtonStart", "CategoryContract")]
+[node name="ContractSelected" type="Control" parent="." node_paths=PackedStringArray("ButtonBack", "ButtonStart", "CategoryContract", "TextureBiome", "LabelBiome", "LabelDifficulty", "LabelMissionType", "TextureReward", "LabelReward")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -320,6 +427,12 @@ script = ExtResource("20_epfvj")
 ButtonBack = NodePath("Panel/BtnBack")
 ButtonStart = NodePath("Panel/BtnStart")
 CategoryContract = NodePath("../Categories/Contract")
+TextureBiome = NodePath("Panel/BiomeTexture")
+LabelBiome = NodePath("Panel/BiomeLabel")
+LabelDifficulty = NodePath("Panel/DifficutlyLabel")
+LabelMissionType = NodePath("Panel/MissionLabel")
+TextureReward = NodePath("Panel/RewardTexture")
+LabelReward = NodePath("Panel/RewardLabel")
 
 [node name="Panel" type="Panel" parent="ContractSelected"]
 layout_mode = 1
@@ -329,6 +442,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("14_yhqx5")
+
+[node name="HeaderLabel" type="Label" parent="ContractSelected/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 11.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("12_yhqx5")
+text = "Contract Details"
+horizontal_alignment = 1
 
 [node name="BtnBack" type="Button" parent="ContractSelected/Panel"]
 custom_minimum_size = Vector2(64, 0)
@@ -351,3 +474,76 @@ offset_bottom = 130.0
 theme_override_fonts/font = ExtResource("12_yhqx5")
 text = "Start"
 flat = true
+
+[node name="BiomeTexture" type="TextureRect" parent="ContractSelected/Panel"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 29.0
+offset_right = 52.0
+offset_bottom = 45.0
+texture = ExtResource("7_ce0po")
+stretch_mode = 3
+
+[node name="BiomeLabel" type="Label" parent="ContractSelected/Panel"]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 30.0
+offset_right = 97.0
+offset_bottom = 41.0
+theme_override_fonts/font = ExtResource("12_yhqx5")
+text = "$Biome"
+
+[node name="DifficultyTexture" type="TextureRect" parent="ContractSelected/Panel"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 47.0
+offset_right = 52.0
+offset_bottom = 63.0
+scale = Vector2(2, 2)
+texture = ExtResource("21_r4gec")
+stretch_mode = 2
+
+[node name="DifficutlyLabel" type="Label" parent="ContractSelected/Panel"]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 49.0
+offset_right = 117.0
+offset_bottom = 60.0
+theme_override_fonts/font = ExtResource("12_yhqx5")
+text = "$Difficulty"
+
+[node name="MissionTexture" type="TextureRect" parent="ContractSelected/Panel"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 66.0
+offset_right = 52.0
+offset_bottom = 82.0
+texture = ExtResource("5_in2e0")
+stretch_mode = 3
+
+[node name="MissionLabel" type="Label" parent="ContractSelected/Panel"]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 68.0
+offset_right = 117.0
+offset_bottom = 79.0
+theme_override_fonts/font = ExtResource("12_yhqx5")
+text = "$Mission"
+
+[node name="RewardTexture" type="TextureRect" parent="ContractSelected/Panel"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 83.0
+offset_right = 52.0
+offset_bottom = 99.0
+texture = ExtResource("6_131qp")
+stretch_mode = 3
+
+[node name="RewardLabel" type="Label" parent="ContractSelected/Panel"]
+layout_mode = 0
+offset_left = 57.0
+offset_top = 85.0
+offset_right = 117.0
+offset_bottom = 96.0
+theme_override_fonts/font = ExtResource("12_yhqx5")
+text = "$Reward"
