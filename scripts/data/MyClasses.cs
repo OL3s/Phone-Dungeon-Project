@@ -1,37 +1,10 @@
 using System;
-using System.Diagnostics;
 using Godot;
-using MyClasses;
 using MyEnums;
+using Combat;
+using Items;
 
 namespace MyClasses {
-
-	/// <summary>
-	/// A full representation of an item, with properties and methods.
-	/// This is for game logic purposes.
-	/// </summary>
-	public class Item
-	{
-		public string Name { get; }
-		public int Cost { get; }
-		public int Condition { get; set; }
-
-		public Item(string name, int cost, int condition = 100)
-		{
-			Name = name;
-			Cost = cost;
-			Condition = condition;
-		}
-	}
-
-	/// <summary>
-	/// A basic representation of an item, without any special properties or methods.
-	/// This is for display purposes only.
-	/// </summary>
-	public class ItemBasic
-	{
-
-	}
 
 	public class Contract
 	{
@@ -107,12 +80,6 @@ namespace MyClasses {
 				Biomes.Abyss => GD.Load<Texture2D>("res://assets/sprites/menu/icons/biomes/spr-icon-biome-abyss.png"),
 				_ => throw new ArgumentOutOfRangeException(nameof(biome), biome, null)
 			};
-		}
-
-		public static ItemBasic ItemToItemBasic(Item item)
-		{
-			// Convert Item to ItemBasic
-			return new ItemBasic();
 		}
 	}
 }

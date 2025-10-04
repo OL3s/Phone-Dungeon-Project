@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using FileData;
+using Items;
+using Combat;
 
 /// <summary>
 /// SaveData node class to manage game, permanent, and inventory data saving.
@@ -22,8 +24,24 @@ public partial class SaveData : Node
 	{
 		if (IncludeGameData) gameData = new GameData();
 		if (IncludePermData) permData = new PermData();
-		if (IncludeInventoryData) inventoryData = new InventoryData();
+		if (IncludeInventoryData)
+		{
+			inventoryData = new InventoryData();
+
+			// mock inventory for testing
+			inventoryData.AddItem(new Item(null, "Test Item", 10));
+			inventoryData.AddItem(new Item(null, "Test Item 2", 20));
+			inventoryData.AddItem(new Item(null, "Test Item 3", 30));
+			inventoryData.AddItem(new Item(null, "Test Item 4", 40));
+
+			// mock inventory store weapons for testing
+			gameData.MarketItems[0] = new Weapon(null, "Sword", 100, new MeleeAttack(1.0f, 1.0f, null, null), 100);
+			gameData.MarketItems[1] = new Weapon(null, "Bow", 200, new RangedAttack(10.0f, 50.0f, null, null), 100);
+			gameData.MarketItems[2] = new Weapon(null, "Staff", 300, new BeamAttack(5.0f, 2.0f, 30.0f, null, null), 100);
+		}
 	}
+
+	// mock shop-inventory for testing
 
 	/// <summary>
 	/// Saves all gamedata.

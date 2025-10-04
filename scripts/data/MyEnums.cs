@@ -45,6 +45,17 @@ namespace MyEnums
 		Burn,
 		Freeze
 	}
+	public enum AttackType
+	{
+		Collision,
+		Teleport,
+		Projectile,
+		Beam,
+		Summon,
+		AreaOfEffect,
+		Throw,
+		None
+	}
 	public enum MissionType
 	{
 		Rescue,     // Rescue NPC(s)

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Text.Json;
-using MyClasses;
+using Items;
 using MyEnums;
 
 // Core data handling namespace
@@ -18,6 +18,7 @@ namespace FileData
 		public int Kills { get; set; } = 0;
 		public int KillsHeavy { get; set; } = 0;
 		public int ContractSeed { get; set; } = 0;
+		public Item[] MarketItems { get; set; } = new Item[30];
 
 		/// <summary> Constructor for GameData, optionally loading existing data. </summary>
 		/// <param name="instantLoad">If true, loads data immediately on default.</param>
@@ -78,6 +79,13 @@ namespace FileData
 			ContractSeed = new Random().Next();
 			GD.Print($"New contract seed: {ContractSeed}");
 		}
+
+		public override string ToString()
+		{
+			return string.Format(
+				"== GAME DATA == \nGold: {0}\nWave: {1}\nBiome: {2}\nKills: {3} (Heavy: {4})\nContractSeed: {5}\nMarketItems: {6}",
+						Gold, Wave, Biome, Kills, KillsHeavy, ContractSeed, MarketItems.ToString());
+		}
 	}
 
 	/// <summary>
@@ -115,6 +123,11 @@ namespace FileData
 			var data = DataManager.LoadData<PermData>("PermData");
 			if (data == null) { GD.Print("No PermData saved found!, creating empty"); return; }
 			Gems = data.Gems;
+		}
+
+		public override string ToString()
+		{
+			return $"== PERM DATA ==\nGems: [{string.Join(", ", Gems)}]";
 		}
 	}
 
@@ -169,6 +182,19 @@ namespace FileData
 			var data = DataManager.LoadData<InventoryData>("InventoryData");
 			if (data == null) { GD.Print("No InventoryData saved found!, creating empty"); return; }
 			Items = data.Items;
+		}
+
+		public override string ToString()
+		{
+			var itemNames = "";
+			for (int i = 0; i < Items.Length; i++)
+			{
+				if (Items[i] != null)
+					itemNames += $"{i}: {Items[i].Name}\n";
+			}
+			return $"== INVENTORY DATA ==\n" +
+			   $"Items ({Items.Length}):\n" +
+			   itemNames;
 		}
 	}
 

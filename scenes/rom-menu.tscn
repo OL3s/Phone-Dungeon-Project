@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b1hcnw84ujj36"]
+[gd_scene load_steps=25 format=3 uid="uid://b1hcnw84ujj36"]
 
 [ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://shaders/rom-splash.gdshader" id="1_131qp"]
 [ext_resource type="Script" uid="uid://b7624mf6sqaig" path="res://scripts/menu/MenuButtons.cs" id="1_c26fr"]
@@ -18,7 +18,8 @@
 [ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://scenes/StyleBoxMenu.tres" id="14_yhqx5"]
 [ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scripts/data/filedata/SaveData.cs" id="16_rs64w"]
 [ext_resource type="PackedScene" uid="uid://cok7fvvmif3pb" path="res://assets/prefab/menu-contract.tscn" id="17_5gsci"]
-[ext_resource type="PackedScene" uid="uid://cwyq1efe6p40p" path="res://assets/prefab/item_button.tscn" id="18_r4gec"]
+[ext_resource type="Script" uid="uid://bpyxpvs6sfs" path="res://scripts/LoadoutManager.cs" id="18_jb1v1"]
+[ext_resource type="PackedScene" uid="uid://b31xg250yhpfp" path="res://assets/prefab/selected-description.tscn" id="19_jb1v1"]
 [ext_resource type="Script" uid="uid://cj16r715hnvyj" path="res://scripts/ContractSelected.cs" id="20_epfvj"]
 [ext_resource type="Texture2D" uid="uid://ccks58su2ii0f" path="res://assets/sprites/menu/icons/spr-icon-skull.png" id="21_r4gec"]
 
@@ -186,37 +187,12 @@ MenuButtonContainer = NodePath("../MainUI/ContainerButtons")
 ContractSelectedMenu = NodePath("../ContractSelected")
 
 [node name="Loadout" type="Control" parent="Categories"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="SelectedPanel" type="Panel" parent="Categories/Loadout"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_right = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = ExtResource("14_yhqx5")
-
-[node name="Label" type="Label" parent="Categories/Loadout/SelectedPanel"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 11.0
-grow_horizontal = 2
-size_flags_horizontal = 3
-text = "Description"
-label_settings = ExtResource("10_chs3y")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="ItemPanel" type="Panel" parent="Categories/Loadout"]
 layout_mode = 1
@@ -239,10 +215,13 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 4
 
-[node name="ItemContainer" type="VBoxContainer" parent="Categories/Loadout/ItemPanel/ScrollContainer"]
+[node name="ItemContainer" type="VBoxContainer" parent="Categories/Loadout/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData")]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("18_jb1v1")
+saveData = NodePath("../../../../../SaveData")
 
 [node name="Label" type="Label" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer"]
 layout_mode = 2
@@ -252,17 +231,9 @@ label_settings = ExtResource("10_chs3y")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ItemButton" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
-layout_mode = 2
-
-[node name="ItemButton2" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
-layout_mode = 2
-
-[node name="ItemButton3" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
-layout_mode = 2
-
-[node name="ItemButton4" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
-layout_mode = 2
+[node name="SelectedPanel" parent="Categories/Loadout" instance=ExtResource("19_jb1v1")]
+layout_mode = 0
+anchors_preset = 0
 
 [node name="Market" type="Control" parent="Categories"]
 visible = false
@@ -272,42 +243,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="SelectedPanel" type="Panel" parent="Categories/Market"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_right = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = ExtResource("14_yhqx5")
-
-[node name="Label" type="Label" parent="Categories/Market/SelectedPanel"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 11.0
-grow_horizontal = 2
-size_flags_horizontal = 3
-text = "Description"
-label_settings = ExtResource("10_chs3y")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Button" type="Button" parent="Categories/Market/SelectedPanel"]
-layout_mode = 0
-offset_left = 84.0
-offset_top = 103.0
-offset_right = 133.0
-offset_bottom = 127.0
-theme_override_fonts/font = ExtResource("12_yhqx5")
-theme_override_styles/focus = ExtResource("14_yhqx5")
-text = "Buy"
-icon = ExtResource("6_131qp")
-flat = true
 
 [node name="ItemPanel" type="Panel" parent="Categories/Market"]
 layout_mode = 1
@@ -330,10 +265,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 4
 
-[node name="ItemContainer" type="VBoxContainer" parent="Categories/Market/ItemPanel/ScrollContainer"]
+[node name="ItemContainer" type="VBoxContainer" parent="Categories/Market/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData", "descriptionTab")]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("18_jb1v1")
+saveData = NodePath("../../../../../SaveData")
+descriptionTab = NodePath("")
+displayMode = "Market"
 
 [node name="Label" type="Label" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer"]
 layout_mode = 2
@@ -343,17 +283,20 @@ label_settings = ExtResource("10_chs3y")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ItemButton" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
-layout_mode = 2
+[node name="SelectedPanel" parent="Categories/Market" instance=ExtResource("19_jb1v1")]
+layout_mode = 0
+anchors_preset = 0
 
-[node name="ItemButton2" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
-layout_mode = 2
-
-[node name="ItemButton3" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
-layout_mode = 2
-
-[node name="ItemButton4" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer" instance=ExtResource("18_r4gec")]
-layout_mode = 2
+[node name="Button" type="Button" parent="Categories/Market/SelectedPanel"]
+offset_left = 84.0
+offset_top = 103.0
+offset_right = 133.0
+offset_bottom = 127.0
+theme_override_fonts/font = ExtResource("12_yhqx5")
+theme_override_styles/focus = ExtResource("14_yhqx5")
+text = "Buy"
+icon = ExtResource("6_131qp")
+flat = true
 
 [node name="Home" type="Control" parent="Categories"]
 visible = false

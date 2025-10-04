@@ -18,6 +18,7 @@ theme_override_styles/focus = ExtResource("2_dqr7h")
 theme_override_styles/normal = ExtResource("2_dqr7h")
 flat = true
 icon_alignment = 1
+metadata/Index = 0
 
 [node name="LabelName" type="Label" parent="."]
 layout_mode = 1

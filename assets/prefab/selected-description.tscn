@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://b31xg250yhpfp"]
+
+[ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://scenes/StyleBoxMenu.tres" id="1_hmlll"]
+[ext_resource type="LabelSettings" uid="uid://d252j1wwry2gd" path="res://assets/font/pixelLabel.tres" id="2_yb40u"]
+
+[node name="SelectedPanel" type="Panel"]
+custom_minimum_size = Vector2(64, 96)
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_hmlll")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 11.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+text = "Description"
+label_settings = ExtResource("2_yb40u")
+horizontal_alignment = 1
+vertical_alignment = 1
