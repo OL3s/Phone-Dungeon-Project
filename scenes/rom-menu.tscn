@@ -234,9 +234,15 @@ vertical_alignment = 1
 [node name="SelectedPanel" parent="Categories/Loadout" instance=ExtResource("19_jb1v1")]
 layout_mode = 0
 anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 171.0
+offset_right = 311.0
+offset_bottom = 130.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Market" type="Control" parent="Categories"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -267,12 +273,11 @@ mouse_filter = 0
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 4
 
-[node name="ItemContainer" type="VBoxContainer" parent="Categories/Market/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData", "descriptionTab")]
+[node name="ItemContainer" type="VBoxContainer" parent="Categories/Market/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData")]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("18_jb1v1")
 saveData = NodePath("../../../../../SaveData")
-descriptionTab = NodePath("")
 displayMode = "Market"
 
 [node name="Label" type="Label" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer"]
@@ -286,17 +291,13 @@ vertical_alignment = 1
 [node name="SelectedPanel" parent="Categories/Market" instance=ExtResource("19_jb1v1")]
 layout_mode = 0
 anchors_preset = 0
-
-[node name="Button" type="Button" parent="Categories/Market/SelectedPanel"]
-offset_left = 84.0
-offset_top = 103.0
-offset_right = 133.0
-offset_bottom = 127.0
-theme_override_fonts/font = ExtResource("12_yhqx5")
-theme_override_styles/focus = ExtResource("14_yhqx5")
-text = "Buy"
-icon = ExtResource("6_131qp")
-flat = true
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 171.0
+offset_right = 311.0
+offset_bottom = 130.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Home" type="Control" parent="Categories"]
 visible = false
