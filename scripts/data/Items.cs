@@ -26,6 +26,11 @@ namespace Items
 			Cost = cost;
 			Condition = condition;
 		}
+		
+		public override string ToString() 
+		{
+			return Name;
+		}
 	}
 
 	public class Weapon : Item

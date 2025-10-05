@@ -39,6 +39,13 @@ public partial class SaveData : Node
 			gameData.MarketItems[0] = new Weapon(null, "Sword", 100, new MeleeAttack(1.0f, 1.0f, null, null), 100);
 			gameData.MarketItems[1] = new Weapon(null, "Bow", 200, new RangedAttack(10.0f, 50.0f, null, null), 100);
 			gameData.MarketItems[2] = new Weapon(null, "Staff", 300, new BeamAttack(5.0f, 2.0f, 30.0f, null, null), 100);
+		
+			GD.Print(
+				"== PRINTING DATA OBJECTS ==\n\n" +
+				$"{gameData}\n" +
+				$"{inventoryData}\n"
+			);
+			
 		}
 	}
 

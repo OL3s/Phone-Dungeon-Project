@@ -75,6 +75,7 @@ namespace FileData
 			Biome = data.Biome;
 			Kills = data.Kills;
 			KillsHeavy = data.KillsHeavy;
+			MarketItems = data.MarketItems;
 		}
 
 		public void RandomizeContractSeed()
@@ -85,9 +86,15 @@ namespace FileData
 
 		public override string ToString()
 		{
-			return string.Format(
-				"== GAME DATA == \nGold: {0}\nWave: {1}\nBiome: {2}\nKills: {3} (Heavy: {4})\nContractSeed: {5}\nMarketItems: {6}",
-						Gold, Wave, Biome, Kills, KillsHeavy, ContractSeed, MarketItems.ToString());
+			string Return = string.Format(
+				"== GAME DATA == \nGold: {0}\nWave: {1}\nBiome: {2}\nKills: {3} (Heavy: {4})\nContractSeed: {5}\nMarket Items({6}):\n",
+						Gold, Wave, Biome, Kills, KillsHeavy, ContractSeed, MarketItems.Length);
+			foreach (Item item in MarketItems)
+			{
+				if (item != null)
+					Return += $"[{Array.IndexOf(MarketItems, item)}] {item.ToString()}\n";
+			}
+			return Return;
 		}
 	}
 
@@ -200,7 +207,7 @@ namespace FileData
 			for (int i = 0; i < Items.Length; i++)
 			{
 				if (Items[i] != null)
-					itemNames += $"{i}: {Items[i].Name}\n";
+					itemNames += $"[{i}] {Items[i].Name}\n";
 			}
 			return $"== INVENTORY DATA ==\n" +
 			   $"Items ({Items.Length}):\n" +

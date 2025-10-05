@@ -234,7 +234,7 @@ label_settings = ExtResource("10_chs3y")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SelectedPanel" parent="Categories/Loadout" instance=ExtResource("19_jb1v1")]
+[node name="SelectedPanel" parent="Categories/Loadout" node_paths=PackedStringArray("ButtonEquip", "ButtonEquipTop", "saveData") instance=ExtResource("19_jb1v1")]
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
@@ -245,8 +245,32 @@ offset_bottom = 130.0
 grow_horizontal = 1
 grow_vertical = 1
 script = ExtResource("20_ax5xu")
+ButtonEquip = NodePath("EquipButton")
+ButtonEquipTop = NodePath("EquipButtonTop")
+saveData = NodePath("../../../SaveData")
+
+[node name="EquipButton" type="Button" parent="Categories/Loadout/SelectedPanel"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 109.0
+offset_right = 46.0
+offset_bottom = 128.0
+theme_override_fonts/font = ExtResource("12_yhqx5")
+text = "Equip"
+flat = true
+
+[node name="EquipButtonTop" type="Button" parent="Categories/Loadout/SelectedPanel"]
+layout_mode = 0
+offset_left = 67.0
+offset_top = 109.0
+offset_right = 135.0
+offset_bottom = 128.0
+theme_override_fonts/font = ExtResource("12_yhqx5")
+text = "Equip Top"
+flat = true
 
 [node name="Market" type="Control" parent="Categories"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -293,7 +317,7 @@ label_settings = ExtResource("10_chs3y")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SelectedPanel" parent="Categories/Market" instance=ExtResource("19_jb1v1")]
+[node name="SelectedPanel" parent="Categories/Market" node_paths=PackedStringArray("ButtonBuy", "saveData") instance=ExtResource("19_jb1v1")]
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
@@ -304,6 +328,30 @@ offset_bottom = 130.0
 grow_horizontal = 1
 grow_vertical = 1
 script = ExtResource("20_ax5xu")
+ButtonBuy = NodePath("BuyButton")
+saveData = NodePath("../../../SaveData")
+
+[node name="BuyButton" type="Button" parent="Categories/Market/SelectedPanel"]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 103.0
+offset_right = 135.0
+offset_bottom = 127.0
+theme_override_fonts/font = ExtResource("12_yhqx5")
+text = "Buy"
+icon = ExtResource("6_131qp")
+flat = true
+
+[node name="PriceLabel" type="Label" parent="Categories/Market/SelectedPanel"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 96.0
+offset_right = 115.0
+offset_bottom = 107.0
+text = "$price"
+label_settings = ExtResource("10_chs3y")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Home" type="Control" parent="Categories"]
 visible = false

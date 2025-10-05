@@ -1,4 +1,2 @@
 # TODO
-- finnish Item class
-- add ItemBasic class
-- add function to convert Item to ItemBasic
+- Make Buy & Eqip button(s) work
