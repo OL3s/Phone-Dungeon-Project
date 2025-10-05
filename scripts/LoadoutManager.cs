@@ -11,10 +11,6 @@ public partial class LoadoutManager : VBoxContainer
 	public override void _Ready()
 	{
 		ProcessItems();
-		foreach (var child in GetChildren())
-		{
-			GD.Print(child);
-		}
 	}
 
 	public void ProcessItems()
@@ -60,7 +56,11 @@ public partial class LoadoutManager : VBoxContainer
 	{
 		// Handle button press logic
 		GD.Print($"Button pressed: {item.Name} at index {index}");
-		
 
+		// Update description tab with item details
+		if (descriptionTab != null)
+		{
+			(descriptionTab as ItemSelectedManager)?.SelectItem(item);
+		}
 	}
 }

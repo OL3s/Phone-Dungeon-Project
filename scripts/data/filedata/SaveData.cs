@@ -13,6 +13,7 @@ public partial class SaveData : Node
 	[Export] public bool IncludeGameData;
 	[Export] public bool IncludePermData;
 	[Export] public bool IncludeInventoryData;
+	[Export] public bool SaveOnExit = false;
 
 	// Init datatypes
 	public GameData gameData;
@@ -41,6 +42,21 @@ public partial class SaveData : Node
 		}
 	}
 
+	// Save on exit
+	public override void _ExitTree()
+	{
+		if (SaveOnExit) SaveAll();
+	}
+
+	public override void _Notification(int what)
+	{
+		if (what == NotificationApplicationPaused)
+		{
+			// App is going to background
+			if (SaveOnExit) SaveAll();
+		}
+	}
+
 	// mock shop-inventory for testing
 
 	/// <summary>
@@ -48,6 +64,7 @@ public partial class SaveData : Node
 	/// </summary>
 	public void SaveAll()
 	{
+		GD.Print("Saving all before exit in SaveData node");
 		SaveGameData();
 		SavePermData();
 		SaveInventoryData();

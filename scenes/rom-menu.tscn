@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b1hcnw84ujj36"]
+[gd_scene load_steps=26 format=3 uid="uid://b1hcnw84ujj36"]
 
 [ext_resource type="Shader" uid="uid://cgvlv8h272io7" path="res://shaders/rom-splash.gdshader" id="1_131qp"]
 [ext_resource type="Script" uid="uid://b7624mf6sqaig" path="res://scripts/menu/MenuButtons.cs" id="1_c26fr"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://cok7fvvmif3pb" path="res://assets/prefab/menu-contract.tscn" id="17_5gsci"]
 [ext_resource type="Script" uid="uid://bpyxpvs6sfs" path="res://scripts/LoadoutManager.cs" id="18_jb1v1"]
 [ext_resource type="PackedScene" uid="uid://b31xg250yhpfp" path="res://assets/prefab/selected-description.tscn" id="19_jb1v1"]
+[ext_resource type="Script" uid="uid://n5hmg1elol3c" path="res://scripts/ItemSelectedManager.cs" id="20_ax5xu"]
 [ext_resource type="Script" uid="uid://cj16r715hnvyj" path="res://scripts/ContractSelected.cs" id="20_epfvj"]
 [ext_resource type="Texture2D" uid="uid://ccks58su2ii0f" path="res://assets/sprites/menu/icons/spr-icon-skull.png" id="21_r4gec"]
 
@@ -47,6 +48,7 @@ font = ExtResource("12_yhqx5")
 script = ExtResource("16_rs64w")
 IncludeGameData = true
 IncludeInventoryData = true
+SaveOnExit = true
 
 [node name="Background" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_131qp")
@@ -217,11 +219,12 @@ mouse_filter = 0
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 4
 
-[node name="ItemContainer" type="VBoxContainer" parent="Categories/Loadout/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData")]
+[node name="ItemContainer" type="VBoxContainer" parent="Categories/Loadout/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData", "descriptionTab")]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("18_jb1v1")
 saveData = NodePath("../../../../../SaveData")
+descriptionTab = NodePath("../../../SelectedPanel")
 
 [node name="Label" type="Label" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer"]
 layout_mode = 2
@@ -241,6 +244,7 @@ offset_right = 311.0
 offset_bottom = 130.0
 grow_horizontal = 1
 grow_vertical = 1
+script = ExtResource("20_ax5xu")
 
 [node name="Market" type="Control" parent="Categories"]
 layout_mode = 1
@@ -273,11 +277,12 @@ mouse_filter = 0
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 4
 
-[node name="ItemContainer" type="VBoxContainer" parent="Categories/Market/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData")]
+[node name="ItemContainer" type="VBoxContainer" parent="Categories/Market/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData", "descriptionTab")]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("18_jb1v1")
 saveData = NodePath("../../../../../SaveData")
+descriptionTab = NodePath("../../../SelectedPanel")
 displayMode = "Market"
 
 [node name="Label" type="Label" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer"]
@@ -298,6 +303,7 @@ offset_right = 311.0
 offset_bottom = 130.0
 grow_horizontal = 1
 grow_vertical = 1
+script = ExtResource("20_ax5xu")
 
 [node name="Home" type="Control" parent="Categories"]
 visible = false

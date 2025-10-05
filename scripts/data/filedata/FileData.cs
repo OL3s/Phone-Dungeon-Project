@@ -20,6 +20,9 @@ namespace FileData
 		public int ContractSeed { get; set; } = 0;
 		public Item[] MarketItems { get; set; } = new Item[30];
 
+		// Empty constructor for serialization
+		public GameData() { }
+
 		/// <summary> Constructor for GameData, optionally loading existing data. </summary>
 		/// <param name="instantLoad">If true, loads data immediately on default.</param>
 		public GameData(bool instantLoad = true)
@@ -95,6 +98,9 @@ namespace FileData
 	{
 		public int[] Gems { get; set; } = { 0, 0, 0 };
 
+		// Empty constructor for serialization
+		public PermData() { }
+
 		public PermData(bool instantLoad = true)
 		{
 			GD.Print("PermData Init");
@@ -135,6 +141,10 @@ namespace FileData
 	public class InventoryData
 	{
 		public Item[] Items { get; set; } = new Item[40];
+
+		// Empty constructor for serialization
+		public InventoryData() { }
+		
 		public InventoryData(bool instantLoad = true)
 		{
 			GD.Print("InventoryData Init");
@@ -203,6 +213,13 @@ namespace FileData
 	{
 		private static string PathOf(string name) => $"user://{name}.json";
 
+		// Add shared serializer options
+		private static readonly System.Text.Json.JsonSerializerOptions Options = new()
+		{
+			WriteIndented = true,
+			DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+		};
+
 		/// <summary> Load the state of a data object from a file. </summary>
 		public static T LoadData<T>(string fileName)
 		{
@@ -212,7 +229,7 @@ namespace FileData
 
 			using var f = FileAccess.Open(path, FileAccess.ModeFlags.Read);
 			string json = f.GetAsText();
-			return JsonSerializer.Deserialize<T>(json);
+			return System.Text.Json.JsonSerializer.Deserialize<T>(json, Options);
 		}
 
 		/// <summary> Save the state of a data object to a file. </summary>
@@ -221,16 +238,7 @@ namespace FileData
 			GD.Print($"Saving {fileName} data.");
 			var path = PathOf(fileName);
 			using var f = FileAccess.Open(path, FileAccess.ModeFlags.Write);
-			f.StoreString(JsonSerializer.Serialize(data));
-		}
-
-		/// <summary> Delete all saved data files. </summary>
-		public static void DeleteAllData()
-		{
-			GD.Print("Deleting all data files.");
-			DeleteGameData();
-			DeletePermData();
-			DeleteInventoryData();
+			f.StoreString(System.Text.Json.JsonSerializer.Serialize(data, Options));
 		}
 
 		/// <summary> Delete the saved GameData file. </summary>
