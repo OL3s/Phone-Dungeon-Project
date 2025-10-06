@@ -18,9 +18,11 @@ namespace Items
 		public string Name { get; }
 		public int Cost { get; }
 		public int Condition { get; set; }
+		public int? Index { get; set; }
 
-		public Item(string texturePath, string name, int cost, int condition = 100)
+		public Item(string texturePath, string name, int cost, int condition = 100, int? index = null)
 		{
+			Index = index;
 			TexturePath = texturePath;
 			Name = name;
 			Cost = cost;
@@ -29,7 +31,7 @@ namespace Items
 		
 		public override string ToString() 
 		{
-			return Name;
+			return "itemObject:{" + Name + "}";
 		}
 	}
 

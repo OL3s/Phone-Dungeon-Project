@@ -15,19 +15,18 @@ public partial class LoadoutManager : VBoxContainer
 
 	public void ProcessItems()
 	{
-		int i = 0;
 		Item[] selectedList = (displayMode == "Loadout")
 			? saveData.inventoryData.Items
 			: saveData.gameData.MarketItems;
-		foreach (Item item in selectedList)
+		for (int i = 0; i < selectedList.Length; i++)
 		{
+			Item item = selectedList[i];
 			if (item != null)
 			{
 				CreateItemNode(item, i);
 			}
-			i++;
 		}
-	}
+	}	
 
 	public void CreateItemNode(Item item, int index)
 	{

@@ -30,15 +30,15 @@ public partial class SaveData : Node
 			inventoryData = new InventoryData();
 
 			// mock inventory for testing
-			inventoryData.AddItem(new Item(null, "Test Item", 10));
+			inventoryData.AddItem(new Item(null, "Test Item Long Name", 10));
 			inventoryData.AddItem(new Item(null, "Test Item 2", 20));
 			inventoryData.AddItem(new Item(null, "Test Item 3", 30));
 			inventoryData.AddItem(new Item(null, "Test Item 4", 40));
 
 			// mock inventory store weapons for testing
-			gameData.MarketItems[0] = new Weapon(null, "Sword", 100, new MeleeAttack(1.0f, 1.0f, null, null), 100);
-			gameData.MarketItems[1] = new Weapon(null, "Bow", 200, new RangedAttack(10.0f, 50.0f, null, null), 100);
-			gameData.MarketItems[2] = new Weapon(null, "Staff", 300, new BeamAttack(5.0f, 2.0f, 30.0f, null, null), 100);
+			gameData.AddMarketItem(new Weapon(null, "Sword", 100, new MeleeAttack(1.0f, 1.0f, null, null), 100));
+			gameData.AddMarketItem(new Weapon(null, "Bow", 200, new RangedAttack(10.0f, 50.0f, null, null), 100));
+			gameData.AddMarketItem(new Weapon(null, "Staff", 300, new BeamAttack(5.0f, 2.0f, 30.0f, null, null), 100));
 		
 			GD.Print(
 				"== PRINTING DATA OBJECTS ==\n\n" +

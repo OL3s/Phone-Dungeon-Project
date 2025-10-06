@@ -38,6 +38,11 @@ namespace FileData
 			GD.Print($"Adding {amount} gold.");
 			Gold += amount;
 		}
+		
+		public void RemoveGold(int amount)
+		{
+			GD.Print($"Removing {amount} gold.");
+		}
 
 		/// <summary> Increment the wave count by 1. </summary>
 		public void AddWave()
@@ -54,12 +59,36 @@ namespace FileData
 			Kills++;
 			KillsHeavy += (isHeavy) ? 1 : 0;
 		}
+		
+		public bool AddMarketItem(Item item)
+		{
+			for (int i = 0; i < MarketItems.Length; i++)
+			{
+				if (MarketItems[i] == null)
+				{
+					item.Index = i;
+					MarketItems[i] = item;
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		public void RemoveMarketItem(int index)
+		{
+			if (index >= 0 && index < MarketItems.Length)
+			{
+				MarketItems[index] = null;
+				return;
+			}
+		}
 
 		/// <summary>
 		/// Save the current state of GameData to a file.
 		/// </summary>
 		public void Save()
 		{
+			GD.Print("Saving GameData");
 			DataManager.SaveData("GameData", this);
 		}
 
@@ -125,6 +154,7 @@ namespace FileData
 		/// </summary>
 		public void Save()
 		{
+			GD.Print("Saving PermData");
 			DataManager.SaveData("PermData", this);
 		}
 
@@ -167,6 +197,7 @@ namespace FileData
 			{
 				if (Items[i] == null)
 				{
+					newItem.Index = i;
 					Items[i] = newItem;
 					return true;
 				}
@@ -190,6 +221,7 @@ namespace FileData
 		/// <summary> Save the current state of InventoryData to a file. </summary>
 		public void Save()
 		{
+			GD.Print("Saving InventoryData");
 			DataManager.SaveData("InventoryData", this);
 		}
 

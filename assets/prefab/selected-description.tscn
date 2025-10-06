@@ -16,7 +16,7 @@ grow_vertical = 2
 pivot_offset = Vector2(140, 180)
 theme_override_styles/panel = ExtResource("1_hmlll")
 
-[node name="Label" type="Label" parent="."]
+[node name="DescLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -32,10 +32,8 @@ vertical_alignment = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 10.0
-offset_top = 16.0
-offset_right = -17.0
-offset_bottom = 27.0
+offset_top = 18.0
+offset_bottom = 29.0
 grow_horizontal = 2
 text = "$name"
 label_settings = ExtResource("2_yb40u")
@@ -49,3 +47,15 @@ offset_right = 84.0
 offset_bottom = 58.0
 texture = ExtResource("3_yb40u")
 stretch_mode = 3
+
+[node name="CostLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 53.0
+offset_bottom = 64.0
+grow_horizontal = 2
+text = "$price"
+label_settings = ExtResource("2_yb40u")
+horizontal_alignment = 1
+vertical_alignment = 1
