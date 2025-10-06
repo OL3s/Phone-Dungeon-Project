@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class LabelSplashStart : Control
 {
@@ -20,5 +21,17 @@ public partial class LabelSplashStart : Control
 	public override void _Process(double delta)
 	{
 		Modulate = effectFader.GetColor();
+
+		if (Input.IsKeyPressed(Key.Ctrl) 
+		&& Input.IsKeyPressed(Key.D))
+		{
+			try {
+				GetTree().Root.GetNode("Main").GetNode<SaveData>("SaveData").DeleteAllData();
+				GetTree().Quit();
+			} catch {
+				throw new Exception("Missing SaveData node in LabelSplash");
+			}
+		}
 	}
+
 }

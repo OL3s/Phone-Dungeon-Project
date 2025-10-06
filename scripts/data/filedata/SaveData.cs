@@ -107,4 +107,28 @@ public partial class SaveData : Node
 		else if (inventoryData == null)
 			throw new InvalidOperationException("Cannot save inventory data, it is null");
 	}
+	
+	public void DeleteGameData()
+	{
+		DataManager.DeleteGameData();
+	}
+	
+	public void DeletePermData()
+	{
+		DataManager.DeletePermData();
+	}
+	
+	public void DeleteInventoryData()
+	{
+		DataManager.DeleteInventoryData();
+	}
+	
+	public void DeleteAllData() 
+	{
+		GD.Print("Deleting All Data");
+		DeletePermData();
+		DeleteGameData();
+		DeleteInventoryData();
+	}
+	
 }
