@@ -1,5 +1,5 @@
 using Godot;
-using MyClasses;        // For Converters
+using MyClasses;
 
 public partial class GetBiomeTexture : TextureRect
 {

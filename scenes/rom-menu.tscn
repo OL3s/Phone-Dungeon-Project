@@ -18,10 +18,10 @@
 [ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://scenes/StyleBoxMenu.tres" id="14_yhqx5"]
 [ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scripts/data/filedata/SaveData.cs" id="16_rs64w"]
 [ext_resource type="PackedScene" uid="uid://cok7fvvmif3pb" path="res://assets/prefab/menu-contract.tscn" id="17_5gsci"]
-[ext_resource type="Script" uid="uid://bpyxpvs6sfs" path="res://scripts/LoadoutManager.cs" id="18_jb1v1"]
+[ext_resource type="Script" uid="uid://bpyxpvs6sfs" path="res://scripts/menu/LoadoutManager.cs" id="18_jb1v1"]
 [ext_resource type="PackedScene" uid="uid://b31xg250yhpfp" path="res://assets/prefab/selected-description.tscn" id="19_jb1v1"]
-[ext_resource type="Script" uid="uid://n5hmg1elol3c" path="res://scripts/ItemSelectedManager.cs" id="20_ax5xu"]
-[ext_resource type="Script" uid="uid://cj16r715hnvyj" path="res://scripts/ContractSelected.cs" id="20_epfvj"]
+[ext_resource type="Script" uid="uid://n5hmg1elol3c" path="res://scripts/menu/ItemSelectedManager.cs" id="20_ax5xu"]
+[ext_resource type="Script" uid="uid://cj16r715hnvyj" path="res://scripts/menu/ContractSelected.cs" id="20_epfvj"]
 [ext_resource type="Texture2D" uid="uid://ccks58su2ii0f" path="res://assets/sprites/menu/icons/spr-icon-skull.png" id="21_r4gec"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_131qp"]
@@ -48,7 +48,6 @@ font = ExtResource("12_yhqx5")
 script = ExtResource("16_rs64w")
 IncludeGameData = true
 IncludeInventoryData = true
-SaveOnExit = true
 
 [node name="Background" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_131qp")
@@ -219,12 +218,12 @@ mouse_filter = 0
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 4
 
-[node name="ItemContainer" type="VBoxContainer" parent="Categories/Loadout/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData", "descriptionTab")]
+[node name="ItemContainer" type="VBoxContainer" parent="Categories/Loadout/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData", "descriptionPanel")]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("18_jb1v1")
 saveData = NodePath("../../../../../SaveData")
-descriptionTab = NodePath("../../../SelectedPanel")
+descriptionPanel = NodePath("../../../SelectedPanel")
 
 [node name="Label" type="Label" parent="Categories/Loadout/ItemPanel/ScrollContainer/ItemContainer"]
 layout_mode = 2
@@ -234,7 +233,7 @@ label_settings = ExtResource("10_chs3y")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SelectedPanel" parent="Categories/Loadout" node_paths=PackedStringArray("ButtonEquip", "ButtonEquipTop", "saveData") instance=ExtResource("19_jb1v1")]
+[node name="SelectedPanel" parent="Categories/Loadout" node_paths=PackedStringArray("ButtonEquip", "ButtonEquipTop", "saveData", "ListItemsMarket", "ListItemsLoadout") instance=ExtResource("19_jb1v1")]
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
@@ -248,6 +247,9 @@ script = ExtResource("20_ax5xu")
 ButtonEquip = NodePath("EquipButton")
 ButtonEquipTop = NodePath("EquipButtonTop")
 saveData = NodePath("../../../SaveData")
+ListItemsMarket = NodePath("../../Market/ItemPanel/ScrollContainer/ItemContainer")
+ListItemsLoadout = NodePath("../ItemPanel/ScrollContainer/ItemContainer")
+currentList = "Loadout"
 
 [node name="EquipButton" type="Button" parent="Categories/Loadout/SelectedPanel"]
 layout_mode = 0
@@ -301,12 +303,12 @@ mouse_filter = 0
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 4
 
-[node name="ItemContainer" type="VBoxContainer" parent="Categories/Market/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData", "descriptionTab")]
+[node name="ItemContainer" type="VBoxContainer" parent="Categories/Market/ItemPanel/ScrollContainer" node_paths=PackedStringArray("saveData", "descriptionPanel")]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("18_jb1v1")
 saveData = NodePath("../../../../../SaveData")
-descriptionTab = NodePath("../../../SelectedPanel")
+descriptionPanel = NodePath("../../../SelectedPanel")
 displayMode = "Market"
 
 [node name="Label" type="Label" parent="Categories/Market/ItemPanel/ScrollContainer/ItemContainer"]
@@ -317,7 +319,7 @@ label_settings = ExtResource("10_chs3y")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SelectedPanel" parent="Categories/Market" node_paths=PackedStringArray("ButtonBuy", "saveData") instance=ExtResource("19_jb1v1")]
+[node name="SelectedPanel" parent="Categories/Market" node_paths=PackedStringArray("ButtonBuy", "saveData", "ListItemsMarket", "ListItemsLoadout", "HudGoldLabel") instance=ExtResource("19_jb1v1")]
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
@@ -330,6 +332,9 @@ grow_vertical = 1
 script = ExtResource("20_ax5xu")
 ButtonBuy = NodePath("BuyButton")
 saveData = NodePath("../../../SaveData")
+ListItemsMarket = NodePath("../ItemPanel/ScrollContainer/ItemContainer")
+ListItemsLoadout = NodePath("../../Loadout/ItemPanel/ScrollContainer/ItemContainer")
+HudGoldLabel = NodePath("../../../MainUI/ContainerTop/SpriteGold/LabelGold")
 
 [node name="BuyButton" type="Button" parent="Categories/Market/SelectedPanel"]
 layout_mode = 0

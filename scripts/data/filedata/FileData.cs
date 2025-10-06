@@ -19,6 +19,8 @@ namespace FileData
 		public int KillsHeavy { get; set; } = 0;
 		public int ContractSeed { get; set; } = 0;
 		public Item[] MarketItems { get; set; } = new Item[30];
+		public Item Equiped { get; set; } = null;
+		public Item EquipedUpper { get; set; } = null;
 
 		// Empty constructor for serialization
 		public GameData() { }
@@ -35,13 +37,14 @@ namespace FileData
 		/// <param name="amount">The amount of gold to add.</param>
 		public void AddGold(int amount)
 		{
-			GD.Print($"Adding {amount} gold.");
+			GD.Print($"Adding {amount} gold. (Current Gold: {Gold})");
 			Gold += amount;
 		}
 		
 		public void RemoveGold(int amount)
 		{
-			GD.Print($"Removing {amount} gold.");
+			GD.Print($"Removing {amount} gold. (Current Gold: {Gold})");
+			Gold -= amount;
 		}
 
 		/// <summary> Increment the wave count by 1. </summary>
@@ -62,12 +65,14 @@ namespace FileData
 		
 		public bool AddMarketItem(Item item)
 		{
+
 			for (int i = 0; i < MarketItems.Length; i++)
 			{
 				if (MarketItems[i] == null)
 				{
 					item.Index = i;
 					MarketItems[i] = item;
+					GD.Print($"Adding MarketItem: {item.Name}, {item.Index ?? -1}");
 					return true;
 				}
 			}
@@ -76,11 +81,58 @@ namespace FileData
 		
 		public void RemoveMarketItem(int index)
 		{
-			if (index >= 0 && index < MarketItems.Length)
+			GD.Print($"Removing MarketItem at index {index}");
+
+			// Out of bounds debugger
+			if (!(index >= 0 && index < MarketItems.Length))
+				throw new ArgumentOutOfRangeException(nameof(index), "Invalid MarketItem index.");
+
+			// Is null debugger
+			if (MarketItems[index] == null)
+				GD.PrintErr("Tried to remove a MarketItem which is already null");
+	
+			// remove index
+			MarketItems[index] = null;
+		}
+
+		public void SetEquipped(Item item, bool isUpper) 
+		{
+			GD.Print($"Setting equipped item: {item?.Name}, isUpper: {isUpper}");
+			if (item == null)
+				throw new ArgumentNullException(nameof(item), "Item cannot be null.");
+
+			// Prevent duplicate: if equipping to upper, remove from lower if same item, and vice versa
+			if (isUpper)
 			{
-				MarketItems[index] = null;
-				return;
+				if (Equiped != null && Equiped.Name == item.Name)
+					Equiped = null;
+				EquipedUpper = item;
 			}
+			else
+			{
+				if (EquipedUpper != null && EquipedUpper.Name == item.Name)
+					EquipedUpper = null;
+				Equiped = item;
+			}
+		}
+
+		public void RemoveEquipped(bool isUpper) 
+		{
+			if (isUpper)
+				EquipedUpper = null;
+			else
+				Equiped = null;
+		}
+
+		public int GetEquippedIndex(Item item)
+		{
+			if (item == null)
+				throw new ArgumentNullException(nameof(item), "Item cannot be null.");
+			if (Equiped != null && Equiped.Name == item.Name)
+				return 1;
+			if (EquipedUpper != null && EquipedUpper.Name == item.Name)
+				return 2;
+			return 0;
 		}
 
 		/// <summary>
@@ -105,6 +157,8 @@ namespace FileData
 			Kills = data.Kills;
 			KillsHeavy = data.KillsHeavy;
 			MarketItems = data.MarketItems;
+			Equiped = data.Equiped;
+			EquipedUpper = data.EquipedUpper;
 		}
 
 		public void RandomizeContractSeed()
@@ -190,8 +244,8 @@ namespace FileData
 		}
 
 		/// <summary> Add an item to the inventory. </summary>
-		/// <returns>True if the item was added successfully, false if the inventory is full.</returns>
-		public bool AddItem(Item newItem)
+		/// <returns>Index of added item OR -1 if failed</returns>
+		public int AddItem(Item newItem)
 		{
 			for (int i = 0; i < Items.Length; i++)
 			{
@@ -199,10 +253,10 @@ namespace FileData
 				{
 					newItem.Index = i;
 					Items[i] = newItem;
-					return true;
+					return i;
 				}
 			}
-			return false;
+			return -1;
 		}
 
 		/// <summary> Remove an item from the inventory by its index. </summary>
@@ -210,12 +264,35 @@ namespace FileData
 		/// <exception cref="ArgumentOutOfRangeException">Thrown if the index is invalid.</exception>
 		public void RemoveItem(int index)
 		{
-			if (index >= 0 && index < Items.Length)
-			{
-				Items[index] = null;
-				return;
-			}
-			throw new ArgumentOutOfRangeException(nameof(index), "Invalid inventory index.");
+			// Out of bounds debugger
+			if (!(index >= 0 && index < Items.Length))
+				throw new ArgumentOutOfRangeException(nameof(index), "Invalid inventory index.");
+				
+			// remove index
+			Items[index] = null;	
+		}
+		
+		public void RemoveItem(Item item)
+		{
+			// Is null debugger
+			int? index = item.Index;
+			if (index == null) 
+				throw new InvalidOperationException("Item has no index.");
+			
+			// Out of bounds debugger
+			int _index = item.Index.Value;
+			if (!(_index >= 0 && _index < Items.Length))
+				throw new ArgumentOutOfRangeException(nameof(index), "Invalid inventory index.");
+				
+			// remove index
+			Items[_index] = null;
+		}
+
+		public static bool EqualsItemAndIndex(Item item, int index)
+		{
+			if (item.Index == null) return false;
+
+			return item.Index == index;
 		}
 
 		/// <summary> Save the current state of InventoryData to a file. </summary>

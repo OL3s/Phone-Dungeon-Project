@@ -3,6 +3,7 @@ using System;
 using FileData;
 using Items;
 using Combat;
+using System.Formats.Asn1;
 
 /// <summary>
 /// SaveData node class to manage game, permanent, and inventory data saving.
@@ -13,7 +14,7 @@ public partial class SaveData : Node
 	[Export] public bool IncludeGameData;
 	[Export] public bool IncludePermData;
 	[Export] public bool IncludeInventoryData;
-	[Export] public bool SaveOnExit = false;
+	[Export] public bool SaveOnExit = true;
 
 	// Init datatypes
 	public GameData gameData;
@@ -30,22 +31,14 @@ public partial class SaveData : Node
 			inventoryData = new InventoryData();
 
 			// mock inventory for testing
-			inventoryData.AddItem(new Item(null, "Test Item Long Name", 10));
-			inventoryData.AddItem(new Item(null, "Test Item 2", 20));
-			inventoryData.AddItem(new Item(null, "Test Item 3", 30));
-			inventoryData.AddItem(new Item(null, "Test Item 4", 40));
+			inventoryData.AddItem(new Item(null, "Sword", 10));
 
 			// mock inventory store weapons for testing
 			gameData.AddMarketItem(new Weapon(null, "Sword", 100, new MeleeAttack(1.0f, 1.0f, null, null), 100));
 			gameData.AddMarketItem(new Weapon(null, "Bow", 200, new RangedAttack(10.0f, 50.0f, null, null), 100));
-			gameData.AddMarketItem(new Weapon(null, "Staff", 300, new BeamAttack(5.0f, 2.0f, 30.0f, null, null), 100));
-		
-			GD.Print(
-				"== PRINTING DATA OBJECTS ==\n\n" +
-				$"{gameData}\n" +
-				$"{inventoryData}\n"
-			);
-			
+			gameData.AddMarketItem(new Weapon(null, "Staff", 150, new BeamAttack(5.0f, 30.0f, 0.0f, null, null), 100));
+			gameData.AddMarketItem(new Weapon(null, "Dagger", 50, new MeleeAttack(0.5f, 0.5f, null, null), 100));
+
 		}
 	}
 
@@ -83,7 +76,7 @@ public partial class SaveData : Node
 	{
 		if (IncludeGameData && gameData != null)
 			gameData.Save();
-		else if (gameData == null)
+		else if (IncludeGameData && gameData == null)
 			throw new InvalidOperationException("Cannot save gamedata, it is null");
 	}
 
@@ -94,7 +87,7 @@ public partial class SaveData : Node
 	{
 		if (IncludePermData && permData != null)
 			permData.Save();
-		else if (permData == null)
+		else if (IncludePermData && permData == null)
 			throw new InvalidOperationException("Cannot save permdata, it is null");
 	}
 
@@ -104,7 +97,7 @@ public partial class SaveData : Node
 	{
 		if (IncludeInventoryData && inventoryData != null)
 			inventoryData.Save();
-		else if (inventoryData == null)
+		else if (IncludeInventoryData && inventoryData == null)
 			throw new InvalidOperationException("Cannot save inventory data, it is null");
 	}
 	

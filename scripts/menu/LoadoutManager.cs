@@ -5,7 +5,7 @@ using System;
 public partial class LoadoutManager : VBoxContainer
 {
 	[Export] public SaveData saveData;
-	[Export] public Control descriptionTab;
+	[Export] public Control descriptionPanel;
 	[Export(PropertyHint.Enum, "Loadout,Market")] public string displayMode = "Loadout";
 
 	public override void _Ready()
@@ -23,43 +23,66 @@ public partial class LoadoutManager : VBoxContainer
 			Item item = selectedList[i];
 			if (item != null)
 			{
-				CreateItemNode(item, i);
+				CreateItemNode(item);
 			}
 		}
-	}	
+	}
 
-	public void CreateItemNode(Item item, int index)
+	public void RefreshItems()
+	{
+		GD.Print("Refreshing items in LoadoutManager");
+		// Clear existing items
+		foreach (Node child in GetChildren())
+		{
+			if (child is Button button)
+				button.QueueFree();
+		}
+		ProcessItems();
+	}
+
+	public void CreateItemNode(Item item)
 	{
 		var itemTres = GD.Load<PackedScene>("res://assets/prefab/item_button.tscn");
 		var itemButton = itemTres.Instantiate<Button>();
+		
+		// Transparent if item exists in loadout
+		//!!TODO!!
 
 		// Get references to the labels
 		var labelName = itemButton.GetNode<Label>("LabelName");
 		var labelPrice = itemButton.GetNode<Label>("LabelPrice");
+		var labelEquipped = itemButton.GetNode<Label>("LabelEquipped");
 
 		// Set the label texts
 		labelName.Text = item.Name;
 		labelPrice.Text = item.Cost.ToString();
-
-		// Store the index in metadata
-		itemButton.SetMeta("Index", index);
+		if (displayMode == "Market")
+			labelPrice.Modulate = saveData.gameData.Gold >= item.Cost
+				? new Color(1, 1, 1)
+				: new Color(1, 0, 0);
+		labelEquipped.Text = saveData.gameData.GetEquippedIndex(item) switch
+		{
+			1 => "D",
+			2 => "T",
+			_ => ""
+		};
 
 		// Add the button as a child
 		AddChild(itemButton);
 
 		// Connect the button press signal
-		itemButton.Pressed += () => OnItemButtonPressed(index, item);
+		itemButton.Pressed += () => OnItemButtonPressed(item);
 	}
 
-	private void OnItemButtonPressed(int index, Item item)
+	private void OnItemButtonPressed(Item item)
 	{
 		// Handle button press logic
-		GD.Print($"Button pressed: {item.Name} at index {index}");
+		GD.Print($"Button item pressed\n{item}\n");
 
 		// Update description tab with item details
-		if (descriptionTab != null)
+		if (descriptionPanel != null)
 		{
-			(descriptionTab as ItemSelectedManager)?.SelectItem(item);
+			(descriptionPanel as ItemSelectedManager)?.SelectItem(item);
 		}
 	}
 }

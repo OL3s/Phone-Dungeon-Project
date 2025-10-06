@@ -1,7 +1,4 @@
 using Godot;
-using System;
-using System.Reflection;
-using FileData;
 
 public partial class LabelSaveData : Label
 {
@@ -15,14 +12,19 @@ public partial class LabelSaveData : Label
 
 	public override void _Ready()
 	{
+		UpdateLabel();
+	}
+
+	public void UpdateLabel()
+	{
 		var saveNode = GetTree().Root.GetNode("Main").GetNode("SaveData") as SaveData;
-		if (saveNode == null) 
+		if (saveNode == null)
 		{
+			GD.PrintErr("No SaveData node found in scene tree in LabelSaveData");
 			Text = "NaN";
 			return;
 		}
 
-		// Get the correct data object based on SaveDataName
 		object dataObject = SaveDataName switch
 		{
 			"gameData" => saveNode.gameData,
@@ -37,18 +39,15 @@ public partial class LabelSaveData : Label
 			return;
 		}
 
-		// Use reflection to get the property value
 		var property = dataObject.GetType().GetProperty(ValueName);
 		if (property != null)
 		{
 			var value = property.GetValue(dataObject);
-			Text = value?.ToString() ?? "Null";
+			Text = stringBefore + (value?.ToString() ?? "Null") + stringAfter;
 		}
 		else
 		{
-			Text = "Property Not Found";
+			Text = stringBefore + "Property Not Found" + stringAfter;
 		}
-		
-		Text = stringBefore + Text + stringAfter;
 	}
 }

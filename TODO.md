@@ -1,2 +1,2 @@
 # TODO
-- Make Buy & Eqip button(s) work
+- Make save/load prints and make sure it works

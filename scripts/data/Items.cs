@@ -31,7 +31,7 @@ namespace Items
 		
 		public override string ToString() 
 		{
-			return "itemObject:{" + Name + "}";
+			return $"itemObject: Name: {Name}, Cost: {Cost}, Condition: {Condition}, Index: {Index}";
 		}
 	}
 
