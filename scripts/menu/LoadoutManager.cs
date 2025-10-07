@@ -30,7 +30,7 @@ public partial class LoadoutManager : VBoxContainer
 
 	public void RefreshItems()
 	{
-		GD.Print("Refreshing items in LoadoutManager");
+		GD.Print("[LoadoutManager] Refreshing items in LoadoutManager");
 		// Clear existing items
 		foreach (Node child in GetChildren())
 		{
@@ -77,7 +77,7 @@ public partial class LoadoutManager : VBoxContainer
 	private void OnItemButtonPressed(Item item)
 	{
 		// Handle button press logic
-		GD.Print($"Button item pressed\n{item}\n");
+		GD.Print($"[LoadoutManager] Button item pressed\n{item}\n");
 
 		// Update description tab with item details
 		if (descriptionPanel != null)

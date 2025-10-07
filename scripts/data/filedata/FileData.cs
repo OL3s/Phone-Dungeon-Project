@@ -21,14 +21,16 @@ namespace FileData
 		public Item[] MarketItems { get; set; } = new Item[30];
 		public Item Equiped { get; set; } = null;
 		public Item EquipedUpper { get; set; } = null;
+		public bool UpdateMarket { get; set; } = true;
 
 		// Empty constructor for serialization
-		public GameData() { }
+		public GameData() { GD.Print("[GameData] Empty GameData for Json loader"); }
 
 		/// <summary> Constructor for GameData, optionally loading existing data. </summary>
 		/// <param name="instantLoad">If true, loads data immediately on default.</param>
-		public GameData(bool instantLoad = true)
+		public GameData(bool instantLoad)
 		{
+			GD.Print("[GameData] Init");
 			if (instantLoad)
 				Load();
 		}
@@ -37,20 +39,20 @@ namespace FileData
 		/// <param name="amount">The amount of gold to add.</param>
 		public void AddGold(int amount)
 		{
-			GD.Print($"Adding {amount} gold. (Current Gold: {Gold})");
+			GD.Print($"[GameData] Adding {amount} gold. (Current Gold: {Gold})");
 			Gold += amount;
 		}
 		
 		public void RemoveGold(int amount)
 		{
-			GD.Print($"Removing {amount} gold. (Current Gold: {Gold})");
+			GD.Print($"[GameData] Removing {amount} gold. (Current Gold: {Gold})");
 			Gold -= amount;
 		}
 
 		/// <summary> Increment the wave count by 1. </summary>
 		public void AddWave()
 		{
-			GD.Print("Adding wave.");
+			GD.Print("[GameData] Adding wave.");
 			Wave++;
 		}
 
@@ -58,14 +60,19 @@ namespace FileData
 		/// <param name="isHeavy">True if the kill was a heavy enemy.</param>
 		public void AddKill(bool isHeavy)
 		{
-			GD.Print("Adding kill; isHeavy: " + isHeavy);
+			GD.Print($"[GameData] Adding kill; isHeavy: {isHeavy}");
 			Kills++;
 			KillsHeavy += (isHeavy) ? 1 : 0;
 		}
 		
 		public bool AddMarketItem(Item item)
 		{
+			GD.Print($"[GameData] Adding MarketItem: {item.Name}");
 
+			// Is null debugger
+			if (item == null)
+				throw new ArgumentNullException(nameof(item), "Item cannot be null.");
+		
 			for (int i = 0; i < MarketItems.Length; i++)
 			{
 				if (MarketItems[i] == null)
@@ -81,7 +88,7 @@ namespace FileData
 		
 		public void RemoveMarketItem(int index)
 		{
-			GD.Print($"Removing MarketItem at index {index}");
+			GD.Print($"[GameData] Removing MarketItem at index {index}");
 
 			// Out of bounds debugger
 			if (!(index >= 0 && index < MarketItems.Length))
@@ -97,7 +104,7 @@ namespace FileData
 
 		public void SetEquipped(Item item, bool isUpper) 
 		{
-			GD.Print($"Setting equipped item: {item?.Name}, isUpper: {isUpper}");
+			GD.Print($"[GameData] Setting equipped item: {item?.Name}, isUpper: {isUpper}");
 			if (item == null)
 				throw new ArgumentNullException(nameof(item), "Item cannot be null.");
 
@@ -118,6 +125,7 @@ namespace FileData
 
 		public void RemoveEquipped(bool isUpper) 
 		{
+			GD.Print($"[GameData] Removing equipped item, isUpper: {isUpper}");
 			if (isUpper)
 				EquipedUpper = null;
 			else
@@ -140,7 +148,7 @@ namespace FileData
 		/// </summary>
 		public void Save()
 		{
-			GD.Print("Saving GameData");
+			GD.Print("[GameData] Saving GameData");
 			DataManager.SaveData("GameData", this);
 		}
 
@@ -149,6 +157,7 @@ namespace FileData
 		/// </summary>
 		public void Load()
 		{
+			GD.Print("[GameData] Loading GameData");
 			var data = DataManager.LoadData<GameData>("GameData");
 			if (data == null) { GD.Print("No GameData saved found! creating empty"); return; }
 			Gold = data.Gold;
@@ -164,7 +173,7 @@ namespace FileData
 		public void RandomizeContractSeed()
 		{
 			ContractSeed = new Random().Next();
-			GD.Print($"New contract seed: {ContractSeed}");
+			GD.Print($"[GameData] New contract seed: {ContractSeed}");
 		}
 
 		public override string ToString()
@@ -189,16 +198,18 @@ namespace FileData
 		public int[] Gems { get; set; } = { 0, 0, 0 };
 
 		// Empty constructor for serialization
-		public PermData() { }
+		public PermData() { GD.Print("[PermData] Empty PermData for Json loader"); }
 
-		public PermData(bool instantLoad = true)
+		public PermData(bool instantLoad)
 		{
-			GD.Print("PermData Init");
+			GD.Print("[PermData] Init");
 			if (instantLoad)
 				Load();
 		}
 		public void AddGem(int index)
 		{
+			GD.Print($"[PermData] Adding gem at index {index}");
+			// Out of bounds debugger
 			if (index < 0 || index >= Gems.Length) throw new ArgumentOutOfRangeException(nameof(index), "Invalid gem index.");
 			Gems[index]++;
 		}
@@ -208,7 +219,7 @@ namespace FileData
 		/// </summary>
 		public void Save()
 		{
-			GD.Print("Saving PermData");
+			GD.Print("[PermData] Saving PermData");
 			DataManager.SaveData("PermData", this);
 		}
 
@@ -217,8 +228,9 @@ namespace FileData
 		/// </summary>
 		public void Load()
 		{
+			GD.Print("[PermData] Loading PermData");
 			var data = DataManager.LoadData<PermData>("PermData");
-			if (data == null) { GD.Print("No PermData saved found!, creating empty"); return; }
+			if (data == null) { GD.Print("[PermData] No PermData saved found!, creating empty"); return; }
 			Gems = data.Gems;
 		}
 
@@ -234,11 +246,11 @@ namespace FileData
 		public Item[] Items { get; set; } = new Item[40];
 
 		// Empty constructor for serialization
-		public InventoryData() { }
-		
-		public InventoryData(bool instantLoad = true)
+		public InventoryData() { GD.Print("[InventoryData] Empty InventoryData for Json loader"); }
+
+		public InventoryData(bool instantLoad)
 		{
-			GD.Print("InventoryData Init");
+			GD.Print("[InventoryData] Init");
 			if (instantLoad)
 				Load();
 		}
@@ -247,6 +259,7 @@ namespace FileData
 		/// <returns>Index of added item OR -1 if failed</returns>
 		public int AddItem(Item newItem)
 		{
+			GD.Print($"[InventoryData] Adding item {newItem.Name} to inventory.");
 			for (int i = 0; i < Items.Length; i++)
 			{
 				if (Items[i] == null)
@@ -264,6 +277,8 @@ namespace FileData
 		/// <exception cref="ArgumentOutOfRangeException">Thrown if the index is invalid.</exception>
 		public void RemoveItem(int index)
 		{
+			GD.Print("[InventoryData] Removing item from inventory.");
+
 			// Out of bounds debugger
 			if (!(index >= 0 && index < Items.Length))
 				throw new ArgumentOutOfRangeException(nameof(index), "Invalid inventory index.");
@@ -274,6 +289,8 @@ namespace FileData
 		
 		public void RemoveItem(Item item)
 		{
+			GD.Print("[InventoryData] Removing item from inventory.");
+
 			// Is null debugger
 			int? index = item.Index;
 			if (index == null) 
@@ -291,20 +308,20 @@ namespace FileData
 		public static bool EqualsItemAndIndex(Item item, int index)
 		{
 			if (item.Index == null) return false;
-
 			return item.Index == index;
 		}
 
 		/// <summary> Save the current state of InventoryData to a file. </summary>
 		public void Save()
 		{
-			GD.Print("Saving InventoryData");
+			GD.Print("[InventoryData] Saving InventoryData");
 			DataManager.SaveData("InventoryData", this);
 		}
 
 		/// <summary> Load the state of InventoryData from a file. </summary>
 		public void Load()
 		{
+			GD.Print("[InventoryData] Loading InventoryData");
 			var data = DataManager.LoadData<InventoryData>("InventoryData");
 			if (data == null) { GD.Print("No InventoryData saved found!, creating empty"); return; }
 			Items = data.Items;
@@ -339,55 +356,70 @@ namespace FileData
 		/// <summary> Load the state of a data object from a file. </summary>
 		public static T LoadData<T>(string fileName)
 		{
-			GD.Print($"Loading {fileName} data.");
+			GD.Print($"[DataManager] Loading {fileName} data.");
 			var path = PathOf(fileName);
-			if (!FileAccess.FileExists(path)) return default;
+			if (!FileAccess.FileExists(path)) 
+			{
+				GD.PrintErr($"[DataManager] File {fileName} does not exist, returning default.");
+				return default;
+			}
 
 			using var f = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+			if (f == null)
+			{
+				GD.PrintErr($"[DataManager] Failed to open {fileName} for reading!");
+				return default;
+			}
+			
 			string json = f.GetAsText();
-			return System.Text.Json.JsonSerializer.Deserialize<T>(json, Options);
+			var result = System.Text.Json.JsonSerializer.Deserialize<T>(json, Options);
+			GD.Print($"[DataManager] Successfully loaded {fileName} data.");
+			return result;
 		}
 
 		/// <summary> Save the state of a data object to a file. </summary>
 		public static void SaveData<T>(string fileName, T data)
 		{
-			GD.Print($"Saving {fileName} data.");
+			GD.Print($"[DataManager] Saving {fileName} data.");
 			var path = PathOf(fileName);
+			
 			using var f = FileAccess.Open(path, FileAccess.ModeFlags.Write);
+			if (f == null)
+			{
+				GD.PrintErr($"[DataManager] Failed to open {fileName} for writing!");
+				return;
+			}
+			
 			f.StoreString(System.Text.Json.JsonSerializer.Serialize(data, Options));
+			GD.Print($"[DataManager] Successfully saved {fileName} data.");
+		}
+
+		public static void DeleteData(string fileName)
+		{
+			GD.Print($"[DataManager] Deleting {fileName} data.");
+			var path = PathOf(fileName);
+			if (FileAccess.FileExists(path))
+				DirAccess.RemoveAbsolute(path);
+			else
+				GD.Print($"[DataManager] No {fileName} file to delete.");
 		}
 
 		/// <summary> Delete the saved GameData file. </summary>
 		public static void DeleteGameData()
 		{
-			GD.Print("Deleting GameData file.");
-			var path = PathOf("GameData");
-			if (FileAccess.FileExists(path))
-				DirAccess.RemoveAbsolute(path);
-			else
-				GD.Print("No GameData file to delete.");
+			DeleteData("GameData");
 		}
 
 		/// <summary> Delete the saved PermData file. </summary>
 		public static void DeletePermData()
 		{
-			GD.Print("Deleting PermData file.");
-			var path = PathOf("PermData");
-			if (FileAccess.FileExists(path))
-				DirAccess.RemoveAbsolute(path);
-			else
-				GD.Print("No PermData file to delete.");
+			DeleteData("PermData");
 		}
 
 		/// <summary> Delete the saved InventoryData file. </summary>
 		public static void DeleteInventoryData()
 		{
-			GD.Print("Deleting InventoryData file.");
-			var path = PathOf("InventoryData");
-			if (FileAccess.FileExists(path))
-				DirAccess.RemoveAbsolute(path);
-			else
-				GD.Print("No InventoryData file to delete.");
+			DeleteData("InventoryData");
 		}
 	}
 }

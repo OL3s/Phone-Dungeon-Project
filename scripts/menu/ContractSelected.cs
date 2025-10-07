@@ -34,12 +34,12 @@ public partial class ContractSelected : Control
 	{
 		CategoryContract.Visible = true;
 		this.Visible = false;
-		GD.Print("Back button pressed!");
+		GD.Print("[ContractSelected] Back button pressed!");
 	}
 
 	private void OnButtonStartPressed()
 	{
-		GD.Print("Start button pressed! TODO -> START MISSION");
+		GD.Print("[ContractSelected] Start button pressed! TODO -> START MISSION");
 		if (CurrentContract == null)
 		{
 			throw new Exception("No contract selected on start button pressed, cannot start game!");

@@ -23,7 +23,7 @@ public partial class CategoryManager : Control
 
 	// Make only target menu visible
 	private void OnMenuButtonPressed(int index) {
-		GD.Print($"CategoryManager: Button index {index} pressed");
+		GD.Print($"[CategoryManager] Button index {index} pressed");
 		var i = 0;
 		
 		// Make Ui visible

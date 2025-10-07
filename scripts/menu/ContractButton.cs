@@ -50,7 +50,7 @@ public partial class ContractButton : Control
 
 	private void OnButtonPressed()
 	{
-		GD.Print("Contract pressed!");
+		GD.Print("[ContractButton] Contract pressed!");
 		ContractSelectedMenu.Visible = true;
 		ContractMenu.Visible = false;
 		

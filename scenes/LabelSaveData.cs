@@ -17,10 +17,11 @@ public partial class LabelSaveData : Label
 
 	public void UpdateLabel()
 	{
+		GD.Print("[LabelSaveData] updating HudLabel");
 		var saveNode = GetTree().Root.GetNode("Main").GetNode("SaveData") as SaveData;
 		if (saveNode == null)
 		{
-			GD.PrintErr("No SaveData node found in scene tree in LabelSaveData");
+			GD.PrintErr("[LabelSaveData] No SaveData node found in scene tree in LabelSaveData");
 			Text = "NaN";
 			return;
 		}
