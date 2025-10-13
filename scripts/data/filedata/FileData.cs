@@ -3,6 +3,7 @@ using System;
 using System.Text.Json;
 using Items;
 using MyEnums;
+using MyClasses;
 
 // Core data handling namespace
 namespace FileData
@@ -17,11 +18,11 @@ namespace FileData
 		public Biomes Biome { get; set; } = Biomes.Woodland;
 		public int Kills { get; set; } = 0;
 		public int KillsHeavy { get; set; } = 0;
-		public int ContractSeed { get; set; } = 0;
+		public int Seed { get; set; } = 0;
 		public Item[] MarketItems { get; set; } = new Item[30];
 		public Item Equiped { get; set; } = null;
 		public Item EquipedUpper { get; set; } = null;
-		public bool UpdateMarket { get; set; } = true;
+		public bool UpdateMenu { get; set; } = true;
 
 		// Empty constructor for serialization
 		public GameData() { GD.Print("[GameData] Empty GameData for Json loader"); }
@@ -168,19 +169,47 @@ namespace FileData
 			MarketItems = data.MarketItems;
 			Equiped = data.Equiped;
 			EquipedUpper = data.EquipedUpper;
+			Seed = data.Seed;
+			UpdateMenu = data.UpdateMenu;
 		}
 
-		public void RandomizeContractSeed()
+		public void RandomizeSeed()
 		{
-			ContractSeed = new Random().Next();
-			GD.Print($"[GameData] New contract seed: {ContractSeed}");
+			Seed = new Random().Next();
+			GD.Print($"[GameData] New seed: {Seed}");
+		}
+
+		public void GenerateMarketItems()
+		{
+			GD.Print("[GameData] Generating MarketItems for current wave and biome");
+			Random rng = new Random();
+			for (int i = 0; i < MarketItems.Length; i++)
+			{
+				if (rng.NextDouble() < 0.5) // 50% chance to generate an item
+				{
+					GenerateMarketItem(Wave, Biome);
+				}
+			}
+		}
+
+
+		public void GenerateMarketItem(int wave, Biomes biome)
+		{
+			GD.Print($"[GameData] Generating MarketItems for wave {wave}, biome {biome}");
+			AddMarketItem(Item.ItemPreset(ItemPresets.Sword));
+		}
+
+		public void ClearMarketItems()
+		{
+			GD.Print("[GameData] Clearing MarketItems");
+			MarketItems = new Item[30];
 		}
 
 		public override string ToString()
 		{
 			string Return = string.Format(
-				"== GAME DATA == \nGold: {0}\nWave: {1}\nBiome: {2}\nKills: {3} (Heavy: {4})\nContractSeed: {5}\nMarket Items({6}):\n",
-						Gold, Wave, Biome, Kills, KillsHeavy, ContractSeed, MarketItems.Length);
+				"== GAME DATA == \nGold: {0}\nWave: {1}\nBiome: {2}\nKills: {3} (Heavy: {4})\nSeed: {5}\nMarket Items({6}):\n",
+						Gold, Wave, Biome, Kills, KillsHeavy, Seed, MarketItems.Length);
 			foreach (Item item in MarketItems)
 			{
 				if (item != null)

@@ -27,6 +27,16 @@ public partial class SaveData : Node
 		if (IncludeGameData) gameData = new GameData(true);
 		if (IncludePermData) permData = new PermData(true);
 		if (IncludeInventoryData) inventoryData = new InventoryData(true);
+
+		// Regenerate market if stated in gamedata
+		if (IncludeGameData && gameData != null && gameData.UpdateMenu)
+		{
+			GD.Print("[SaveData] Updating menu, regenerating market items and randomizing seed.");
+			gameData.RandomizeSeed();
+			gameData.GenerateMarketItems();
+			gameData.UpdateMenu = false; // Reset flag after updating
+			gameData.Save(); // Save changes to gamedata
+		}
 	}
 
 	// Handle data input event

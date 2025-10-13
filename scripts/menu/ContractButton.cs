@@ -17,7 +17,7 @@ public partial class ContractButton : Control
 	public override void _Ready()
 	{
 		gameData = saveData.gameData;
-		contract = new Contract(gameData.Biome, gameData.Wave, gameData.ContractSeed + Index);
+		contract = new Contract(gameData.Biome, gameData.Wave, gameData.Seed + Index);
 
 		// Get the categories control
 		if (ContractSelectedMenu == null || ContractMenu == null)
