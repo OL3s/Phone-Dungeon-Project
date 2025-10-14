@@ -39,13 +39,13 @@ public partial class ItemSelectedManager : Control
 	{
 		if (item == null)
 		{
-			GD.Print("'No item' selected in ItemSelectedManager");
+			GD.Print("[ItemSelectedManager] Selected item: 'No item'");
 			Visible = false;
 			SelectedItem = null;
 			return;
 		}
 
-		GD.Print($"Selected item:\n{item}\nin ItemSelectedManager");
+		GD.Print($"[ItemSelectedManager] Selected item: {item.Name}");
 		SelectedItem = item; // add selected item
 
 		// enable buy button based on price
@@ -89,6 +89,7 @@ public partial class ItemSelectedManager : Control
 		/* 2. Add in inventory */
 		int inventoryIndex = saveData.inventoryData.AddItem(SelectedItem);
 		if (inventoryIndex == -1) throw new Exception("No space in inventory to add item");
+		saveData.inventoryData.Items[inventoryIndex].Index = inventoryIndex; // set index in inventory
 
 		/* 3. Remove from market (use preserved index) */
 		// saveData.gameData.MarketItems[SelectedItem.Index.Value] = null; // wrong after AddItem

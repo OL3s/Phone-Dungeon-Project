@@ -1,6 +1,5 @@
 using Godot;
 using Items;
-using System;
 
 public partial class LoadoutManager : VBoxContainer
 {
@@ -60,15 +59,18 @@ public partial class LoadoutManager : VBoxContainer
 			labelPrice.Modulate = saveData.gameData.Gold >= item.Cost
 				? new Color(1, 1, 1)
 				: new Color(1, 0, 0);
-		labelEquipped.Text = saveData.gameData.GetEquippedIndex(item) switch
-		{
-			1 => "D",
-			2 => "T",
-			_ => ""
-		};
+
+			labelEquipped.Text = (displayMode == "Loadout")
+				? saveData.gameData.EqualsEquippedIndex(item) switch
+				{
+					1 => "D",
+					2 => "T",
+					_ => ""
+				}
+				: "";
 
 		// Add the button as a child
-		AddChild(itemButton);
+			AddChild(itemButton);
 
 		// Connect the button press signal
 		itemButton.Pressed += () => OnItemButtonPressed(item);

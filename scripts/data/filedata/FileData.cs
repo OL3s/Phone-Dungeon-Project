@@ -1,9 +1,7 @@
 using Godot;
 using System;
-using System.Text.Json;
 using Items;
 using MyEnums;
-using MyClasses;
 
 // Core data handling namespace
 namespace FileData
@@ -112,15 +110,23 @@ namespace FileData
 			// Prevent duplicate: if equipping to upper, remove from lower if same item, and vice versa
 			if (isUpper)
 			{
-				if (Equiped != null && Equiped.Name == item.Name)
+				if (Equiped != null && Equiped.Index == item.Index)
 					Equiped = null;
-				EquipedUpper = item;
+				// unequip if same item
+				if (EquipedUpper != null && EquipedUpper.Index == item.Index)
+					EquipedUpper = null;
+				else 
+					EquipedUpper = item;
 			}
 			else
 			{
-				if (EquipedUpper != null && EquipedUpper.Name == item.Name)
+				if (EquipedUpper != null && EquipedUpper.Index == item.Index)
 					EquipedUpper = null;
-				Equiped = item;
+				// unequip if same item
+				if (Equiped != null && Equiped.Index == item.Index)
+					Equiped = null;
+				else
+					Equiped = item;
 			}
 		}
 
@@ -133,13 +139,32 @@ namespace FileData
 				Equiped = null;
 		}
 
-		public int GetEquippedIndex(Item item)
+		/// <summary>
+		/// Check if the given item is currently equipped.
+		/// Returns 0 if not equipped, 1 if equipped in lower slot, 2 if equipped in upper slot.
+		/// If the item is null, throws an ArgumentNullException.
+		/// </summary>
+		/// <param name="item">The item to check for being equipped.</param>
+		/// <returns>0 if not equipped, 1 if equipped in lower slot, 2 if equipped in upper slot.</returns>
+		/// <exception cref="ArgumentNullException">Thrown if the item is null.</exception>
+		public int EqualsEquippedName(Item item)
 		{
 			if (item == null)
 				throw new ArgumentNullException(nameof(item), "Item cannot be null.");
 			if (Equiped != null && Equiped.Name == item.Name)
 				return 1;
 			if (EquipedUpper != null && EquipedUpper.Name == item.Name)
+				return 2;
+			return 0;
+		}
+
+		public int EqualsEquippedIndex(Item item)
+		{
+			if (item == null)
+				throw new ArgumentNullException(nameof(item), "Item cannot be null.");
+			if (Equiped != null && Equiped.Index == item.Index)
+				return 1;
+			if (EquipedUpper != null && EquipedUpper.Index == item.Index)
 				return 2;
 			return 0;
 		}
@@ -151,6 +176,19 @@ namespace FileData
 		{
 			GD.Print("[GameData] Saving GameData");
 			DataManager.SaveData("GameData", this);
+		}
+
+		public bool CheckEquipped(bool isUpper) {
+			if (isUpper)
+				return (EquipedUpper != null);
+			else
+				return (Equiped != null);
+		}
+
+		public bool CheckItemEquipped(Item item) {
+			if (item == null)
+				throw new ArgumentNullException(nameof(item), "Item cannot be null.");
+			return (EqualsEquippedIndex(item) != 0);
 		}
 
 		/// <summary>
