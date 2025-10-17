@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://digowhkhw63xj"]
+
+[ext_resource type="Texture2D" uid="uid://b2dh02yjyqk8p" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome-woodlands.png" id="1_0vcjy"]
+[ext_resource type="Script" uid="uid://0fxtp3d3h1r7" path="res://scripts/prefab/MobDefaultSprite2D.cs" id="2_fnb7l"]
+[ext_resource type="Script" uid="uid://qq6xiuetyk0q" path="res://scripts/PlayerInput.cs" id="3_fnb7l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kfbeb"]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0vcjy")
+script = ExtResource("2_fnb7l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_kfbeb")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
+[node name="PlayerInput" type="Node" parent="."]
+script = ExtResource("3_fnb7l")
+inputType = 2

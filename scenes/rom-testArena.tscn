@@ -1,3 +1,7 @@
-[gd_scene format=3 uid="uid://ce7ucbl0qt4mn"]
+[gd_scene load_steps=2 format=3 uid="uid://ce7ucbl0qt4mn"]
+
+[ext_resource type="PackedScene" uid="uid://digowhkhw63xj" path="res://assets/prefab/player-default.tscn" id="1_68ggi"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_68ggi")]
