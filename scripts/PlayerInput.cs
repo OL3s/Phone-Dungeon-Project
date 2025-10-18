@@ -5,7 +5,6 @@ using InputManager;
 public partial class PlayerInput : Node
 {
 	[Export] public InputType inputType { get; set; } = InputType.Auto;
-
 	public InputValues[] inputs = new InputValues[Enum.GetValues<InputPositionType>().Length];
 	
 	

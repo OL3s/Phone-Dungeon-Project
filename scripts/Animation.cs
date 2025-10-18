@@ -7,8 +7,7 @@ namespace Animation
 	{
 		public static float SwayMovementOffset(double delta, float range, float speed)
 		{
-			// Implement sway movement calculation
-			return (float)(Math.Sin(delta * speed) * 0.5 + 0.5) * range;
+			return (float)(Math.Sin(delta * speed) * range);
 		}
 
 		public static float BounceMovementOffset(double delta, float range, float speed)
@@ -66,6 +65,14 @@ namespace Animation
 		public static float LerpPositionY(double delta, float current, float target, float speed)
 		{
 			// Implement linear interpolation for position Y
+			if (Math.Abs(target - current) < 0.01f)
+				return target;
+			return current + (target - current) * speed * (float)delta;
+		}
+
+		public static float Lerp(double delta, float current, float target, float speed)
+		{
+			// General linear interpolation
 			if (Math.Abs(target - current) < 0.01f)
 				return target;
 			return current + (target - current) * speed * (float)delta;

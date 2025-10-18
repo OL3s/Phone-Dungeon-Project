@@ -4,6 +4,7 @@ using System;
 
 public partial class PlayerMovement : Node
 {
+	[Export] public bool EnableDebugLogs = false;
 	[Export] public CharacterBody2D playerBody;
 	[Export] public PlayerInput playerInput;
 	[Export] public float MoveSpeed = 100f;
@@ -26,7 +27,7 @@ public partial class PlayerMovement : Node
 		InputValues inputMovement = playerInput.GetInput(InputPositionType.Movement);
 		playerBody.Velocity = inputMovement.Output * MoveSpeed;
 		playerBody.MoveAndSlide();
-		if (playerBody.Velocity != Vector2.Zero)
+		if (playerBody.Velocity != Vector2.Zero && EnableDebugLogs)
 			GD.Print($"[PlayerMovement] Moving with velocity: {playerBody.Velocity} => pos: {playerBody.Position}");
 	}
 }
