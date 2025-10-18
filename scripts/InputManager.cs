@@ -1,95 +1,56 @@
+using System;
 using Godot;
 
 namespace InputManager
 {
 	public class InputValues
 	{
-		public float MaxRadius = 100f;   // pixels from StartPos for full strength
-		public static float DeadZone = 0.15f;  // 0..1 (15%)
-		public float TapTime = 0.25f;  // seconds
 
-		public Vector2 StartPos { get; set; }
-		public Vector2 CurrentPos { get; set; }
-		public InputPositionType? inputPositionType { get; set; }
-
-		private Vector2 Delta => CurrentPos - StartPos;
-		private float RawStrength01 => Mathf.Clamp(Delta.Length() / Mathf.Max(1f, MaxRadius), 0f, 1f);
-
-		public float Strength
-		{
-			get
-			{
-				float s = RawStrength01;
-				if (s <= DeadZone) return 0f;
-				return (s - DeadZone) / (1f - DeadZone);
-			}
-		}
-
-		public Vector2 Direction => Delta == Vector2.Zero ? Vector2.Zero : Delta.Normalized();
-		public Vector2 Output => Direction * Strength;
-
-		public double TimeHeld { get; private set; }
-		public bool IsDown { get; private set; }
-		public bool JustPressed { get; private set; }
-		public bool JustReleased { get; private set; }
-
-		public bool IsDrag => Strength > DeadZone && IsDown;
-		public bool IsTap => JustReleased && TimeHeld <= TapTime && RawStrength01 < DeadZone;
-		public bool IsHold => IsDown && TimeHeld > TapTime && !IsDrag && !IsTap;
-
-		/*
-			IsTap is for tap ability
-			IsDrag is for drag ability
-		*/
-		
+		public Vector2 Output { get; private set; } = Vector2.Zero; // output vector
+		public InputPositionType PositionType { get; private set; } // position type of the input
+		private float deadzone { get; } = 0.2f; // deadzone for input
+		private float holdTimer { get; set; } = 0.0f; // timer for how long the input has been held
+		private float holdThreshold { get; } = 0.5f; // threshold for considering the input as held
+		public bool IsTapped { get; private set; } = false; // whether the input was just tapped
+		public bool IsDragging { get; private set; } = false; // whether the input is being dragged
 		public InputValues() { }
-		public InputValues(InputPositionType posType) {
-			inputPositionType = posType;
+		public InputValues(InputPositionType posType, float deadzone = 0.2f) {
+			PositionType = posType;
+			this.deadzone = deadzone;
 		}
 
 		/// <summary>
-		/// Update input values
+		/// Updates the input values based on the provided parameters.
 		/// </summary>
-		/// <param name="delta"></param>
-		/// <param name="pressed">Whether the input is currently pressed</param>
-		/// <param name="pos">The current position of the input</param>
-		public void Update(double delta, bool pressed, Vector2 pos)
+		/// <param name="delta">The time elapsed since the last update.</param>
+		/// <param name="pressed">Whether the input is currently pressed.</param>
+		/// <param name="rawInput">The raw input vector. Length must be between 0 and 1.</param>
+		/// <exception cref="ArgumentOutOfRangeException"></exception> 
+		public void Update(double delta, bool pressed, Vector2 rawInput)
 		{
-			// JustPressed
-			if (pressed && !IsDown)
-			{
-				JustPressed = true;
-				StartPos = pos;
-				TimeHeld = 0;
-				GD.Print($"[InputValues] JustPressed at {StartPos}");
-			}
-			else JustPressed = false;
+			// Debug length
+			if (rawInput.Length() > 1.0f)
+				throw new ArgumentOutOfRangeException("rawInput", "Input vector length cannot exceed 1.0f < " + rawInput.Length() + ">");
 
-			// JustReleased
-			if (!pressed && IsDown) {
-				JustReleased = true;
-				GD.Print($"[InputValues] JustReleased after {TimeHeld} seconds");
-			} else {
-				JustReleased = false;
-			}
+			// Hold Timer
+			if (pressed)
+				holdTimer += (float)delta;
+			else
+				holdTimer = 0.0f;
 
-			// Update state
-			IsDown = pressed;
-			CurrentPos = pos;
-			if (IsDown) TimeHeld += delta;
+			// Check tap & drag
+			IsTapped = !pressed && holdTimer > 0.0f && holdTimer < holdThreshold;
+			IsDragging = pressed && rawInput.Length() > deadzone;
+			Output = IsDragging ? rawInput : Vector2.Zero;
+
+			if (IsTapped)
+				GD.Print($"[InputValues] {PositionType} was tapped.");
 		}
-
-		/*
-		public void Reset()
+		
+		public override string ToString()
 		{
-			IsDown = false;
-			JustPressed = false;
-			JustReleased = false;
-			TimeHeld = 0;
-			StartPos = Vector2.Zero;
-			CurrentPos = Vector2.Zero;
+			return $"Output: {Output}, IsDragging: {IsDragging}, IsTapped: {IsTapped}";
 		}
-		*/
 
 		public static InputPositionType GetTouchPositionType(Vector2 touchPos, Vector2 screenSize)
 		{

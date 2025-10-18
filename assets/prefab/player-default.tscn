@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://digowhkhw63xj"]
+[gd_scene load_steps=6 format=3 uid="uid://digowhkhw63xj"]
 
 [ext_resource type="Texture2D" uid="uid://b2dh02yjyqk8p" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome-woodlands.png" id="1_0vcjy"]
 [ext_resource type="Script" uid="uid://0fxtp3d3h1r7" path="res://scripts/prefab/MobDefaultSprite2D.cs" id="2_fnb7l"]
 [ext_resource type="Script" uid="uid://qq6xiuetyk0q" path="res://scripts/PlayerInput.cs" id="3_fnb7l"]
+[ext_resource type="Script" uid="uid://dgaq18ex6dbw6" path="res://scripts/prefab/PlayerMovement.cs" id="4_xd3r1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kfbeb"]
 
@@ -21,3 +22,8 @@ position_smoothing_enabled = true
 [node name="PlayerInput" type="Node" parent="."]
 script = ExtResource("3_fnb7l")
 inputType = 2
+
+[node name="PlayerMovement" type="Node" parent="." node_paths=PackedStringArray("playerBody", "playerInput")]
+script = ExtResource("4_xd3r1")
+playerBody = NodePath("..")
+playerInput = NodePath("../PlayerInput")

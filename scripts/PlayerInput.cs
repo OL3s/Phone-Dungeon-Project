@@ -1,16 +1,15 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 using InputManager;
 
 public partial class PlayerInput : Node
 {
-	[Export]
-	public InputType inputType { get; set; } = InputType.Auto;
+	[Export] public InputType inputType { get; set; } = InputType.Auto;
+
 	public InputValues[] inputs = new InputValues[Enum.GetValues<InputPositionType>().Length];
 	
+	
 	// Touch tracking
-
 	public override void _Ready()
 	{
 		// Create "Joysticks"
@@ -52,41 +51,51 @@ public partial class PlayerInput : Node
 				break;
 		}
 	}
-	
+
 	public override void _Input(InputEvent @event)
 	{
 		if (inputType != InputType.Touch)
 			return;
 
-		// Handle raw input events here
+		// !! TODO Handle raw input events here
 	}
 
 	private void UpdateGamepadInputs(double delta)
 	{
 		// Movement
 		var movementInput = inputs[(int)InputPositionType.Movement];
-		Vector2 moveVector = new Vector2(
+		Vector2 rawMovementVector = new Vector2(
 			Input.GetJoyAxis(0, JoyAxis.LeftX),
 			Input.GetJoyAxis(0, JoyAxis.LeftY)
 		);
-		bool isMoving = moveVector.Length() > InputValues.DeadZone;
-		movementInput.Update(delta, isMoving, moveVector);
+
+		// Update with error handling
+		try 
+		{
+			movementInput.Update(delta, true, rawMovementVector);
+		}
+		catch 
+		{
+			GD.PrintErr($"[PlayerInput] rawMovementVector out of range");
+			movementInput.Update(delta, false, Vector2.Zero);
+		}
 
 		// Action Main and Action Top
 		var actionMainInput = inputs[(int)InputPositionType.ActionMain];
 		var actionTopInput = inputs[(int)InputPositionType.ActionTop];
-		Vector2 stickPos = new Vector2(
+		Vector2 rawActionVector = new Vector2(
 			Input.GetJoyAxis(0, JoyAxis.RightX),
 			Input.GetJoyAxis(0, JoyAxis.RightY)
 		);
 
+		// Get which action is pressed
 		bool[] isActionPressed = new bool[] {
 			Input.GetJoyAxis(0, JoyAxis.TriggerRight) > 0.5f,
 			Input.GetJoyAxis(0, JoyAxis.TriggerLeft) > 0.5f
 		};
 
-		actionMainInput.Update(delta, isActionPressed[0], stickPos);
-		actionTopInput.Update(delta, isActionPressed[1], stickPos);
+		actionMainInput.Update(delta, isActionPressed[0], rawActionVector);
+		actionTopInput.Update(delta, isActionPressed[1], rawActionVector);
 	}
 
 	private void UpdateKeyboardInputs(double delta)
@@ -96,9 +105,9 @@ public partial class PlayerInput : Node
 		Vector2 moveVector = new Vector2(
 			Convert.ToInt32(Input.IsKeyPressed(Key.D)) - Convert.ToInt32(Input.IsKeyPressed(Key.A)),
 			Convert.ToInt32(Input.IsKeyPressed(Key.S)) - Convert.ToInt32(Input.IsKeyPressed(Key.W))
-		);
-		bool isMoving = moveVector.Length() > InputValues.DeadZone;
-		movementInput.Update(delta, isMoving, moveVector);
+		).Normalized();
+
+		movementInput.Update(delta, true, moveVector);
 
 		// Action Main and Action Top
 		var actionMainInput = inputs[(int)InputPositionType.ActionMain];
@@ -107,16 +116,24 @@ public partial class PlayerInput : Node
 		bool isActionMainPressed = Input.IsMouseButtonPressed(MouseButton.Left);
 		bool isActionTopPressed = Input.IsMouseButtonPressed(MouseButton.Right);
 		bool ignoreMouseDirection = Input.IsKeyPressed(Key.Ctrl);
-	
-		actionMainInput.Update(delta, isActionMainPressed, ignoreMouseDirection ? Vector2.Zero : GetMouseDirection());
-		actionTopInput.Update(delta, isActionTopPressed, ignoreMouseDirection ? Vector2.Zero : GetMouseDirection());
+
+		// Update with error handling
+		try
+		{
+			actionMainInput.Update(delta, isActionMainPressed, ignoreMouseDirection ? Vector2.Zero : GetMouseDirection());
+			actionTopInput.Update(delta, isActionTopPressed, ignoreMouseDirection ? Vector2.Zero : GetMouseDirection());
+		}
+		catch (ArgumentOutOfRangeException e)
+		{
+			GD.PrintErr($"[PlayerInput] Mouse direction out of range");
+		}
 	}
 
 	private Vector2 GetMouseDirection()
 	{
 		Vector2 mousePos = GetViewport().GetMousePosition();
 		Vector2 screenCenter = new Vector2(GetViewport().GetVisibleRect().Size.X / 2, GetViewport().GetVisibleRect().Size.Y / 2);
-		return mousePos - screenCenter;
+		return (mousePos - screenCenter).Normalized();
 	}
 
 	public InputValues GetInput(InputPositionType type)

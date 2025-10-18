@@ -1,7 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://ce7ucbl0qt4mn"]
+[gd_scene load_steps=3 format=3 uid="uid://ce7ucbl0qt4mn"]
 
 [ext_resource type="PackedScene" uid="uid://digowhkhw63xj" path="res://assets/prefab/player-default.tscn" id="1_68ggi"]
+[ext_resource type="Texture2D" uid="uid://co86w3ikub3xs" path="res://assets/sprites/gameplay/spr-background-debug.png" id="1_kp0py"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kp0py")
+stretch_mode = 1
+metadata/_edit_lock_ = true
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_68ggi")]

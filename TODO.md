@@ -5,3 +5,5 @@
 	- Fix _Input() for touch handling in `PlayerInput.cs`
 - Create a working mob.
 - Create a working dungeon.
+
+- !! DIX Input Diagonal and general fix
