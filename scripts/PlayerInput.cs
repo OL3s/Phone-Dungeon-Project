@@ -122,7 +122,7 @@ public partial class PlayerInput : Node
 			actionMainInput.Update(delta, isActionMainPressed, ignoreMouseDirection ? Vector2.Zero : GetMouseDirection());
 			actionTopInput.Update(delta, isActionTopPressed, ignoreMouseDirection ? Vector2.Zero : GetMouseDirection());
 		}
-		catch (ArgumentOutOfRangeException e)
+		catch
 		{
 			GD.PrintErr($"[PlayerInput] Mouse direction out of range");
 		}
