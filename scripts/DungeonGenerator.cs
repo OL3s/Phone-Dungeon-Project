@@ -29,8 +29,8 @@ namespace DungeonGenerator
 		private int length;
 		private int thickness;
 		private int padding;
-		public Dictionary<(int x, int y), Node> Nodes
-			= new Dictionary<(int x, int y), Node>();
+		public Dictionary<(int x, int y), TileNode> Nodes
+			= new Dictionary<(int x, int y), TileNode>();
 
 		// Constructor with initialization
 		public MapConstructor(
@@ -71,9 +71,9 @@ namespace DungeonGenerator
 
 				if (!Nodes.ContainsKey(currentPosition))
 				{
-					if (isStart) Nodes[currentPosition] = new Node { position = currentPosition, spawnType = TileSpawnType.Start };
-					else if (isEnd) Nodes[currentPosition] = new Node { position = currentPosition, spawnType = TileSpawnType.End };
-					else Nodes[currentPosition] = new Node { position = currentPosition, spawnType = TileSpawnType.Road };
+					if (isStart) Nodes[currentPosition] = new TileNode { position = currentPosition, spawnType = TileSpawnType.Start };
+					else if (isEnd) Nodes[currentPosition] = new TileNode { position = currentPosition, spawnType = TileSpawnType.End };
+					else Nodes[currentPosition] = new TileNode { position = currentPosition, spawnType = TileSpawnType.Road };
 
 					if (ENABLE_DETAILED_LOGGING)
 						Console.WriteLine($"Added node at {currentPosition.x}, {currentPosition.y} (total {Nodes.Count}/{length})");
@@ -113,7 +113,7 @@ namespace DungeonGenerator
 		}
 
 		// Converts the nodes to a 2D map array
-		private int[,] ConvertToMap(Dictionary<(int, int), Node> Nodes)
+		private int[,] ConvertToMap(Dictionary<(int, int), TileNode> Nodes)
 		{
 			if (Nodes.Count == 0 || length <= 0 || Nodes == null)
 				throw new InvalidOperationException("No nodes to convert to map.");
@@ -216,9 +216,9 @@ namespace DungeonGenerator
 		}
 
 		// Gets all nodes within a certain radius of a position
-		private Dictionary<(int x, int y), Node> GetNodesInRadius((int x, int y) center, int radius)
+		private Dictionary<(int x, int y), TileNode> GetNodesInRadius((int x, int y) center, int radius)
 		{
-			var nodesInRadius = new Dictionary<(int x, int y), Node>();
+			var nodesInRadius = new Dictionary<(int x, int y), TileNode>();
 
 			// Instead of scanning all Nodes, probe the neighborhood using TryGetValue.
 			for (int dx = -radius; dx <= radius; dx++)
@@ -259,7 +259,7 @@ namespace DungeonGenerator
 		// Fills node types based on available types and collision radius
 		private void FillNodeTypes(List<TileSpawnType> typesToFill, int collisionRadius)
 		{
-			Console.WriteLine("Filling Node Types...");
+			Console.WriteLine("Filling TileNode Types...");
 			var random = new Random(seed);
 
 			var keysToUpdate = new List<(int x, int y)>();
@@ -295,7 +295,7 @@ namespace DungeonGenerator
 					typesToFill.RemoveAt(index);
 
 				keysToUpdate.Add(key);
-				Nodes[key] = new Node { position = node.position, spawnType = typeToAssign };
+				Nodes[key] = new TileNode { position = node.position, spawnType = typeToAssign };
 			}
 
 			// --- Ensure important types are assigned ---
@@ -339,7 +339,7 @@ namespace DungeonGenerator
 					var node = Nodes[key];
 					if (IsNodesRadiusOccupied(node.position, collisionRadius)) continue;
 
-					Nodes[key] = new Node { position = node.position, spawnType = type };
+					Nodes[key] = new TileNode { position = node.position, spawnType = type };
 					placed = true;
 					break;
 				}
@@ -377,7 +377,7 @@ namespace DungeonGenerator
 			Lava,
 			Bridge,
 		}
-		public struct Node
+		public struct TileNode
 		{
 			public (int x, int y) position;
 			public TileSpawnType spawnType;

@@ -8,3 +8,4 @@
 	- Implement DungeonGenerator.cs to an object
 	- Make tile background for layers
 	- implement tiletype code for init() spawns
+	- implement DungeonNode.cs : Node
