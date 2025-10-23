@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxpm0fsyevbn4"]
+
+[ext_resource type="Script" uid="uid://co2042ylivd14" path="res://scenes/DungeonNode.cs" id="1_wmqov"]
+
+[sub_resource type="TileSet" id="TileSet_myiry"]
+physics_layer_0/collision_layer = 1
+
+[node name="Dungeon" type="Node"]
+script = ExtResource("1_wmqov")
+
+[node name="TileMapFloor" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_myiry")
+collision_visibility_mode = 1

@@ -20,7 +20,7 @@ namespace DungeonGenerator
 	class MapConstructor
 	{
 		// Internal state
-		private static bool ENABLE_DETAILED_LOGGING = false;
+		private bool ENABLE_DETAILED_LOGGING = false;
 		private ((int x, int y) topLeft, (int x, int y) bottomRight) bounds = ((0, 0), (0, 0));
 		private (int width, int height) mapSize => (bounds.bottomRight.x - bounds.topLeft.x + 1,
 												  bounds.bottomRight.y - bounds.topLeft.y + 1);
@@ -36,13 +36,15 @@ namespace DungeonGenerator
 		public MapConstructor(
 			int length, int thickness,
 			int enemyFactor, int landmarkFactor, int treasureFactor,
-			bool isBoss, bool isQuest)
+			bool isBoss, bool isQuest, int nodeTypeCollisionRadius, bool enableDetailedLogging = false
+		)
 		{
 			// Initialize parameters
 			this.length = length;
 			this.seed = Random.Shared.Next();
 			this.thickness = thickness;
 			this.padding = thickness + 1;
+			this.ENABLE_DETAILED_LOGGING = enableDetailedLogging;
 
 			// Add spawn types based on factors
 			var spawns = new List<TileSpawnType>();
@@ -54,7 +56,7 @@ namespace DungeonGenerator
 
 			// Generate the map
 			GenerateDefaultNodes();
-			FillNodeTypes(spawns, 4);
+			FillNodeTypes(spawns, nodeTypeCollisionRadius);
 		}
 
 		// Generates nodes in a random walk fashion (start, end and none types)
