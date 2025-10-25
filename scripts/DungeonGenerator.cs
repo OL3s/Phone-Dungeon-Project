@@ -195,7 +195,11 @@ namespace DungeonGenerator
 		// === END IMAGE CREATION ===
 
 
-		// Convert tile dictionary to Godot TileMap
+		/// <summary>
+		/// Convert tile dictionary to Godot TileMap
+		/// </summary>
+		/// <param name="map"></param>
+		/// <returns>(A filled TileMapLayer and a dictionary mapping positions to tile types)</returns>
 		public (TileMapLayer tilemapFloor, Godot.Collections.Dictionary<Vector2I, TileSpawnType> tilemapType) ConvertToGodot(int[,] map = null)
 		{
 			if (map == null)
@@ -209,8 +213,10 @@ namespace DungeonGenerator
 				for (int y = 0; y < map.GetLength(1); y++)
 				{
 					// Here you would set the cell value in the TileMapLayer
-					tilemapFloor.SetCell(new Vector2I(x, y), (int)TileSpawnType.Default); // Example: set floor type
-					tilemapType[new Vector2I(x, y)] = (TileSpawnType)map[x, y];
+					bool isEmpty = map[x, y] == (int)TileSpawnType.Empty;
+					tilemapFloor.SetCell(new Vector2I(x, y), isEmpty ? -1 : 1);
+					if (!isEmpty && map[x, y] != (int)TileSpawnType.Default && map[x, y] != (int)TileSpawnType.Road)
+						tilemapType[new Vector2I(x, y)] = (TileSpawnType)map[x, y];
 				}
 			}
 
