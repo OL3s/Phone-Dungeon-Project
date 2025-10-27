@@ -258,7 +258,7 @@ namespace MapGeneratorCs
 		}
 
 		// Converts nodes to a list of positions and types, filtering by typesToInclude
-		public List<((int x, int y), TileSpawnType)> ConvertNodesToList(List<TileSpawnType>? typesToInclude = null)
+		public List<((int x, int y), TileSpawnType)> ConvertNodesToList(List<TileSpawnType> typesToInclude = null)
 		{
 			var nodes = new List<((int x, int y), TileSpawnType)>();
 			if (typesToInclude == null)

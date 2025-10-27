@@ -4,17 +4,18 @@
 !project.godot
 !export_presets.cfg
 
-# Godot editor/user/runtime artifacts
-.godot/            # local editor settings
-.import/           # imported assets
-.export/           # exported editor data (if present)
-.export_presets.cfg~  # temp backups
+# Godot editor/runtime artifacts
+.godot/                      # local editor settings (OK to ignore)
+.godot/imported/             # generated imported binaries (ignore)
+.import/                     # older generated import cache (ignore)
+.export/                     # exported editor data (if present)
+
+# NOTE: DO NOT IGNORE the *.import metadata files that live next to your assets.
+# These should be tracked to preserve import settings across machines.
 
 # Mono / C# build artifacts
 .mono/
 .mono_glue/
-*.sln
-*.csproj
 *.user
 *.vs/
 bin/
@@ -28,8 +29,8 @@ export/
 *.xcodeproj/
 *.xcworkspace/
 *.ipa
-/*.zip
-/*.tar.gz
+*.zip
+*.tar.gz
 
 # Android / Gradle
 /android/
@@ -59,7 +60,6 @@ desktop.ini
 *.keystore
 *.jks
 *.p12
-# If you keep signing keys elsewhere, ignore them here
 
 # Misc
 *.backup
