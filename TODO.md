@@ -9,3 +9,5 @@
 	- Make tile background for layers
 	- implement tiletype code for init() spawns
 	- implement DungeonNode.cs : Node
+
+	- !! Fix the filling of TileMapLayer being empty on generation function from int[,] -> TileTypeLayer[Vector2I]
