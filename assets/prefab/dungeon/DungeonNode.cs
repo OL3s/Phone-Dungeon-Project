@@ -104,14 +104,15 @@ public partial class DungeonNode : Node
 		location.X *= tileSize;
 		location.Y *= tileSize;
 		GD.Print("[DungeonNode] Generating start node object at " + location);
+		
+		// load resource
 		var res = GD.Load<PackedScene>("res://assets/prefab/player/player-default.tscn");
 		if (res == null)
 			throw new System.Exception("Failed to load player-default.tscn!");
-
 		var instance = res.Instantiate<CharacterBody2D>();
-
-		var root = GetTree().Root;
-		var main = root.GetNodeOrNull("Main");
+		
+		// get main
+		var main = GetTree().Root.GetNodeOrNull("Main");
 		if (main == null)
 		{
 			GD.PushError("[DungeonNode] 'Main' node not found in root.");
@@ -122,8 +123,6 @@ public partial class DungeonNode : Node
 		main.CallDeferred("add_child", instance);
 
 		// set position
-		
-		instance.ZIndex = 10;
 		instance.Position = new Vector2(location.X, location.Y);
 	}
 }

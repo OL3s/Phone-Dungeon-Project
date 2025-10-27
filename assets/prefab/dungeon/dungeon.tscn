@@ -7,4 +7,5 @@
 script = ExtResource("1_wmqov")
 
 [node name="TileMapFloor" type="TileMapLayer" parent="."]
+z_index = -1
 tile_set = ExtResource("2_03g6o")

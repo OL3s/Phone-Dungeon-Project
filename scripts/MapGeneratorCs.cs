@@ -61,7 +61,7 @@ namespace MapGeneratorCs
 		// Generates nodes in a random walk fashion, with types: Start, End, Default
 		private void GenerateStandardNodes()
 		{
-			Console.WriteLine("Generating Nodes...");
+			GD.Print("[MapConstructor] Generating Nodes...");
 			var random = new Random(seed);
 			currentPosition = (0, 0);
 
@@ -95,7 +95,7 @@ namespace MapGeneratorCs
 		// Fills node types based on available types and collision radius
 		private void FillNodeTypes(List<TileSpawnType> typesToFill, int collisionRadius)
 		{
-			Console.WriteLine("Filling Node Types...");
+			GD.Print("[MapConstructor] Filling Node Types...");
 			var random = new Random(seed);
 
 			// Build list of empty node keys to consider once and shuffle it
@@ -173,14 +173,14 @@ namespace MapGeneratorCs
 					break;
 				}
 				if (!placed)
-					Console.WriteLine($"Warning: couldn't place important type {type} due to collisions.");
+					GD.PrintErr($"[MapConstructor] Warning: couldn't place important type {type} due to collisions.");
 			}
 		}
 
 		// Updates the bounds of the map based on the current node positions
 		private void UpdateBounds()
 		{
-			Console.WriteLine("Updating Bounds...");
+			GD.Print("[MapConstructor] Updating Bounds...");
 
 			if (Nodes == null || Nodes.Count == 0)
 				throw new InvalidOperationException("No nodes to update bounds.");
@@ -211,7 +211,7 @@ namespace MapGeneratorCs
 
 		private void UpdateNodeOffset()
 		{
-			Console.WriteLine("Updating Node Offset...");
+			GD.Print("[MapConstructor] Updating Node Offset...");
 			var offsetX = -bounds.topLeft.x + padding;
 			var offsetY = -bounds.topLeft.y + padding;
 			var newDictionary = new Dictionary<(int x, int y), TileSpawnType>();
@@ -238,7 +238,7 @@ namespace MapGeneratorCs
 				for (int y = 0; y < map.GetLength(1); y++)
 					map[x, y] = (int)TileSpawnType.Empty;
 
-			Console.WriteLine("Converting to Map...");
+			GD.Print("[MapConstructor] Converting to Map...");
 			(int i, int n) counter = (0, Nodes.Count);
 			foreach (var point in Nodes)
 			{

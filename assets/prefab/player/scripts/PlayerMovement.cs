@@ -8,7 +8,6 @@ public partial class PlayerMovement : Node
 	[Export] public CharacterBody2D playerBody;
 	[Export] public PlayerInput playerInput;
 	[Export] public float MoveSpeed = 100f;
-	[Export] public TileMapLayer CollisionLayer; // For collision detection
 
 	public override void _Ready()
 	{
@@ -17,8 +16,6 @@ public partial class PlayerMovement : Node
 			throw new Exception("[PlayerMovement] playerBody is not assigned!");
 		if (playerInput == null)
 			throw new Exception("[PlayerMovement] playerInput is not assigned!");
-		if (CollisionLayer == null)
-			GD.PrintErr("[PlayerMovement] CollisionLayer is not assigned!");
 	}
 
 	public override void _PhysicsProcess(double delta)
