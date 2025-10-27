@@ -1,3 +1,69 @@
-# Godot 4+ specific ignores
-.godot/
+// ...existing code...
+# Godot project - useful .gitignore for Godot 4+ (mobile/export oriented)
+
+# Keep core project files
+!project.godot
+!export_presets.cfg
+
+# Godot editor/user/runtime artifacts
+.godot/            # local editor settings
+.import/           # imported assets
+.export/           # exported editor data (if present)
+.export_presets.cfg~  # temp backups
+*.import
+
+# Mono / C# build artifacts
+.mono/
+.mono_glue/
+*.sln
+*.csproj
+*.user
+*.vs/
+bin/
+obj/
+
+# Build / export outputs
+build/
+export/
+*.apk
+*.aab
+*.xcodeproj/
+*.xcworkspace/
+*.ipa
+/*.zip
+/*.tar.gz
+
+# Android / Gradle
 /android/
+/.gradle/
+/local.properties
+/android/build/
+/android/.gradle/
+
+# IDE / editor files
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs / temp files / caches
+*.log
+*.tmp
+.cache/
+.temp/
+*.pid
+
+# Keystores and sensitive files
+*.keystore
+*.jks
+*.p12
+# If you keep signing keys elsewhere, ignore them here
+
+# Misc
+*.backup
+*~
+#

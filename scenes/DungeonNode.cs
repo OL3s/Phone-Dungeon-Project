@@ -1,40 +1,65 @@
 using Godot;
-using DungeonGenerator;
+using MapGeneratorCs;
 using System.Collections.Generic;
-using System.Linq;
+using static MapGeneratorCs.MapConstructor;
 
 public partial class DungeonNode : Node
 {
 	TileMapLayer tilemapFloor;
-	Godot.Collections.Dictionary<Vector2I, MapConstructor.TileSpawnType> tilemapType;
+	List<((int x, int y), TileSpawnType)> tileMapNodes = new List<((int x, int y), TileSpawnType)>();
 
-	// Convert Godot Dictionary to List<(Vector2I, MapConstructor.TileSpawnType)>
-	List<(Vector2I, MapConstructor.TileSpawnType)> tilemapTypeList;
+	MapConstructor mapConstructor = new MapConstructor(1_000, 1, 5, (2, 1, 1, true, false), false);
+
 	public override void _Ready()
 	{
-		// Fetch the TileMapLayer node
 		tilemapFloor = GetNode<TileMapLayer>("TileMapFloor");
 
-		// Generate the grid using MapConstructor and convert to Godot types
-		var map = new MapConstructor(1_000, 1, 2, 1, 1, false, false, 4, true);
-		(tilemapFloor, tilemapType) = map.ConvertToGodot();
-		map.ConvertToImage("test_image.png");
+		if (tilemapFloor == null)
+			throw new System.Exception("TileMapFloor node not found!");
 
-		// Convert Dictionary to List for easier access later
-		tilemapTypeList = [.. tilemapType.Select(kv => (kv.Key, kv.Value))];
-
-		GD.Print("[DungeonNode] Dungeon generated successfully.");
-		GD.Print("[DungeonNode] print tostring\n" + this.ToString());
-		
+		ConvertIntMapToTileMapLayer();
+		tileMapNodes = mapConstructor.ConvertNodesToList();
+		mapConstructor.PrintMapToGDPrint();
+		mapConstructor.PrintNodesToGDPrint();
+		PrintTileMapLayerToGDPrint();
 	}
 
-	public override string ToString()
+	private void ConvertIntMapToTileMapLayer()
 	{
-		var Return = $"{base.ToString()}";
-		foreach (var (position, type) in tilemapTypeList)
+		GD.Print("[DungeonNode] Converting int map to TileMapLayer...");
+		var rawMap = mapConstructor.IntMap2D;
+
+		// Write directly to the scene's TileMapLayer node
+		for (int x = 0; x < rawMap.GetLength(0); x++)
 		{
-			Return += $"\nTile at {position} is of type {type}";
+			for (int y = 0; y < rawMap.GetLength(1); y++)
+			{
+				int tileType = rawMap[x, y];
+
+				// Only set cells for valid tile indices (negative = empty)
+				if (tileType < 0)
+					continue;
+
+				// Use SetCell so the TileMap registers the cell as "used"
+				tilemapFloor.SetCell(new Vector2I(x, y), tileType);
+			}
 		}
-		return Return;
+	}
+
+	private void PrintTileMapLayerToGDPrint()
+	{
+		GD.Print("[DungeonNode] Printing TileMapLayer:");
+		var usedCells = tilemapFloor.GetUsedCells();
+		if (usedCells == null || usedCells.Count == 0)
+		{
+			GD.Print("[DungeonNode] No used cells found on tilemapFloor.");
+			return;
+		}
+
+		foreach (var cell in usedCells)
+		{
+			int tileType = tilemapFloor.GetCellSourceId(cell);
+			GD.Print($"Cell ({cell.X}, {cell.Y}): Tile Type {tileType}");
+		}
 	}
 }
