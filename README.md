@@ -1,4 +1,3 @@
-	[Back to index](../README.md)
 # Path of Salvation
 
 *A pixel-style, real-time dungeon crawler for mobile platforms. Your ultimate goal is to collect all three legendary gems, each earned by defeating a unique final boss. After collecting a gem, the game resets for a new challenge.*
