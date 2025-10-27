@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://cok7fvvmif3pb"]
 
-[ext_resource type="Script" uid="uid://dcbrqr6h2epx8" path="res://scripts/menu/ContractButton.cs" id="1_2cmsx"]
-[ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://scenes/StyleBoxMenu.tres" id="1_corhe"]
-[ext_resource type="Texture2D" uid="uid://b2dh02yjyqk8p" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome-woodlands.png" id="2_ob03s"]
-[ext_resource type="LabelSettings" uid="uid://d252j1wwry2gd" path="res://assets/font/pixelLabel.tres" id="3_7k03k"]
-[ext_resource type="Texture2D" uid="uid://c2pvmctt516by" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon5.png" id="4_bshf7"]
+[ext_resource type="Script" uid="uid://dcbrqr6h2epx8" path="res://assets/prefab/menu/contract/ContractButton.cs" id="1_h38ky"]
+[ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://assets/godotAddons/StyleBoxMenu.tres" id="2_b8xh7"]
+[ext_resource type="Texture2D" uid="uid://b2dh02yjyqk8p" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome-woodlands.png" id="3_er3bh"]
+[ext_resource type="LabelSettings" uid="uid://d252j1wwry2gd" path="res://assets/font/pixelLabel.tres" id="4_ophmp"]
+[ext_resource type="Texture2D" uid="uid://c2pvmctt516by" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon5.png" id="5_d15lk"]
 
 [node name="Control" type="Control"]
 custom_minimum_size = Vector2(64, 96)
@@ -12,7 +12,7 @@ layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_2cmsx")
+script = ExtResource("1_h38ky")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 1
@@ -21,7 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = ExtResource("1_corhe")
+theme_override_styles/normal = ExtResource("2_b8xh7")
 
 [node name="BiomeTexture" type="TextureRect" parent="Button"]
 layout_mode = 1
@@ -30,7 +30,7 @@ anchor_right = 1.0
 offset_top = 10.0
 offset_bottom = 26.0
 grow_horizontal = 2
-texture = ExtResource("2_ob03s")
+texture = ExtResource("3_er3bh")
 stretch_mode = 3
 
 [node name="DifficultyLabel" type="Label" parent="Button"]
@@ -41,7 +41,7 @@ offset_top = 28.0
 offset_bottom = 39.0
 grow_horizontal = 2
 text = "$difclt"
-label_settings = ExtResource("3_7k03k")
+label_settings = ExtResource("4_ophmp")
 horizontal_alignment = 1
 
 [node name="MissionTexture" type="TextureRect" parent="Button"]
@@ -54,7 +54,7 @@ offset_top = 0.0479965
 offset_bottom = -26.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_bshf7")
+texture = ExtResource("5_d15lk")
 stretch_mode = 3
 
 [node name="MissionLabel" type="Label" parent="Button"]
@@ -70,5 +70,5 @@ offset_bottom = -13.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "$cont-type"
-label_settings = ExtResource("3_7k03k")
+label_settings = ExtResource("4_ophmp")
 horizontal_alignment = 1

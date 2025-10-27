@@ -104,7 +104,7 @@ public partial class DungeonNode : Node
 		location.X *= tileSize;
 		location.Y *= tileSize;
 		GD.Print("[DungeonNode] Generating start node object at " + location);
-		var res = GD.Load<PackedScene>("res://assets/prefab/player-default.tscn");
+		var res = GD.Load<PackedScene>("res://assets/prefab/player/player-default.tscn");
 		if (res == null)
 			throw new System.Exception("Failed to load player-default.tscn!");
 

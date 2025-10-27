@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dxpm0fsyevbn4"]
 
-[ext_resource type="Script" uid="uid://co2042ylivd14" path="res://scenes/DungeonNode.cs" id="1_wmqov"]
-[ext_resource type="TileSet" uid="uid://dv3r0cdxs2cfw" path="res://res/DefaultTileSet.tres" id="2_03g6o"]
+[ext_resource type="Script" uid="uid://co2042ylivd14" path="res://assets/prefab/dungeon/DungeonNode.cs" id="1_wmqov"]
+[ext_resource type="TileSet" uid="uid://dv3r0cdxs2cfw" path="res://assets/recourses/DefaultTileSet.tres" id="2_03g6o"]
 
 [node name="Dungeon" type="Node"]
 script = ExtResource("1_wmqov")

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dnj2hf3f70hdw" path="res://assets/sprites/menu/icons/buttons/spr-menu-select-icon2.png" id="1_vo4d0"]
 [ext_resource type="LabelSettings" uid="uid://d252j1wwry2gd" path="res://assets/font/pixelLabel.tres" id="2_csceu"]
-[ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://scenes/StyleBoxMenu.tres" id="2_dqr7h"]
+[ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://assets/godotAddons/StyleBoxMenu.tres" id="2_dqr7h"]
 
 [node name="Button" type="Button"]
 custom_minimum_size = Vector2(0, 32)

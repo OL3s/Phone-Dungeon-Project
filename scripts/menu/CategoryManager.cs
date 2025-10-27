@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+// VBoxVertical
 public partial class CategoryManager : Control
 {
 	[Export] public MenuButtons MenuButtonContainer;

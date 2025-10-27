@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ce7ucbl0qt4mn"]
 
-[ext_resource type="PackedScene" uid="uid://digowhkhw63xj" path="res://assets/prefab/player-default.tscn" id="1_68ggi"]
+[ext_resource type="PackedScene" uid="uid://digowhkhw63xj" path="res://assets/prefab/player/player-default.tscn" id="1_68ggi"]
 [ext_resource type="Texture2D" uid="uid://co86w3ikub3xs" path="res://assets/sprites/gameplay/spr-background-debug.png" id="1_kp0py"]
 
 [node name="Main" type="Node2D"]
