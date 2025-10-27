@@ -9,7 +9,6 @@
 .import/           # imported assets
 .export/           # exported editor data (if present)
 .export_presets.cfg~  # temp backups
-*.import
 
 # Mono / C# build artifacts
 .mono/
