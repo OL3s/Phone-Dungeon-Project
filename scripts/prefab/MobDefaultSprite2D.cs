@@ -9,6 +9,12 @@ public partial class MobDefaultSprite2D : Sprite2D
 		public float rotation;
 		public Vector2 scale;
 		public float opacity;
+		void reset() 
+		{
+			rotation = 0.0f;
+			scale = Vector2.One;
+			opacity = 1.0f;
+		}
 	}
 
 	public AnimateTarget animateTarget = new AnimateTarget();
@@ -30,10 +36,14 @@ public partial class MobDefaultSprite2D : Sprite2D
 		base._Process(delta);
 
 		// Lerp
-		animateTarget.scale.X = AnimationLib.LerpXScale(delta, Scale.X, animateTarget.scale.X, 0.1f);
-		animateTarget.scale.Y = AnimationLib.LerpYScale(delta, Scale.Y, animateTarget.scale.Y, 0.1f);
-		animateTarget.opacity = AnimationLib.LerpAlpha(delta, Modulate.A, animateTarget.opacity, 0.1f);
-		animateTarget.rotation = AnimationLib.LerpRotation(delta, RotationDegrees, animateTarget.rotation, 0.1f);
+		Scale = new Vector2(
+			AnimationLib.LerpXScale(delta, Scale.X, animateTarget.scale.X, 1f),
+			AnimationLib.LerpYScale(delta, Scale.Y, animateTarget.scale.Y, 1f)
+		);
+		Modulate = new Color(Modulate.R, Modulate.G, Modulate.B,
+			AnimationLib.LerpAlpha(delta, Modulate.A, animateTarget.opacity, 10f)
+		);
+		RotationDegrees = AnimationLib.LerpRotation(delta, RotationDegrees, animateTarget.rotation, 10f);
 
 		// Apply lerped values
 		Scale = animateTarget.scale;
@@ -53,13 +63,22 @@ public partial class MobDefaultSprite2D : Sprite2D
 				// Simple swing back and forth
 				RotationDegrees = AnimationLib.SwayMovementOffset(Timer, 10.0f, 10.0f);
 			}
-			else {
+			else
+			{
 				if (Mathf.Abs(Position.Y) > 0.01f)
 					Position = new Vector2(0.0f, AnimationLib.Lerp((float)delta, Position.Y, 0.0f, 20f));
+
 				if (Mathf.Abs(RotationDegrees - animateTarget.rotation) > 0.01f)
 					RotationDegrees = AnimationLib.Lerp((float)delta, RotationDegrees, animateTarget.rotation, 20f);
+
 				Timer = 0.0f;
 			}
+
+			// set direction
+			if (ParentBody.Velocity.X < -0.1f)
+				animateTarget.scale.X = -1;
+			else if (ParentBody.Velocity.X > 0.1f)
+				animateTarget.scale.X = 1;
 		}
 	}
 }

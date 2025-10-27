@@ -8,7 +8,7 @@ namespace MapGeneratorCs
 	class MapConstructor
 	{
 		// === Fields ===
-		private static bool ENABLE_DETAILED_LOGGING = false;
+		private static bool ENABLE_DETAILED_LOGGING;
 		private ((int x, int y) topLeft, (int x, int y) bottomRight) bounds = ((0, 0), (0, 0));
 		private (int width, int height) mapSize => (bounds.bottomRight.x - bounds.topLeft.x + 1,
 												  bounds.bottomRight.y - bounds.topLeft.y + 1);
@@ -17,17 +17,22 @@ namespace MapGeneratorCs
 		private int length;
 		private int thickness;
 		private int padding;
+		private bool enableTypesInMap;
 		public int[,] IntMap2D;
-		private Dictionary<(int x, int y), TileSpawnType> Nodes
+		public Dictionary<(int x, int y), TileSpawnType> Nodes
 			= new Dictionary<(int x, int y), TileSpawnType>();
 
 		// === Constructors ===
 		public MapConstructor(
 			int length, int thickness, int collisionRadius,
 			(int enemyFactor, int landmarkFactor, int treasureFactor,
-			bool isBoss, bool isQuest) spawnFactors, bool enableDetailedLogging = true)
+			bool isBoss, bool isQuest) spawnFactors,
+			bool enableDetailedLogging = false,
+			bool enableTypesInMap = false
+		)
 		{
 			// Initialize parameters
+			this.enableTypesInMap = enableTypesInMap;
 			this.length = length;
 			this.seed = Random.Shared.Next();
 			this.thickness = thickness;
@@ -45,7 +50,8 @@ namespace MapGeneratorCs
 			// Generate the map
 			GenerateStandardNodes();
 			FillNodeTypes(spawns, collisionRadius);
-			IntMap2D = ConvertToMap(Nodes, includeTypes: true);
+			IntMap2D = ConvertToMap(Nodes);
+			UpdateNodeOffset();
 
 		}
 
@@ -203,9 +209,23 @@ namespace MapGeneratorCs
 			}
 		}
 
+		private void UpdateNodeOffset()
+		{
+			Console.WriteLine("Updating Node Offset...");
+			var offsetX = -bounds.topLeft.x + padding;
+			var offsetY = -bounds.topLeft.y + padding;
+			var newDictionary = new Dictionary<(int x, int y), TileSpawnType>();
+			foreach (var kvp in Nodes)
+			{
+				var newKey = (kvp.Key.x + offsetX, kvp.Key.y + offsetY);
+				newDictionary[newKey] = kvp.Value;
+			}
+			Nodes = newDictionary;
+		}
+
 		// === CONVERSION METHODS ===
 		// Converts the nodes to a 2D map array
-		private int[,] ConvertToMap(Dictionary<(int, int), TileSpawnType> Nodes, bool includeTypes = false)
+		private int[,] ConvertToMap(Dictionary<(int, int), TileSpawnType> Nodes)
 		{
 			if (Nodes == null || Nodes.Count == 0 || length <= 0)
 				throw new InvalidOperationException("No nodes to convert to map.");
@@ -252,7 +272,7 @@ namespace MapGeneratorCs
 
 				// Add main node (respect includeTypes)
 				if (mapX >= 0 && mapX < map.GetLength(0) && mapY >= 0 && mapY < map.GetLength(1))
-					map[mapX, mapY] = includeTypes ? (int)point.Value : (int)TileSpawnType.Default;
+					map[mapX, mapY] = enableTypesInMap ? (int)point.Value : (int)TileSpawnType.Default;
 			}
 			return map;
 		}
@@ -337,15 +357,15 @@ namespace MapGeneratorCs
 		// === ENUMS ===
 		public enum TileSpawnType
 		{
-			Empty = -1,
-			Default = 0,
-			Start = 1,
-			End = 2,
-			Treasure = 3,
-			EnemySpawn = 4,
-			Landmark = 5,
-			BossSpawn = 6,
-			Quest = 7,
+			Empty,
+			Default,
+			Start,
+			End,
+			Treasure,
+			EnemySpawn,
+			Landmark,
+			BossSpawn,
+			Quest,
 		}
 	}
 }

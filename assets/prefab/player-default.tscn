@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://digowhkhw63xj"]
 
-[ext_resource type="Texture2D" uid="uid://b2dh02yjyqk8p" path="res://assets/sprites/menu/icons/biomes/spr-icon-biome-woodlands.png" id="1_0vcjy"]
 [ext_resource type="Texture2D" uid="uid://bxvph1ms1bu62" path="res://assets/sprites/gameplay/mob/spr-shadow-16.png" id="1_1utxn"]
+[ext_resource type="Texture2D" uid="uid://bkf6nbsddrk6l" path="res://assets/sprites/gameplay/player/spr-player.png" id="2_1utxn"]
 [ext_resource type="Script" uid="uid://0fxtp3d3h1r7" path="res://scripts/prefab/MobDefaultSprite2D.cs" id="2_fnb7l"]
 [ext_resource type="Script" uid="uid://qq6xiuetyk0q" path="res://scripts/PlayerInput.cs" id="3_fnb7l"]
 [ext_resource type="Script" uid="uid://dgaq18ex6dbw6" path="res://scripts/prefab/PlayerMovement.cs" id="4_xd3r1"]
@@ -16,7 +16,7 @@ modulate = Color(0, 0, 0, 0.392157)
 texture = ExtResource("1_1utxn")
 
 [node name="Sprite2D" type="Sprite2D" parent="." node_paths=PackedStringArray("ParentBody")]
-texture = ExtResource("1_0vcjy")
+texture = ExtResource("2_1utxn")
 script = ExtResource("2_fnb7l")
 ParentBody = NodePath("..")
 
@@ -35,3 +35,4 @@ inputType = 2
 script = ExtResource("4_xd3r1")
 playerBody = NodePath("..")
 playerInput = NodePath("../PlayerInput")
+MoveSpeed = 50.0
