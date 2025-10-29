@@ -37,17 +37,13 @@ public partial class MobDefaultSprite2D : Sprite2D
 
 		// Lerp
 		Scale = new Vector2(
-			AnimationLib.LerpXScale(delta, Scale.X, animateTarget.scale.X, 1f),
-			AnimationLib.LerpYScale(delta, Scale.Y, animateTarget.scale.Y, 1f)
+			AnimationLib.LerpXScale(delta, Scale.X, animateTarget.scale.X, 10f),
+			AnimationLib.LerpYScale(delta, Scale.Y, animateTarget.scale.Y, 10f)
 		);
 		Modulate = new Color(Modulate.R, Modulate.G, Modulate.B,
 			AnimationLib.LerpAlpha(delta, Modulate.A, animateTarget.opacity, 10f)
 		);
 		RotationDegrees = AnimationLib.LerpRotation(delta, RotationDegrees, animateTarget.rotation, 10f);
-
-		// Apply lerped values
-		Scale = animateTarget.scale;
-		Modulate = new Color(Modulate.R, Modulate.G, Modulate.B, animateTarget.opacity);
 
 		if (ParentBody != null)
 		{

@@ -6,6 +6,8 @@
 
 # 📘 General Overview
 
+Go to documentation [HERE](./doc/main.md)
+
 ## Gameplay Loop
 
 1. Browse and buy gear in the market/inventory

@@ -1,14 +1,25 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dv3r0cdxs2cfw"]
 
-[ext_resource type="Texture2D" uid="uid://kfvgadv0kab8" path="res://assets/tile/spr-TileImage01.png" id="1_ru5e3"]
+[ext_resource type="Texture2D" uid="uid://bohfncryqeunb" path="res://assets/sprites/sheets/woodland/spr-sheet-woodlands.png" id="1_imtgc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fqr7v"]
-texture = ExtResource("1_ru5e3")
+texture = ExtResource("1_imtgc")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
 
 [resource]
 physics_layer_0/collision_layer = 1

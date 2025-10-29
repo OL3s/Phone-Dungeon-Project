@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://dgaq18ex6dbw6" path="res://assets/prefab/player/scripts/PlayerMovement.cs" id="4_xd3r1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kfbeb"]
-radius = 8.06226
+radius = 6.0
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_layer = 2

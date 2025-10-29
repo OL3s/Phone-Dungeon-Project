@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cxb77it3r076m" path="res://assets/sprites/splash/gemstones/spr-gemstones-full2.png" id="6_x758s"]
 [ext_resource type="Texture2D" uid="uid://cj22pqajejimt" path="res://assets/sprites/splash/gemstones/spr-gemstones-full3.png" id="7_rqvx0"]
 [ext_resource type="Texture2D" uid="uid://w5y1fk8lphmc" path="res://assets/sprites/menu/background/spr-background-dark.png" id="10_5dk1h"]
-[ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://assets/fonts/ByteBounce.ttf" id="11_x758s"]
+[ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://assets/font/ByteBounce.ttf" id="11_x758s"]
 [ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scripts/data/filedata/SaveData.cs" id="12_q3q07"]
 [ext_resource type="Script" uid="uid://dexdrsbxxb8n7" path="res://scripts/data/filedata/LabelSplashStart.cs" id="14_5whtx"]
 [ext_resource type="Script" uid="uid://bl7e5gmxts4s" path="res://scripts/splash/TouchStart.cs" id="14_q3q07"]
