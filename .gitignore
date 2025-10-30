@@ -1,5 +1,6 @@
 # ─── Godot engine ───
 .import/
+.export/
 export_presets.cfg
 .godot/
 .editor_settings-3.tres
