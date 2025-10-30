@@ -71,7 +71,7 @@ public partial class DungeonNode : Node
 				tilemapFloor.SetCell(
 					new Vector2I(x, y),      // cell position
 					sourceId,                // atlas source
-					GetAtlasTileCoords(atlasType) // atlas coordinates
+					GetAtlasTileCoordsFromType(atlasType) // atlas coordinates
 				);
 			}
 		}
@@ -143,7 +143,7 @@ public partial class DungeonNode : Node
 		instance.Position = new Vector2(location.X, location.Y);
 	}
 
-	private Vector2I GetAtlasTileCoords(AtlasType atlasType)
+	private Vector2I GetAtlasTileCoordsFromType(AtlasType atlasType)
 	{
 		return atlasType switch
 		{
