@@ -43,3 +43,5 @@ desktop.ini
 *.db
 *.json.backup
 
+# ─── Builds ───
+builds/
