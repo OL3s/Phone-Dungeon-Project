@@ -368,4 +368,27 @@ namespace MapGeneratorCs
 			Quest,
 		}
 	}
+
+	// === TESTS ===
+	public static class Test
+	{
+		
+		public static void RunTests()
+		{
+			Console.WriteLine("Running MapConstructor Tests...");
+
+			var constructor = new MapConstructor(
+				length: 20,
+				thickness: 1,
+				collisionRadius: 2,
+				spawnFactors: (enemyFactor: 5, landmarkFactor: 3, treasureFactor: 2, isBoss: true, isQuest: true),
+				enableDetailedLogging: true,
+				enableTypesInMap: true
+			);
+
+			constructor.PrintNodesToGDPrint();
+			constructor.PrintMapToGDPrint();
+		}
+
+	}
 }

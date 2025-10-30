@@ -14,7 +14,7 @@
 [ext_resource type="LabelSettings" uid="uid://d252j1wwry2gd" path="res://assets/font/pixelLabel.tres" id="10_chs3y"]
 [ext_resource type="Script" uid="uid://cqn1jwhjhp4oe" path="res://scripts/data/filedata/LabelSaveData.cs" id="11_yhqx5"]
 [ext_resource type="FontFile" uid="uid://blqaan1y2lu8j" path="res://assets/font/ByteBounce.ttf" id="12_yhqx5"]
-[ext_resource type="Script" uid="uid://de55xpirkep0v" path="res://scripts/GetBiomeTexture.cs" id="14_0lbrx"]
+[ext_resource type="Script" uid="uid://de55xpirkep0v" path="res://scripts/gameplay/GetBiomeTexture.cs" id="14_0lbrx"]
 [ext_resource type="StyleBox" uid="uid://dnhybhxo5c1l6" path="res://assets/godotAddons/StyleBoxMenu.tres" id="14_yhqx5"]
 [ext_resource type="Script" uid="uid://4k4foqhyqbse" path="res://scripts/data/filedata/SaveData.cs" id="16_rs64w"]
 [ext_resource type="PackedScene" uid="uid://cok7fvvmif3pb" path="res://assets/prefab/menu/contract/menu-contract.tscn" id="17_5gsci"]
