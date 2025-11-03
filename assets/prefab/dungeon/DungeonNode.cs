@@ -6,31 +6,33 @@ using static MapGeneratorCs.MapConstructor;
 
 public partial class DungeonNode : Node
 {
-	[Export] public bool GenerateStartNode = true;
-	TileMapLayer tilemapFloor;
-	List<((int x, int y), TileSpawnType)> tileMapNodes = new List<((int x, int y), TileSpawnType)>();
-
-	MapConstructor mapConstructor = new MapConstructor(
-		length: 3_000,
-		thickness: 2,
-		collisionRadius: 5,
-		spawnFactors: (2, 1, 1, true, false),
-		enableDetailedLogging: false,
-		enableTypesInMap: false
-	);
+	TileMapLayer tilemapFloor; // TileMapLayer for floor tiles
+	MapConstructor mapConstructor; // MapConstructor instance
 
 	public override void _Ready()
 	{
+		mapConstructor = new MapConstructor(
+			length: 3_000,
+			thickness: 2,
+			collisionRadius: 5,
+			spawnFactors: (2, 1, 1, true, false),
+			enableDetailedLogging: false,
+			enableTypesInMap: true
+		);
+
+		// Get TileMapLayer node
 		tilemapFloor = GetNode<TileMapLayer>("TileMapFloor");
-
 		if (tilemapFloor == null)
-			throw new System.Exception("TileMapFloor node not found!");
+			throw new Exception("TileMapFloor node not found!");
 
-		ApplyIntMapToTileMapLayer();
-		GenerateNodesToObjectGroups();
+		// Convert mapConstructor int[,] to GodotEngine
+		ConvertIntMap2DToAtlas();
 	}
 
-	private void ApplyIntMapToTileMapLayer()
+	/// <summary>
+	/// Converts the integer map int[,] from MapConstructor to the TileMapLayer using atlas tiles.
+	/// </summary>
+	private void ConvertIntMap2DToAtlas()
 	{
 		GD.Print("[DungeonNode] Converting int map to TileMapLayer...");
 		var rawMap = mapConstructor.IntMap2D;
@@ -42,29 +44,26 @@ public partial class DungeonNode : Node
 			return;
 		}
 
-		// use first atlas source (the texture you added)
+		// Add atlas (background) source to tileset based on int[,] data
 		int sourceId = tileSet.GetSourceId(0);
 
 		for (int x = 0; x < rawMap.GetLength(0); x++)
 		{
 			for (int y = 0; y < rawMap.GetLength(1); y++)
 			{
-				int tileType = rawMap[x, y];
-				var atlasCoords = new Vector2I(0, 0);
-				var atlasType = tileType == 0 ? AtlasType.None : AtlasType.Default;
+				// get tile type
+				int tileRawType = rawMap[x, y];
 
-				// skip empty tiles
-				if (tileType < 0)
-					continue;
+				// init default atlas type
+				var atlasType = (tileRawType <= 0) ? AtlasType.None : AtlasType.Default;
 
-
-				if (tileType == 0 && y < rawMap.GetLength(1) - 1 && rawMap[x, y + 1] != 0)
+				if (tileRawType == 0 && y < rawMap.GetLength(1) - 1 && rawMap[x, y + 1] != 0)
 					atlasType = AtlasType.TopWall;
 
-				if (tileType > 0 && y != 0 && rawMap[x, y - 1] == 0)
+				if (tileRawType > 0 && y != 0 && rawMap[x, y - 1] == 0)
 					atlasType = AtlasType.TopTile;
 
-				if (tileType > 0 && (Random.Shared.Next(0, 2) == 0) && CountNeighbourOfIndex(x, y, 6, 0) < 6)
+				if (tileRawType > 0 && (Random.Shared.Next(0, 2) == 0) && CountNeighbourInIntMap2D(x, y, 6, 0) < 6)
 					atlasType = AtlasType.Centered;
 
 				// atlas coords: (tileType, 0)
@@ -77,72 +76,20 @@ public partial class DungeonNode : Node
 		}
 	}
 
-	private void PrintTileMapLayerToGDPrint()
+	/// <summary>
+	/// Generates objects based on the integer map.
+	/// </summary>
+	private void GenerateIntMap2DToObjects()
 	{
-		GD.Print("[DungeonNode] Printing TileMapLayer:");
-		var usedCells = tilemapFloor.GetUsedCells();
-		if (usedCells == null || usedCells.Count == 0)
-		{
-			GD.Print("[DungeonNode] No used cells found on tilemapFloor.");
-			return;
-		}
-
-		foreach (var cell in usedCells)
-		{
-			int tileType = tilemapFloor.GetCellSourceId(cell);
-			GD.Print($"[DungeonNode] Cell at {cell} has tile type {tileType}");
-		}
+		// TODO: implement object generation based on int map
+		throw new NotImplementedException();
 	}
-
-	private void GenerateNodesToObjectGroups()
-	{
-		GD.Print("[DungeonNode] Generating nodes to object groups...");
-		foreach (var kvp in mapConstructor.Nodes)
-		{
-			var position = kvp.Key;
-			var type = kvp.Value;
-
-			switch (type)
-			{
-				case TileSpawnType.Start:
-					if (GenerateStartNode)
-						GenerateStartNodeObject(new Vector2I(position.x, position.y));
-					break;
-				// Add more cases for different TileSpawnTypes as needed
-				default:
-					break;
-			}
-		}
-	}
-
-	private void GenerateStartNodeObject(Vector2I location)
-	{
-		var tileSize = 16;
-		location.X *= tileSize;
-		location.Y *= tileSize;
-		GD.Print("[DungeonNode] Generating start node object at " + location);
-
-		// load resource
-		var res = GD.Load<PackedScene>("res://assets/prefab/player/player-default.tscn");
-		if (res == null)
-			throw new System.Exception("Failed to load player-default.tscn!");
-		var instance = res.Instantiate<CharacterBody2D>();
-
-		// get main
-		var main = GetTree().Root.GetNodeOrNull("Main");
-		if (main == null)
-		{
-			GD.PushError("[DungeonNode] 'Main' node not found in root.");
-			return;
-		}
-
-		// defer the add_child call to avoid "Parent node is busy setting up children" error
-		main.CallDeferred("add_child", instance);
-
-		// set position
-		instance.Position = new Vector2(location.X, location.Y);
-	}
-
+	
+	/// <summary>
+    /// Gets the atlas tile coordinates based on the specified atlas type.
+    /// </summary>
+    /// <param name="atlasType"></param>
+    /// <returns></returns>
 	private Vector2I GetAtlasTileCoordsFromType(AtlasType atlasType)
 	{
 		return atlasType switch
@@ -156,24 +103,47 @@ public partial class DungeonNode : Node
 		};
 	}
 
-	private int CountNeighbourOfIndex(int x, int y, int radius, int targetIndex)
+	/// <summary>
+    /// Counts the number of neighboring tiles of a specific index around a given position.
+    /// </summary>
+    /// <param name="x">x</param>
+    /// <param name="y">y</param>
+    /// <param name="radius">radius</param>
+    /// <param name="targetIndex">The index of the tile to count neighbors for. -1 means count all indexes except '0'.</param>
+    /// <param name="isCircular">Whether to count neighbors in a circular or square manner.</param>
+    /// <returns></returns>
+	private int CountNeighbourInIntMap2D(int x, int y, int radius, int targetIndex, bool isCircular = true)
 	{
 		var rawMap = mapConstructor.IntMap2D;
 		var count = 0;
+		int r2 = radius * radius;
+
 		for (int offsetX = -radius; offsetX <= radius; offsetX++)
+		{
 			for (int offsetY = -radius; offsetY <= radius; offsetY++)
 			{
 				if (offsetX == 0 && offsetY == 0)
 					continue;
+
+				// circular check when requested
+				if (isCircular)
+				{
+					int dx = offsetX;
+					int dy = offsetY;
+					if (dx * dx + dy * dy > r2)
+						continue;
+				}
+
 				int checkX = x + offsetX;
 				int checkY = y + offsetY;
 				if (checkX >= 0 && checkX < rawMap.GetLength(0) &&
 					checkY >= 0 && checkY < rawMap.GetLength(1))
 				{
-					if (rawMap[checkX, checkY] == targetIndex)
+					if (targetIndex == -1 ? rawMap[checkX, checkY] != 0 : rawMap[checkX, checkY] == targetIndex)
 						count++;
 				}
 			}
+		}
 		return count;
 	}
 
@@ -185,4 +155,6 @@ public partial class DungeonNode : Node
 		TopTile,
 		Centered
 	}
+
+
 }
