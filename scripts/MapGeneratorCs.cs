@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+// -- Image Building Imports --
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace MapGeneratorCs
 {
@@ -64,6 +67,7 @@ namespace MapGeneratorCs
 			GenerateStandardNodes();
 			FillNodeTypes(spawns, collisionRadius);
 			UpdateIntMap2DFromNodeDictTypeBasic();
+			// !!! GenerateIntMap2DToObjects(); // TODO: implement object generation
 		}
 
 		// === Generation ===
@@ -147,8 +151,8 @@ namespace MapGeneratorCs
 				bool placed = false;
 				foreach (var key in candidates)
 				{
-				 if (IsNodesRadiusOccupied(key, collisionRadius)) continue;
-				 Nodes[key] = type; placed = true; break;
+					if (IsNodesRadiusOccupied(key, collisionRadius)) continue;
+					Nodes[key] = type; placed = true; break;
 				}
 				if (!placed && ENABLE_DETAILED_LOGGING)
 					Console.WriteLine($"[MapConstructor] Warning: couldn't place {type} due to collisions.");
@@ -186,7 +190,7 @@ namespace MapGeneratorCs
 		}
 
 		// === Map conversion (no node reposition) ===
-		private void UpdateIntMap2DFromNodeDictTypeBasic() 
+		private void UpdateIntMap2DFromNodeDictTypeBasic()
 		{
 			var nodes = Nodes;
 			UpdateBoundsFromNodes();
@@ -226,16 +230,16 @@ namespace MapGeneratorCs
 
 				// thickness shape (disk)
 				for (int dx = -thickness; dx <= thickness; dx++)
-				for (int dy = -thickness; dy <= thickness; dy++)
-				{
-					int distSq = dx * dx + dy * dy;
-					if (distSq > thickness * thickness) continue;
+					for (int dy = -thickness; dy <= thickness; dy++)
+					{
+						int distSq = dx * dx + dy * dy;
+						if (distSq > thickness * thickness) continue;
 
-					int ix = mapX + dx, iy = mapY + dy;
-					if (ix >= 0 && ix < mapW && iy >= 0 && iy < mapH)
-						if (map[ix, iy] == (int)TileSpawnType.Empty)
-							map[ix, iy] = (int)TileSpawnType.Default;
-				}
+						int ix = mapX + dx, iy = mapY + dy;
+						if (ix >= 0 && ix < mapW && iy >= 0 && iy < mapH)
+							if (map[ix, iy] == (int)TileSpawnType.Empty)
+								map[ix, iy] = (int)TileSpawnType.Default;
+					}
 
 				// center
 				if (mapX >= 0 && mapX < mapW && mapY >= 0 && mapY < mapH)
@@ -249,15 +253,15 @@ namespace MapGeneratorCs
 		private bool IsNodesRadiusOccupied((int x, int y) position, int radius, bool includeTypeNone = false)
 		{
 			for (int dx = -radius; dx <= radius; dx++)
-			for (int dy = -radius; dy <= radius; dy++)
-			{
-				var p = (position.x + dx, position.y + dy);
-				if (Nodes.TryGetValue(p, out var node))
+				for (int dy = -radius; dy <= radius; dy++)
 				{
-					if (!includeTypeNone && node == TileSpawnType.Default) continue;
-					return true;
+					var p = (position.x + dx, position.y + dy);
+					if (Nodes.TryGetValue(p, out var node))
+					{
+						if (!includeTypeNone && node == TileSpawnType.Default) continue;
+						return true;
+					}
 				}
-			}
 			return false;
 		}
 
@@ -282,6 +286,39 @@ namespace MapGeneratorCs
 				}
 				Console.WriteLine(line);
 			}
+		}
+
+		public void SaveMapAsImage(string filePath)
+		{
+			int width = IntMap2D.GetLength(0);
+			int height = IntMap2D.GetLength(1);
+			using var image = new Image<Rgba32>(width, height);
+
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					var val = IntMap2D[x, y];
+					Rgba32 color = val switch
+					{
+						(int)TileSpawnType.Empty => new Rgba32(0, 0, 0),
+						(int)TileSpawnType.Default => new Rgba32(128, 128, 128),
+						(int)TileSpawnType.Start => new Rgba32(0, 255, 0),
+						(int)TileSpawnType.End => new Rgba32(255, 0, 0),
+						(int)TileSpawnType.Treasure => new Rgba32(255, 215, 0),
+						(int)TileSpawnType.Enemy => new Rgba32(255, 140, 0),
+						(int)TileSpawnType.Landmark => new Rgba32(0, 0, 255),
+						(int)TileSpawnType.Boss => new Rgba32(128, 0, 128),
+						(int)TileSpawnType.Quest => new Rgba32(0, 255, 255),
+						_ => new Rgba32(255, 255, 255),
+					};
+					image[x, y] = color;
+				}
+			}
+
+			image.Save(filePath);
+			if (ENABLE_DETAILED_LOGGING)
+				Console.WriteLine($"[MapConstructor] Map image saved to {filePath}");
 		}
 
 		// === Helpers ===
