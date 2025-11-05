@@ -12,3 +12,14 @@
 	- !! Fix the filling of TileMapLayer being empty on generation function from int[,] -> TileTypeLayer[Vector2I]
 
 - REWORK the dungeon generator, have the whole mapgenerator generate the entire map, including nodes, then have the DungeonNode.cs just read from that data and fill in the TileMapLayer and ObjectGroups. This will make it way easier to manage the data flow.
+
+# Roadmap
+1. Create dungeon generator v2.
+2. Create AStar pathfinding system.
+3. Create working mobs with basic AI.
+4. Create working player with touch controls.
+5. Create basic combat system.
+6. Create basic item system with equippable items.
+7. Create basic UI for inventory, health, etc.
+8. Create basic sound effects and music.
+9. Polish and optimize the game for mobile platforms.

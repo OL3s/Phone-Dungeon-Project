@@ -71,7 +71,7 @@ public partial class PathFinding : Node
                     int neighborY = (int)neighbor.Y;
                     
                     // Check bounds
-                    if (neighborX >= 0 && neighborX < gridRaw.GetLength(1) && 
+                    if (neighborX >= 0 && neighborX < gridRaw.GetLength(1) &&   
                         neighborY >= 0 && neighborY < gridRaw.GetLength(0))
                     {
                         // For diagonal neighbors, check if both adjacent cardinal tiles are walkable

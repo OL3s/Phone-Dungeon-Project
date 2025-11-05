@@ -1,3 +1,6 @@
-[gd_scene format=3 uid="uid://dsfnpyo3b2l5q"]
+[gd_scene load_steps=2 format=3 uid="uid://dsfnpyo3b2l5q"]
+
+[ext_resource type="Script" uid="uid://dcqtn6hh2aow2" path="res://assets/prefab/pathfinding/PathFinding.cs" id="1_tf025"]
 
 [node name="Node" type="Node"]
+script = ExtResource("1_tf025")
