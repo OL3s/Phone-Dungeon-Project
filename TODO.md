@@ -15,6 +15,8 @@
 
 - REWORK the dungeon generator, have the whole mapgenerator generate the entire map, including nodes, then have the DungeonNode.cs just read from that data and fill in the TileMapLayer and ObjectGroups. This will make it way easier to manage the data flow.
 
+- AddToGroup() implement this in all relevant objects for easy access via GetTree().GetNodesInGroup("groupname")
+
 # Roadmap
 1. Create dungeon generator v2.
 2. Create AStar pathfinding system.
