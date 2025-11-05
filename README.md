@@ -5,8 +5,7 @@
 ---
 
 # 📘 General Overview
-
-Go to documentation [HERE](./doc/main.md)
+![Roadmap](./roadmap.png)
 
 ## Gameplay Loop
 

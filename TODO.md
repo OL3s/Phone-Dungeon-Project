@@ -10,6 +10,8 @@
 	- implement tiletype code for init() spawns
 	- implement DungeonNode.cs : Node
 	- !! Fix the filling of TileMapLayer being empty on generation function from int[,] -> TileTypeLayer[Vector2I]
+- Create contract pointer at last wave to select which gem (which is close to current biome)
+	- Make fitting icons for each gem to be next to contract pointer
 
 - REWORK the dungeon generator, have the whole mapgenerator generate the entire map, including nodes, then have the DungeonNode.cs just read from that data and fill in the TileMapLayer and ObjectGroups. This will make it way easier to manage the data flow.
 
