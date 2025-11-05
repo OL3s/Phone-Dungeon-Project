@@ -86,10 +86,10 @@ public partial class DungeonNode : Node
 	}
 	
 	/// <summary>
-    /// Gets the atlas tile coordinates based on the specified atlas type.
-    /// </summary>
-    /// <param name="atlasType"></param>
-    /// <returns></returns>
+	/// Gets the atlas tile coordinates based on the specified atlas type.
+	/// </summary>
+	/// <param name="atlasType"></param>
+	/// <returns></returns>
 	private Vector2I GetAtlasTileCoordsFromType(AtlasType atlasType)
 	{
 		return atlasType switch
@@ -104,14 +104,14 @@ public partial class DungeonNode : Node
 	}
 
 	/// <summary>
-    /// Counts the number of neighboring tiles of a specific index around a given position.
-    /// </summary>
-    /// <param name="x">x</param>
-    /// <param name="y">y</param>
-    /// <param name="radius">radius</param>
-    /// <param name="targetIndex">The index of the tile to count neighbors for. -1 means count all indexes except '0'.</param>
-    /// <param name="isCircular">Whether to count neighbors in a circular or square manner.</param>
-    /// <returns></returns>
+	/// Counts the number of neighboring tiles of a specific index around a given position.
+	/// </summary>
+	/// <param name="x">x</param>
+	/// <param name="y">y</param>
+	/// <param name="radius">radius</param>
+	/// <param name="targetIndex">The index of the tile to count neighbors for. -1 means count all indexes except '0'.</param>
+	/// <param name="isCircular">Whether to count neighbors in a circular or square manner.</param>
+	/// <returns></returns>
 	private int CountNeighbourInIntMap2D(int x, int y, int radius, int targetIndex, bool isCircular = true)
 	{
 		var rawMap = mapConstructor.IntMap2D;
